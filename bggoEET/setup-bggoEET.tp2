@@ -1,0 +1,79 @@
+BACKUP ~bggoEET/backup~
+AUTHOR ~me~
+VERSION ~v2.0 beta~
+
+ALWAYS
+	INCLUDE ~bggoEET/lib/a7_tools.tpa~
+END
+
+BEGIN ~bggoEET~
+
+MKDIR ~bggoEET/bif~
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN
+bird => 1
+eagle => 1
+vultur => 1
+seagul => 1
+END
+
+
+ACTION_FOR_EACH are IN ~BG1000~ ~BG1400~ ~BG1500~ ~BG1600~ ~BG1700~ ~BG1800~ ~BG1900~ ~BG2000~ ~BG2100~ ~BG2200~ ~BG2300~ ~BG2400~ ~BG2600~ ~BG2700~ ~BG2800~ ~BG2900~ ~BG3000~ ~BG3100~ ~BG3200~ ~BG3300~ ~BG3400~ ~BG3500~ ~BG3600~ ~BG3700~ ~BG3800~ ~BG3900~ ~BG4000~ ~BG4100~ ~BG4200~ ~BG4300~ ~BG4400~ ~BG4500~ ~BG4600~ ~BG4700~ ~BG4800~ ~BG4900~ ~BG5000~ ~BG5100~ ~BG5200~ ~BG5300~ ~BG5400~ ~BG5500~ ~BG5600~ ~BG5700~ ~BG5800~ ~BG5900~ ~BG6000~ ~BG6100~ BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%are%.are~ BEGIN
+		COPY_EXISTING ~%are%.are~ ~override~
+		PATCH_IF SOURCE_SIZE > 0x11b BEGIN // Valid size check
+			WRITE_BYTE 0x48 (THIS BOR 0b01000000) // Toggle extended night flag on whether on or off
+			GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110
+			PHP_EACH actors AS i => off BEGIN
+				READ_ASCII off + 0x80 cre_resref
+				TO_LOWER cre_resref
+				PATCH_IF VARIABLE_IS_SET $turn_off_at_night("%cre_resref%") BEGIN
+					WRITE_LONG off + 0x40 0x1ffe0 // 05:30 to 17:29
+				END
+			END
+		END
+		BUT_ONLY
+		
+		MKDIR ~bggoEET/bif/%are%~
+		LAF HANDLE_TILECONV
+			INT_VAR
+			STR_VAR
+				input_path    = EVAL ~bggoEET/base/tbcN/%are%~
+				output_path	  = EVAL ~bggoEET/bif/%are%~
+		END
+		COPY ~bggoEET/base/wedN/%are%N.wed~ ~bggoEET/bif/%are%~
+		COPY ~bggoEET/base/mosN/%are%N.mos~ ~bggoEET/bif/%are%~
+		COPY ~bggoEET/base/bmpN/%are%LN.bmp~ ~bggoEET/bif/%are%~
+		COPY_EXISTING ~%are%SR.bmp~ ~bggoEET/bif/%are%~
+		COPY_EXISTING ~%are%HT.bmp~ ~bggoEET/bif/%are%~
+		COPY_EXISTING ~%are%LM.bmp~ ~bggoEET/bif/%are%~
+		MAKE_BIFF ~%are%N~ BEGIN ~bggoEET/bif/%are%~ ~^.*$~ END
+
+		ACTION_FOR_EACH var IN bmp mos tis wed BEGIN
+			ACTION_BASH_FOR ~bggoEET/bif/%are%~ ~^.+\.%var%$~ BEGIN
+				DELETE +  ~%BASH_FOR_FILESPEC%~
+			END
+		END
+
+		LAF REMOVE_DIRECTORY STR_VAR dir_name = EVAL ~bggoEET/bif/%are%~ END
+	END
+END
+
+LAF HANDLE_TILECONV
+  INT_VAR
+  STR_VAR
+    input_path    = ~bggoEET/base/tbcN/ys~
+	output_path	  = ~bggoEET/bif/bggom~
+END
+
+MAKE_BIFF ~bggom~ BEGIN ~bggoEET/bif/bggom~ ~^.*$~ END
+
+ACTION_FOR_EACH var IN bmp mos tis wed BEGIN
+	ACTION_BASH_FOR ~bggoEET/bif/bggom~ ~^.+\.%var%$~ BEGIN
+		DELETE +  ~%BASH_FOR_FILESPEC%~
+	END
+END
+
+LAF REMOVE_DIRECTORY STR_VAR dir_name = ~bggoEET/bif/bggom~ END
+
+LAF REMOVE_DIRECTORY STR_VAR dir_name = ~bggoEET/bif~ END
