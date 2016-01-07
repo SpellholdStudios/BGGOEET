@@ -1,0 +1,80 @@
+DEFINE_ACTION_FUNCTION ~INSTALL_NIGHT_TILESETS~
+	STR_VAR
+		purple = ~~
+BEGIN
+
+	MKDIR ~bggoEET/bif~
+	
+	ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN
+		bird => 1
+		eagle => 1
+		vultur => 1
+		seagul => 1
+	END
+	
+	ACTION_IF FILE_EXISTS_IN_GAME ~%are%.are~ BEGIN
+		COPY_EXISTING ~%are%.are~ ~override~
+		PATCH_IF SOURCE_SIZE > 0x11b BEGIN // Valid size check
+			WRITE_BYTE 0x48 (THIS BOR 0b01000000) // Toggle extended night flag on whether on or off
+			GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110
+			PHP_EACH actors AS i => off BEGIN
+				READ_ASCII off + 0x80 cre_resref
+				TO_LOWER cre_resref
+				PATCH_IF VARIABLE_IS_SET $turn_off_at_night("%cre_resref%") BEGIN
+					WRITE_LONG off + 0x40 0x1ffe0 // 05:30 to 17:29
+				END
+			END
+		END
+		BUT_ONLY
+		
+		MKDIR ~bggoEET/bif/%are%~
+		LAF HANDLE_TILECONV
+			INT_VAR
+			STR_VAR
+				input_path    = EVAL ~bggoEET/base/tbcN%purple%/%are%~
+				output_path	  = EVAL ~bggoEET/bif/%are%~
+		END
+		COPY ~bggoEET/base/wedN%purple%/%are%N.wed~ ~bggoEET/bif/%are%~
+		COPY ~bggoEET/base/mosN%purple%/%are%N.mos~ ~bggoEET/bif/%are%~
+		COPY ~bggoEET/base/bmpN/%are%LN.bmp~ ~bggoEET/bif/%are%~
+		COPY_EXISTING ~%are%SR.bmp~ ~bggoEET/bif/%are%~
+		COPY_EXISTING ~%are%HT.bmp~ ~bggoEET/bif/%are%~
+		COPY_EXISTING ~%are%LM.bmp~ ~bggoEET/bif/%are%~
+		MAKE_BIFF ~%are%N~ BEGIN ~bggoEET/bif/%are%~ ~^.*$~ END
+
+		ACTION_FOR_EACH var IN bmp mos tis wed BEGIN
+			ACTION_BASH_FOR ~bggoEET/bif/%are%~ ~^.+\.%var%$~ BEGIN
+				DELETE +  ~%BASH_FOR_FILESPEC%~
+			END
+		END
+
+		LAF REMOVE_DIRECTORY STR_VAR dir_name = EVAL ~bggoEET/bif/%are%~ END
+	END
+	
+	LAF REMOVE_DIRECTORY STR_VAR dir_name = ~bggoEET/bif~ END
+END
+
+DEFINE_ACTION_FUNCTION ~INSTALL_MAIN_FILES~
+BEGIN
+	MKDIR ~bggoEET/bif~
+
+	LAF HANDLE_TILECONV
+		INT_VAR
+		STR_VAR
+			input_path    = ~bggoEET/base/tbcN/ys~
+			output_path	  = ~bggoEET/bif/bggom~
+	END
+
+	MAKE_BIFF ~bggom~ BEGIN ~bggoEET/bif/bggom~ ~^.*$~ END
+
+	ACTION_FOR_EACH var IN bmp mos tis wed BEGIN
+		ACTION_BASH_FOR ~bggoEET/bif/bggom~ ~^.+\.%var%$~ BEGIN
+			DELETE +  ~%BASH_FOR_FILESPEC%~
+		END
+	END
+
+	LAF REMOVE_DIRECTORY STR_VAR dir_name = ~bggoEET/bif/bggom~ END
+
+	LAF REMOVE_DIRECTORY STR_VAR dir_name = ~bggoEET/bif~ END
+END
+
