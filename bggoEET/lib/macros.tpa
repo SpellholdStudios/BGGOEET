@@ -341,7 +341,7 @@ END
 		seagul => 1
 	END
 	
-	COPY_EXISTING ~AR2626.are~ ~override~
+	COPY_EXISTING ~BG2626.are~ ~override~
 		PATCH_IF SOURCE_SIZE > 0x11b BEGIN // Valid size check
 			WRITE_BYTE 0x48 (THIS BOR 0b01000000) // Toggle extended night flag on whether on or off
 			GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110

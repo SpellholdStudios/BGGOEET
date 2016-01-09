@@ -9,6 +9,7 @@ END
 
 BEGIN ~Purple Patches~
 SUBCOMPONENT ~Baldur's Gate Graphics Overhaul for EET~
+REQUIRE_PREDICATE GAME_IS ~bgt~ ~This mod is currently for EET only~
 
 ACTION_FOR_EACH are IN ~BG0100~ ~BG0200~ ~BG0300~ ~BG0600~ ~BG0621~ ~BG0700~ ~BG0800~ ~BG1100~ ~BG1200~ ~BG1300~ BEGIN
 	LAF ~INSTALL_TILESETS~ STR_VAR purple = ~PP~ END 
@@ -18,6 +19,7 @@ LAF ~INSTALL_MAIN~ END
 
 BEGIN ~No Purple Patches~
 SUBCOMPONENT ~Baldur's Gate Graphics Overhaul for EET~
+REQUIRE_PREDICATE GAME_IS ~bgt~ ~This mod is currently for EET only~
 
 ACTION_FOR_EACH are IN ~BG0100~ ~BG0200~ ~BG0300~ ~BG0600~ ~BG0621~ ~BG0700~ ~BG0800~ ~BG1100~ ~BG1200~ ~BG1300~ BEGIN
 	LAF ~INSTALL_TILESETS~ STR_VAR purple = ~P~ END 
