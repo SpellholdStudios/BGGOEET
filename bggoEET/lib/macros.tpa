@@ -1,3 +1,90 @@
+ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_tis BEGIN
+	"BG0100"    => "%NWBaldursGate%"
+	"BG0101"    => "%NWBaldursGate_SilvershieldEstate_L1%"
+	"BG0102"    => "%NWBaldursGate_SilvershieldEstate_L2%"
+	"BG0103"    => "%NEBaldursGate_SplurgingSturgeon_L1%"
+	"BG0130"    => "%WBaldursGate_HallofWonders%"
+	"BG0131"    => "%WBaldursGate_HighHouseofWonders%"
+	"BG0162"    => "%NWBaldursGate_LaertasHouse_L1%"
+	"BG0166"    => "%NWBaldursGate_Tavern_L2%"
+	"BG0200"    => "%NBaldursGate%"
+	"BG0224"    => "%WSewers%"
+	"BG0225"    => "%CentralSewers%"
+	"BG0300"    => "%NEBaldursGate%"
+	"BG0400"    => "%Farmlands%"
+	"BG0500"    => "%DurlagsTower%"
+	"BG0600"    => "%WBaldursGate%"
+	"BG0621"    => "%BaldursGateDocks_IronThroneRoof%"
+	"BG0700"    => "%CentralBaldursGate%"
+	"BG0719"    => "%CentralBaldursGate_FeloniusManor%"
+	"BG0800"    => "%EBaldursGate%"
+	"BG0900"    => "%WyrmsCrossing%"
+	"BG1000"    => "%UlgothsBeard%"
+	"BG1100"    => "%SWBaldursGate%"
+	"BG1101"    => "%SWBaldursGate_WivensHouse_L1%"
+	"BG1102"    => "%SWBaldursGate_WivensHouse_L2%"
+	"BG1200"    => "%BaldursGateDocks%"
+	"BG1207"    => "%BaldursGateDocks_BasiliskWarehouse%"
+	"BG1208"    => "%BaldursGateDocks_NoraleesWarehouse%"
+	"BG1300"    => "%SEBaldursGate%"
+	"BG1320"    => "%SEBaldursGate_GeneralStore1%"
+	"BG1400"    => "%FishingVillage%"
+	"BG1500"    => "%IsleofBalduranN%"
+	"BG1600"    => "%CloakwoodDruids%"
+	"BG1700"    => "%CloakwoodWyverns%"
+	"BG1800"    => "%CloakwoodMines%"
+	"BG1900"    => "%BanditCamp%"
+	"BG2000"    => "%IsleofBalduranS%"
+	"BG2100"    => "%CloakwoodNest%"
+	"BG2200"    => "%CloakwoodLodge%"
+	"BG2300"    => "%FriendlyArmInn%"
+	"BG2400"    => "%Peldvale%"
+	"BG2600"    => "%Candlekeep%"
+	"BG2700"    => "%LionsWay%"
+	"BG2800"    => "%CoastWay%"
+	"BG2900"    => "%Larswood%"
+	"BG3000"    => "%SpiderWood%"
+	"BG3100"    => "%ShipwrecksCoast%"
+	"BG3200"    => "%HighHedge%"
+	"BG3202"    => "%HighHedge_ThalanthyrsAbode%"
+	"BG3300"    => "%Beregost%"
+	"BG3400"    => "%Temple%"
+	"BG3500"    => "%MutaminsGarden%"
+	"BG3600"    => "%Lighthouse%"
+	"BG3700"    => "%RedCanyons%"
+	"BG3800"    => "%SouthBeregostRoad%"
+	"BG3900"    => "%Ulcaster%"
+	"BG4000"    => "%Gullykin%"
+	"BG4100"    => "%ArchaeologicalSite%"
+	"BG4200"    => "%FishermansLake%"
+	"BG4300"    => "%NorthNashkelRoad%"
+	"BG4400"    => "%LonelyPeaks%"
+	"BG4500"    => "%FirewineBridge%"
+	"BG4600"    => "%BearRiver%"
+	"BG4700"    => "%XvartVillage%"
+	"BG4800"    => "%Nashkel%"
+	"BG4900"    => "%NashkelCarnival%"
+	"BG5000"    => "%ValleyoftheTombs%"
+	"BG5100"    => "%GnollStronghold%"
+	"BG5200"    => "%DryadFalls%"
+	"BG5300"    => "%FireLeafForest%"
+	"BG5400"    => "%NashkelMines%"
+	"BG5500"    => "%GibberlingMountains%"
+	"BG5600"    => "%Encounter_Plains1%"
+	"BG5700"    => "%Encounter_Canyon1%"
+	"BG5800"    => "%Encounter_Cliff1%"
+	"BG5900"    => "%Encounter_Grassland1%"
+	"BG6000"    => "%Encounter_Forest1%"
+	"BG6100"    => "%Encounter_Road%"
+END
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN
+		bird => 1
+		eagle => 1
+		vultur => 1
+		seagul => 1
+END
+
 DEFINE_ACTION_FUNCTION ~INSTALL_TILESETS~
 	STR_VAR
 		purple = ~~
@@ -5,15 +92,11 @@ BEGIN
 
 	MKDIR ~bggoEET/bif~
 	
-	ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN
-		bird => 1
-		eagle => 1
-		vultur => 1
-		seagul => 1
-	END
+	ACTION_IF (VARIABLE_IS_SET $EVAL ~remapped_tis~(~%are%~)) BEGIN
+	OUTER_TEXT_SPRINT are2 $EVAL ~remapped_tis~(~%are%~)
 	
-	ACTION_IF FILE_EXISTS_IN_GAME ~%are%.are~ BEGIN
-		COPY_EXISTING ~%are%.are~ ~override~
+	ACTION_IF FILE_EXISTS_IN_GAME ~%are2%.are~ BEGIN
+		COPY_EXISTING ~%are2%.are~ ~override~
 		PATCH_IF SOURCE_SIZE > 0x11b BEGIN // Valid size check
 			WRITE_BYTE 0x48 (THIS BOR 0b01000000) // Toggle extended night flag on whether on or off
 			GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110
@@ -27,59 +110,67 @@ BEGIN
 		END
 		BUT_ONLY
 		
-		MKDIR ~bggoEET/bif/%are%~
+		MKDIR ~bggoEET/bif/%are2%~
 		
 
 		ACTION_IF FILE_EXISTS ~bggoEET/base/tbcD/%are%/%are%.tbc~ BEGIN
 			LAF HANDLE_TILECONV
 				STR_VAR
 					input_path    = EVAL ~bggoEET/base/tbcD/%are%~
-					output_path	  = EVAL ~bggoEET/bif/%are%~
+					output_path	  = EVAL ~bggoEET/bif/%are2%~
 			END		
+			MOVE + ~bggoEET/bif/%are2%/%are%.tis~ ~bggoEET/bif/%are2%/%are2%.tis~
 		
-			COPY ~bggoEET/base/mosD/%are%.mos~ ~bggoEET/bif/%are%~
+			COPY ~bggoEET/base/mosD/%ee%/%are%.mos~ ~bggoEET/bif/%are2%/%are2%.mos~
 		
 			ACTION_IF FILE_EXISTS ~bggoEET/base/wedD/%are%.wed~ BEGIN
-				COPY ~bggoEET/base/wedD/%are%.wed~ ~bggoEET/bif/%are%~
+				COPY ~bggoEET/base/wedD/%are%.wed~ ~bggoEET/bif/%are2%/%are2%.wed~
+				REPLACE_TEXTUALLY ~%are%~ ~%are2%~
+				BUT_ONLY
 			END ELSE BEGIN
-				COPY_EXISTING ~%are%.wed~ ~bggoEET/bif/%are%~
+				COPY_EXISTING ~%are2%.wed~ ~bggoEET/bif/%are2%~
 			END
 		
-			COPY_EXISTING ~%are%LM.bmp~ ~bggoEET/bif/%are%~
+			COPY_EXISTING ~%are2%LM.bmp~ ~bggoEET/bif/%are2%~
 		END		
 		
 		LAF HANDLE_TILECONV
 			STR_VAR
 				input_path    = EVAL ~bggoEET/base/tbcN%purple%/%are%~
-				output_path	  = EVAL ~bggoEET/bif/%are%~
+				output_path	  = EVAL ~bggoEET/bif/%are2%~
 		END
-		COPY ~bggoEET/base/wedN%purple%/%are%N.wed~ ~bggoEET/bif/%are%~
-		PATCH_IF ((~%are%~ STRING_COMPARE_CASE "BG3300")=0 AND FILE_EXISTS ~override/GavinNPC.B~) BEGIN
+		MOVE + ~bggoEET/bif/%are2%/%are%N.tis~ ~bggoEET/bif/%are2%/%are2%N.tis~
+		COPY ~bggoEET/base/wedN%purple%/%are%N.wed~ ~bggoEET/bif/%are2%/%are2%N.wed~
+		PATCH_IF ((~%are%~ STRING_COMPARE_CASE "%Beregost%")=0 AND FILE_EXISTS ~override/GavinNPC.B~) BEGIN
 			PATCH_PRINT ~Gavin detected~
 			LPM ~patchGavin~
 		END
-		COPY ~bggoEET/base/mosN%purple%/%are%N.mos~ ~bggoEET/bif/%are%~
-		COPY ~bggoEET/base/bmpN/%are%LN.bmp~ ~bggoEET/bif/%are%~
+			REPLACE_TEXTUALLY ~%are%~ ~%are2%~
+		BUT_ONLY
+		COPY ~bggoEET/base/mosN%purple%/%ee%/%are%N.mos~ ~bggoEET/bif/%are2%/%are2%N.mos~
+		COPY ~bggoEET/base/bmpN/%are%LN.bmp~ ~bggoEET/bif/%are2%/%are2%LN.bmp~
 		
 		ACTION_IF FILE_EXISTS ~bggoEET/base/bmpSR/%are%SR.bmp~ BEGIN
-			COPY ~bggoEET/base/bmpSR/%are%SR.bmp~ ~bggoEET/bif/%are%~
+			COPY ~bggoEET/base/bmpSR/%are%SR.bmp~ ~bggoEET/bif/%are2%/%are2%SR.bmp~
 		END ELSE BEGIN
-		COPY_EXISTING ~%are%SR.bmp~ ~bggoEET/bif/%are%~
+		COPY_EXISTING ~%are2%SR.bmp~ ~bggoEET/bif/%are2%~
 		END
 		
-		COPY_EXISTING ~%are%HT.bmp~ ~bggoEET/bif/%are%~
-		MAKE_BIFF ~go%are%~ BEGIN ~bggoEET/bif/%are%~ ~^.*$~ END
+		COPY_EXISTING ~%are2%HT.bmp~ ~bggoEET/bif/%are2%~
+		MAKE_BIFF ~go%are2%~ BEGIN ~bggoEET/bif/%are2%~ ~^.*$~ END
 
 		ACTION_FOR_EACH var IN bmp mos tis wed BEGIN
-			ACTION_BASH_FOR ~bggoEET/bif/%are%~ ~^.+\.%var%$~ BEGIN
+			ACTION_BASH_FOR ~bggoEET/bif/%are2%~ ~^.+\.%var%$~ BEGIN
 				DELETE +  ~%BASH_FOR_FILESPEC%~
 			END
 		END
 
-		LAF REMOVE_DIRECTORY STR_VAR dir_name = EVAL ~bggoEET/bif/%are%~ END
+		LAF REMOVE_DIRECTORY STR_VAR dir_name = EVAL ~bggoEET/bif/%are2%~ END
 	END
 	
 	LAF REMOVE_DIRECTORY STR_VAR dir_name = ~bggoEET/bif~ END
+	
+END
 END
 
 DEFINE_ACTION_FUNCTION ~INSTALL_MAIN~
@@ -117,8 +208,8 @@ BEGIN
 	ACTION_DEFINE_ARRAY ccys BEGIN 416 253 323 360 END
 
 	ACTION_PHP_EACH ccxs AS index => ccx BEGIN
-	  COPY_EXISTING "BG2600.are" override
-					"BG2626.are" override
+	  COPY_EXISTING "%Candlekeep%.are" override
+					"%Candlekeep_Ch6%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ccxs("%index%")
@@ -140,7 +231,7 @@ BEGIN
 	ACTION_DEFINE_ARRAY ar1ys BEGIN 499 555 1645 2295 3155 1279 END
 
 	ACTION_PHP_EACH ar1xs AS index => ar1x BEGIN
-	  COPY_EXISTING "BG0100.are" override
+	  COPY_EXISTING "%NWBaldursGate%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ar1xs("%index%")
@@ -159,7 +250,7 @@ BEGIN
 	ACTION_DEFINE_ARRAY ar2ys BEGIN 80 207 END
 
 	ACTION_PHP_EACH ar2xs AS index => ar2x BEGIN
-	  COPY_EXISTING "BG0200.are" override
+	  COPY_EXISTING "%NBaldursGate%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ar2xs("%index%")
@@ -178,7 +269,7 @@ BEGIN
 	ACTION_DEFINE_ARRAY ar2bys BEGIN 1510 1699 END
 
 	ACTION_PHP_EACH ar2bxs AS index => ar2bx BEGIN
-	  COPY_EXISTING "BG0200.are" override
+	  COPY_EXISTING "%NBaldursGate%.are" override
 		LPF fj_are_structure
 			INT_VAR
 			fj_loc_x = $ar2bxs("%index%")
@@ -197,7 +288,7 @@ BEGIN
 	ACTION_DEFINE_ARRAY ar3ys BEGIN 361 428 529 2327 3130 2411 2108 1898 1659 1120 END
 
 	ACTION_PHP_EACH ar3xs AS index => ar3x BEGIN
-	  COPY_EXISTING "BG0300.are" override
+	  COPY_EXISTING "%NEBaldursGate%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ar3xs("%index%")
@@ -216,7 +307,7 @@ BEGIN
 	ACTION_DEFINE_ARRAY ar6ys BEGIN 81 420 2478 END
 
 	ACTION_PHP_EACH ar6xs AS index => ar6x BEGIN
-	  COPY_EXISTING "BG0600.are" override
+	  COPY_EXISTING "%WBaldursGate%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ar6xs("%index%")
@@ -235,7 +326,7 @@ BEGIN
 	ACTION_DEFINE_ARRAY ar7ys BEGIN 1670 1566 1083 END
 
 	ACTION_PHP_EACH ar7xs AS index => ar7x BEGIN
-	  COPY_EXISTING "BG0700.are" override
+	  COPY_EXISTING "%CentralBaldursGate%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ar7xs("%index%")
@@ -254,7 +345,7 @@ END
 	ACTION_DEFINE_ARRAY ar8ys BEGIN 2614 2392 295 42 203 446 814 END
 
 	ACTION_PHP_EACH ar8xs AS index => ar8x BEGIN
-	  COPY_EXISTING "BG0800.are" override
+	  COPY_EXISTING "%EBaldursGate%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ar8xs("%index%")
@@ -273,7 +364,7 @@ END
 	ACTION_DEFINE_ARRAY ar11ys BEGIN 1172 1969 824 2810 2912 END
 
 	ACTION_PHP_EACH ar11xs AS index => ar11x BEGIN
-	  COPY_EXISTING "BG1100.are" override
+	  COPY_EXISTING "%SWBaldursGate%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ar11xs("%index%")
@@ -295,7 +386,7 @@ END
 	ACTION_DEFINE_ARRAY ar607ys BEGIN 434 355 397 457 522 459 368 282 217 271 354 440 531 844 927 883 947 1007 970 1049 1141 1226 1155 1069 978 END
 
 	ACTION_PHP_EACH ar607xs AS index => ar607x BEGIN
-	  COPY_EXISTING "BG0607.are" override
+	  COPY_EXISTING "%SWBaldursGate_FlamingFistHQ_L1%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ar607xs("%index%")
@@ -317,7 +408,7 @@ END
 	ACTION_DEFINE_ARRAY ar607cys BEGIN 769 744 810 836 END
 
 	ACTION_PHP_EACH ar607cxs AS index => ar607cx BEGIN
-	  COPY_EXISTING "BG0607.are" override
+	  COPY_EXISTING "%SWBaldursGate_FlamingFistHQ_L1%.are" override
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $ar607cxs("%index%")
@@ -332,16 +423,27 @@ END
 	  BUT_ONLY
 	END
 	
-	COPY ~bggoEET/base/bmpLM~ ~override~
-	
-	ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN
-		bird => 1
-		eagle => 1
-		vultur => 1
-		seagul => 1
+	ACTION_BASH_FOR ~bggoEET/base/bmpLM~ ~^.+$~ BEGIN
+		ACTION_TO_UPPER BASH_FOR_RES
+        ACTION_IF ~%BASH_FOR_EXT%~ STRING_EQUAL_CASE ~bmp~ BEGIN //BMP
+            OUTER_SET updated = 0
+            ACTION_FOR_EACH var IN LM BEGIN
+                ACTION_IF (updated = 0) BEGIN
+                    OUTER_PATCH_SAVE temp ~%BASH_FOR_RES%~ BEGIN
+                        REPLACE_TEXTUALLY ~%var%$~ ~~
+                    END
+                    ACTION_IF (VARIABLE_IS_SET $EVAL ~remapped_tis~(~%temp%~)) BEGIN
+                        OUTER_TEXT_SPRINT output $EVAL ~remapped_tis~(~%temp%~)
+                        //MOVE + ~%BASH_FOR_FILESPEC%~ ~%BASH_FOR_DIRECTORY%/%output%%var%.%BASH_FOR_EXT%~
+						COPY ~bggoEET/base/bmpLM/%temp%LM.bmp~ ~override/%output%LM.bmp~
+                        OUTER_SET updated = 1
+                    END
+                END
+            END
+        END
 	END
 	
-	COPY_EXISTING ~BG2626.are~ ~override~
+	COPY_EXISTING ~%Candlekeep_Ch6%.are~ ~override~
 		PATCH_IF SOURCE_SIZE > 0x11b BEGIN // Valid size check
 			WRITE_BYTE 0x48 (THIS BOR 0b01000000) // Toggle extended night flag on whether on or off
 			GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110
