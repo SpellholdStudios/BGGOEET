@@ -119,14 +119,23 @@ BEGIN
 					input_path    = EVAL ~bggoEET/base/tbcD/%are%~
 					output_path	  = EVAL ~bggoEET/bif/%are2%~
 			END		
+			ACTION_IF !GAME_IS ~eet~ BEGIN
 			MOVE + ~bggoEET/bif/%are2%/%are%.tis~ ~bggoEET/bif/%are2%/%are2%.tis~
+			END
 		
-			COPY ~bggoEET/base/mosD/%ee%/%are%.mos~ ~bggoEET/bif/%are2%/%are2%.mos~
+			//COPY ~bggoEET/base/mosD/%ee%/%are%.mos~ ~bggoEET/bif/%are2%/%are2%.mos~
+			LAF HANDLE_TILECONV
+				STR_VAR
+					input_path = EVAL ~bggoEET/base/mbcD/%ee%/%are%~
+					output_path	  = EVAL ~bggoEET/bif/%are2%~
+			END
+			ACTION_IF !GAME_IS ~eet~ BEGIN
+				MOVE + ~bggoEET/bif/%are2%/%are%.mos~ ~bggoEET/bif/%are2%/%are2%.mos~
+			END
 		
 			ACTION_IF FILE_EXISTS ~bggoEET/base/wedD/%are%.wed~ BEGIN
 				COPY ~bggoEET/base/wedD/%are%.wed~ ~bggoEET/bif/%are2%/%are2%.wed~
 				REPLACE_TEXTUALLY ~%are%~ ~%are2%~
-				BUT_ONLY
 			END ELSE BEGIN
 				COPY_EXISTING ~%are2%.wed~ ~bggoEET/bif/%are2%~
 			END
@@ -139,15 +148,27 @@ BEGIN
 				input_path    = EVAL ~bggoEET/base/tbcN%purple%/%are%~
 				output_path	  = EVAL ~bggoEET/bif/%are2%~
 		END
+		ACTION_IF !GAME_IS ~eet~ BEGIN
 		MOVE + ~bggoEET/bif/%are2%/%are%N.tis~ ~bggoEET/bif/%are2%/%are2%N.tis~
+		END
 		COPY ~bggoEET/base/wedN%purple%/%are%N.wed~ ~bggoEET/bif/%are2%/%are2%N.wed~
+			REPLACE_TEXTUALLY ~%are%~ ~%are2%~
 		PATCH_IF ((~%are%~ STRING_COMPARE_CASE "%Beregost%")=0 AND FILE_EXISTS ~override/GavinNPC.B~) BEGIN
 			PATCH_PRINT ~Gavin detected~
 			LPM ~patchGavin~
 		END
-			REPLACE_TEXTUALLY ~%are%~ ~%are2%~
-		BUT_ONLY
-		COPY ~bggoEET/base/mosN%purple%/%ee%/%are%N.mos~ ~bggoEET/bif/%are2%/%are2%N.mos~
+			
+		
+		//COPY ~bggoEET/base/mosN%purple%/%ee%/%are%N.mos~ ~bggoEET/bif/%are2%/%are2%N.mos~
+		LAF HANDLE_TILECONV
+			STR_VAR
+				input_path    = EVAL ~bggoEET/base/mbcN%purple%/%are%~
+				output_path	  = EVAL ~bggoEET/bif/%are2%~
+		END
+		ACTION_IF !GAME_IS ~eet~ BEGIN
+			MOVE + ~bggoEET/bif/%are2%/%are%N.mos~ ~bggoEET/bif/%are2%/%are2%N.mos~
+		END
+		
 		COPY ~bggoEET/base/bmpN/%are%LN.bmp~ ~bggoEET/bif/%are2%/%are2%LN.bmp~
 		
 		ACTION_IF FILE_EXISTS ~bggoEET/base/bmpSR/%are%SR.bmp~ BEGIN
