@@ -162,7 +162,7 @@ BEGIN
 		//COPY ~bggoEET/base/mosN%purple%/%ee%/%are%N.mos~ ~bggoEET/bif/%are2%/%are2%N.mos~
 		LAF HANDLE_TILECONV
 			STR_VAR
-				input_path    = EVAL ~bggoEET/base/mbcN%purple%/%are%~
+				input_path    = EVAL ~bggoEET/base/mbcN%purple%/%ee%/%are%N~
 				output_path	  = EVAL ~bggoEET/bif/%are2%~
 		END
 		ACTION_IF !GAME_IS ~eet~ BEGIN
