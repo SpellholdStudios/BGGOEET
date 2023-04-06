@@ -1,5 +1,6 @@
 BACKUP ~bggoEET/backup~
-AUTHOR ~White Agnus~
+SUPPORT ~http://www.shsforums.net/forum/641-bg-graphics-overhaul/~
+//AUTHOR ~Yovaneth, EET support by White Agnus, fixes by TotoR and weigo~
 VERSION ~v2.0 beta~
 
 ALWAYS
@@ -27,6 +28,7 @@ ALWAYS
 END
 
 BEGIN ~Purple Patches~
+LABEL ~BGGOEET-PurplePatches~
 SUBCOMPONENT ~Baldur's Gate Graphics Overhaul for EET~
 REQUIRE_PREDICATE GAME_IS ~eet bgt tutu_totsc~ ~This mod is currently for EET and BGT only~
 
@@ -37,6 +39,7 @@ END
 LAF ~INSTALL_MAIN~ END
 
 BEGIN ~No Purple Patches~
+LABEL ~BGGOEET-Main~
 SUBCOMPONENT ~Baldur's Gate Graphics Overhaul for EET~
 REQUIRE_PREDICATE GAME_IS ~eet bgt tutu_totsc~ ~This mod is currently for EET and BGT only~
 
@@ -47,6 +50,7 @@ END
 LAF ~INSTALL_MAIN~ END
 
 BEGIN ~Use extended BG1 areas for TDDz~
+LABEL ~BGGOEET-TDDzExtendedAreas~
 REQUIRE_PREDICATE (MOD_IS_INSTALLED "TDDZ/SETUP-TDDZ.TP2" "2") OR (MOD_IS_INSTALLED "TDDZ/SETUP-TDDZ.TP2" "3") OR (MOD_IS_INSTALLED "TDDZ/SETUP-TDDZ.TP2" "4") "No TDD component detected."
 REQUIRE_COMPONENT "BGGOEET/SETUP-BGGOEET.TP2" "0" "The main component must be installed before" 
 
