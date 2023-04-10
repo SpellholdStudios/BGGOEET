@@ -1,0 +1,73 @@
+BACKUP ~bggo/backup~
+AUTHOR ~White Agnus~
+VERSION ~v2.0 beta~
+
+ALWAYS
+	INCLUDE ~bggo/lib/a7_tools.tpa~
+	INCLUDE ~bggo/lib/macros.tpa~
+	INCLUDE ~bggo/lib/eet_cpmvars.tpa~
+	INCLUDE ~bggo/lib/g3_bgt_cpmvars.tpa~
+	INCLUDE ~bggo/lib/g3_tutu_cpmvars.tpa~
+
+	ACTION_IF GAME_IS ~eet~ BEGIN
+		OUTER_SPRINT ee ~ee~
+	END
+
+	ACTION_IF GAME_IS ~bgt tutu_totsc~ BEGIN
+		OUTER_SPRINT ee ~non-ee~
+//		MKDIR ~bggo/base/tbcD/BG0900~
+//		COPY_LARGE ~bggo/base/bridge/tbcD~ ~bggo/base/tbcD/BG0900~
+//		COPY_LARGE ~bggo/base/bridge/tbcN~ ~bggo/base/tbcN/BG0900~
+//		COPY + ~bggo/base/bridge/wedD~ ~bggo/base/wedD~
+//		COPY + ~bggo/base/bridge/wedN~ ~bggo/base/wedN~
+//		COPY + ~bggo/base/bridge/mosN~ ~bggo/base/mosN/%ee%~
+//		COPY + ~bggo/base/bridge/mosD~ ~bggo/base/mosD/%ee%~
+//		COPY + ~bggo/base/bridge/bmpN~ ~bggo/base/bmpN~
+	END
+	ACTION_IF (DIRECTORY_EXISTS ~%MOD_FOLDER%/bif~) BEGIN
+		ACTION_IF ~%WEIDU_OS%~ STR_EQ ~win32~ BEGIN
+			AT_NOW ~rmdir /s /q %MOD_FOLDER%\bif~ EXACT
+		END ELSE BEGIN //osx, unix
+			AT_NOW ~rm -rf %MOD_FOLDER%/bif~ EXACT
+		END
+	END
+	ACTION_IF ~%WEIDU_OS%~ STR_EQ ~win32~ BEGIN
+		AT_EXIT ~rmdir /s /q %MOD_FOLDER%\bif~ EXACT
+	END ELSE BEGIN //osx, unix
+		AT_EXIT ~rm -rf %MOD_FOLDER%/bif~ EXACT
+	END
+	ACTION_IF ~%WEIDU_OS%~ STR_EQ ~win32~ BEGIN
+		AT_UNINSTALL ~rmdir /s /q %MOD_FOLDER%\bif~ EXACT
+	END ELSE BEGIN //osx, unix
+		AT_UNINSTALL ~rm -rf %MOD_FOLDER%/bif~ EXACT
+	END
+END
+
+/////////////////////////////
+BEGIN ~BGGO for BGT and EET~
+REQUIRE_PREDICATE GAME_IS ~eet bgt tutu_totsc~ ~This mod is currently for EET and BGT~
+
+LAF ~INSTALL_MAIN~ END
+
+/////////////////////////////
+BEGIN ~Use extended BG1 areas for TDDz~
+REQUIRE_PREDICATE (MOD_IS_INSTALLED "TDDZ/SETUP-TDDZ.TP2" "2") OR (MOD_IS_INSTALLED "TDDZ/SETUP-TDDZ.TP2" "3") OR (MOD_IS_INSTALLED "TDDZ/SETUP-TDDZ.TP2" "4") "No TDD component detected."
+REQUIRE_COMPONENT "BGGOEET/SETUP-BGGOEET.TP2" "0" "The main component must be installed before" 
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_tis_tdd BEGIN
+	"DD1900"    => "%BanditCamp%"
+	"DD2300"    => "%FriendlyArmInn%"
+	"DD3300"    => "%Beregost%"
+	"DD8000"    => "%Larswood%"
+END
+
+ACTION_PHP_EACH remapped_tis_tdd AS TDDARE => BG1ARE BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%TDDARE%.are~ BEGIN
+		COPY_EXISTING ~%TDDARE%.are~ ~override~
+		PATCH_IF SOURCE_SIZE > 0x11b BEGIN
+			WRITE_ASCIIE 0x8 ~%BG1ARE%~ #8
+			WRITE_BYTE 0x48 (THIS BOR 0b01000000)
+		END
+		BUT_ONLY
+	END
+END
