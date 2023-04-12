@@ -78,6 +78,10 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_tis BEGIN
 	"BG6100"    => "%Encounter_Road%"
 END
 
+ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_anim_at_night BEGIN
+		AR1200TN => BG1200
+END
+
 ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN
 		bird => 1
 		eagle => 1
@@ -107,6 +111,15 @@ BEGIN
 					TO_LOWER cre_resref
 					PATCH_IF VARIABLE_IS_SET $turn_off_at_night("%cre_resref%") BEGIN
 						WRITE_LONG off + 0x40 0x1ffe0 // 05:30 to 17:29
+					END
+				END
+				GET_OFFSET_ARRAY animations 0xb0 4 0xac 4 0 0 0x4c
+				PHP_EACH animations AS i => off BEGIN
+					READ_ASCII off + 0x0028 animation
+					TO_UPPER animation
+					PATCH_IF VARIABLE_IS_SET $turn_off_anim_at_night("%animation%") BEGIN
+					PATCH_PRINT ~%animation%~
+						WRITE_LONG off+0x34 0x00
 					END
 				END
 			END
@@ -256,7 +269,7 @@ BEGIN
 		END
 	END
 	
-	ACTION_BASH_FOR ~bggo/base/tbcN/ys/%ee%~ ~^.+\.bam$~ BEGIN
+	ACTION_BASH_FOR ~bggo/base/bam~ ~^.+\.bam$~ BEGIN
 		ACTION_IF NOT FILE_EXISTS_IN_GAME ~%BASH_FOR_FILE%~ BEGIN
 			COPY + ~bggo/base/bam/%BASH_FOR_FILE%~ ~bggo/bif/bggom~
 		END
