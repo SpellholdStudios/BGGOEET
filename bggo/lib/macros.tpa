@@ -78,8 +78,14 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_tis BEGIN
 	"BG6100"    => "%Encounter_Road%"
 END
 
+
+
 ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_anim_at_night BEGIN
 		AR1200TN => BG1200
+		AR900WN1 => BG0900
+		AR900WN2 => BG0900
+		AR900WN4 => BG0900
+		AR900WD1 => BG0900
 END
 
 ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN
@@ -118,9 +124,9 @@ BEGIN
 					READ_ASCII off + 0x0028 animation
 					TO_UPPER animation
 					PATCH_IF VARIABLE_IS_SET $turn_off_anim_at_night("%animation%") BEGIN
-					PATCH_PRINT ~%animation%~
-						WRITE_LONG off+0x34 0x00
+							WRITE_LONG off+0x34 0x00
 					END
+					
 				END
 			END
 			BUT_ONLY
@@ -208,7 +214,7 @@ BEGIN
 				END
 				
 				// night lightmap
-				COPY ~bggo/base/bmpN/%are%LN.bmp~ ~bggo/bif/%are2%/%are2%LN.bmp~
+				COPY ~bggo/base/bmpN/%ee%/%are%LN.bmp~ ~bggo/bif/%are2%/%are2%LN.bmp~
 				
 				// searchmap
 				ACTION_IF FILE_EXISTS ~bggo/base/bmpSR/%are%SR.bmp~ BEGIN
@@ -271,7 +277,11 @@ BEGIN
 	
 	ACTION_BASH_FOR ~bggo/base/bam~ ~^.+\.bam$~ BEGIN
 		ACTION_IF NOT FILE_EXISTS_IN_GAME ~%BASH_FOR_FILE%~ BEGIN
-			COPY + ~bggo/base/bam/%BASH_FOR_FILE%~ ~bggo/bif/bggom~
+			ACTION_IF !GAME_IS ~eet~ BEGIN
+				COPY + ~bggo/base/bam/%BASH_FOR_FILE%~ ~bggo/bif/bggom~
+			END ELSE BEGIN
+				COPY + ~bggo/base/bam/%BASH_FOR_FILE%~ ~override~
+			END
 		END
 	END
 
@@ -287,7 +297,8 @@ BEGIN
 
 	LAF REMOVE_DIRECTORY STR_VAR dir_name = ~bggo/bif~ END
 	
-	ACTION_FOR_EACH are IN  ~BG0100~ ~BG0200~ ~BG0300~ ~BG0400~ ~BG0500~ ~BG0600~ ~BG0621~ ~BG0700~ ~BG0800~ ~BG0900~ ~BG1000~ ~BG1100~ ~BG1200~ ~BG1300~ 
+	ACTION_FOR_EACH are IN  
+							~BG0100~ ~BG0200~ ~BG0300~ ~BG0400~ ~BG0500~ ~BG0600~ ~BG0621~ ~BG0700~ ~BG0800~ ~BG0900~ ~BG1000~ ~BG1100~ ~BG1200~ ~BG1300~ 
 							~BG1400~ ~BG1500~ ~BG1600~ ~BG1700~ ~BG1800~ ~BG1900~ ~BG2000~ ~BG2100~ ~BG2200~ ~BG2300~ ~BG2400~ ~BG2600~ ~BG2700~ ~BG2800~ 
 							~BG2900~ ~BG3000~ ~BG3100~ ~BG3200~ ~BG3300~ ~BG3400~ ~BG3500~ ~BG3600~ ~BG3700~ ~BG3800~ ~BG3900~ ~BG4000~ ~BG4100~ ~BG4200~ 
 							~BG4300~ ~BG4400~ ~BG4500~ ~BG4600~ ~BG4700~ ~BG4800~ ~BG4900~ ~BG5000~ ~BG5100~ ~BG5200~ ~BG5300~ ~BG5400~ ~BG5500~ ~BG5600~ 
@@ -550,6 +561,44 @@ END
 		END
 	END
 	BUT_ONLY
+	
+	COPY_EXISTING ~%WyrmsCrossing%.are~ ~override~
+		PATCH_PRINT ~WyrmsCrossing~
+
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x       = 2560
+			fj_loc_y       = 2304
+			fj_flags       = 0b00000000000000000001000100000101	//visible, not illuminated, invisible in dark, covered by actors, shown in combat
+			fj_schedule	   = 0b00000000111000000000000000111111
+		STR_VAR
+			fj_structure_type = animation
+			fj_name           = AR900WN5
+			fj_bam_resref     = AR900WN5
+		END
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x       = 2624
+			fj_loc_y       = 2240
+			fj_flags       = 0b00000000000000000001000100000101	//visible, not illuminated, invisible in dark, covered by actors, shown in combat
+			fj_schedule	   = 0b00000000111000000000000000111111
+		STR_VAR
+			fj_structure_type = animation
+			fj_name           = AR900WN6
+			fj_bam_resref     = AR900WN6
+		END
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x       = 2688
+			fj_loc_y       = 2176
+			fj_flags       = 0b00000000000000000001000100000101	//visible, not illuminated, invisible in dark, covered by actors, shown in combat
+			fj_schedule	   = 0b00000000111000000000000000111111
+		STR_VAR
+			fj_structure_type = animation
+			fj_name           = AR900WN7
+			fj_bam_resref     = AR900WN7
+		END
+
 	
 END
 
