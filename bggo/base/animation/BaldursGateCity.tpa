@@ -1,0 +1,179 @@
+//**************************************************
+// Add some braziers in Baldur's Gate
+//**************************************************
+COPY_EXISTING "%NWBaldursGate%.are" override
+	PATCH_DEFINE_ARRAY ar1xs BEGIN 2853 2246 133  310  386  2165 END
+	PATCH_DEFINE_ARRAY ar1ys BEGIN 499  555  1645 2295 3155 1279 END
+	PATCH_PHP_EACH ar1xs AS index => ar1x BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ar1xs("%index%")
+			fj_loc_y = $ar1ys("%index%")
+			fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Brazier
+			fj_bam_resref = fire_3
+		END
+	END
+
+COPY_EXISTING "%NBaldursGate%.are" override
+	PATCH_DEFINE_ARRAY ar2xs BEGIN 941 3314 END
+	PATCH_DEFINE_ARRAY ar2ys BEGIN 80  207 END
+	PATCH_PHP_EACH ar2xs AS index => ar2x BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ar2xs("%index%")
+			fj_loc_y = $ar2ys("%index%")
+			fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Brazier
+			fj_bam_resref = fire_3
+		END
+	END
+
+COPY_EXISTING "%NBaldursGate%.are" override
+	PATCH_DEFINE_ARRAY ar2bxs BEGIN 2056 2251 END
+	PATCH_DEFINE_ARRAY ar2bys BEGIN 1510 1699 END
+	PATCH_PHP_EACH ar2bxs AS index => ar2bx BEGIN
+		LPF fj_are_structure
+			INT_VAR
+			fj_loc_x = $ar2bxs("%index%")
+			fj_loc_y = $ar2bys("%index%")
+			fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Brazier
+			fj_bam_resref = flame2l
+		END
+	END
+
+COPY_EXISTING "%NEBaldursGate%.are" override
+	PATCH_DEFINE_ARRAY ar3xs BEGIN 247 933 1583 2928 841 1124 1270 1369 1479 1735 END
+	PATCH_DEFINE_ARRAY ar3ys BEGIN 361 428 529 2327 3130 2411 2108 1898 1659 1120 END
+	PATCH_PHP_EACH ar3xs AS index => ar3x BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ar3xs("%index%")
+			fj_loc_y = $ar3ys("%index%")
+			fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Brazier
+			fj_bam_resref = fire_3
+		END
+	END
+
+COPY_EXISTING "%WBaldursGate%.are" override
+	PATCH_DEFINE_ARRAY ar6xs BEGIN 385 383 556 END
+	PATCH_DEFINE_ARRAY ar6ys BEGIN 81  420 2478 END
+	PATCH_PHP_EACH ar6xs AS index => ar6x BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ar6xs("%index%")
+			fj_loc_y = $ar6ys("%index%")
+			fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Brazier
+			fj_bam_resref = fire_3
+		END
+	END
+
+COPY_EXISTING "%CentralBaldursGate%.are" override
+	PATCH_DEFINE_ARRAY ar7xs BEGIN 3186 3637 4121 END
+	PATCH_DEFINE_ARRAY ar7ys BEGIN 1670 1566 1083 END
+	PATCH_PHP_EACH ar7xs AS index => ar7x BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ar7xs("%index%")
+			fj_loc_y = $ar7ys("%index%")
+			fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Brazier
+			fj_bam_resref = fire_3
+		END
+	END
+
+COPY_EXISTING "%EBaldursGate%.are" override
+	PATCH_DEFINE_ARRAY ar8xs BEGIN 3311 3337 3422 853 715 585 168 END
+	PATCH_DEFINE_ARRAY ar8ys BEGIN 2614 2392 295  42  203 446 814 END
+	PATCH_PHP_EACH ar8xs AS index => ar8x BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ar8xs("%index%")
+			fj_loc_y = $ar8ys("%index%")
+			fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Brazier
+			fj_bam_resref = fire_3
+		END
+	END
+
+COPY_EXISTING "%SWBaldursGate%.are" override
+	PATCH_DEFINE_ARRAY ar11xs BEGIN 322  552  241 1309 2145 END
+	PATCH_DEFINE_ARRAY ar11ys BEGIN 1172 1969 824 2810 2912 END
+	PATCH_PHP_EACH ar11xs AS index => ar11x BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ar11xs("%index%")
+			fj_loc_y = $ar11ys("%index%")
+			fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Brazier
+			fj_bam_resref = fire_3
+		END
+	END
+
+//**************************************************
+// Light the wall sconces in the Ducal Palace
+//**************************************************
+COPY_EXISTING "%SWBaldursGate_FlamingFistHQ_L1%.are" override
+	PATCH_DEFINE_ARRAY ar607xs BEGIN 226 305 420 542 671 1170 1260 1346 1438 1546 1492 1406 1316 1291 1209 1405 1533 1654 860 803  713  627  481  566  656 END
+	PATCH_DEFINE_ARRAY ar607ys BEGIN 434 355 397 457 522 459  368  282  217  271  354  440  531  844  927  883  947  1007 970 1049 1141 1226 1155 1069 978 END
+	PATCH_PHP_EACH ar607xs AS index => ar607x BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ar607xs("%index%")
+			fj_loc_y = $ar607ys("%index%")
+			fj_schedule = 0b111111111111111111111111 //Hours All
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Sconce
+			fj_bam_resref = flame2m
+		END
+	END
+
+//**************************************************
+// Light the candles in the Ducal Palace
+//**************************************************
+COPY_EXISTING "%SWBaldursGate_FlamingFistHQ_L1%.are" override
+	PATCH_DEFINE_ARRAY ar607cxs BEGIN 871 896 1031 1003 END
+	PATCH_DEFINE_ARRAY ar607cys BEGIN 769 744 810  836 END
+	PATCH_PHP_EACH ar607cxs AS index => ar607cx BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ar607cxs("%index%")
+			fj_loc_y = $ar607cys("%index%")
+			fj_schedule = 0b111111111111111111111111 //Hours All
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Candle
+			fj_bam_resref = flame2s
+		END
+	END
+	

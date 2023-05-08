@@ -1,0 +1,35 @@
+//**************************************************
+// Add torches to the temple in Candlekeep
+//**************************************************
+
+COPY_EXISTING "%Candlekeep%.are" override
+			  "%Candlekeep_Ch6%.are" override
+	PATCH_DEFINE_ARRAY ccxs BEGIN 3933 4086 4201 4321 END
+	PATCH_DEFINE_ARRAY ccys BEGIN 416  253  323  360 END	
+	PATCH_PHP_EACH ccxs AS index => ccx BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $ccxs("%index%")
+			fj_loc_y = $ccys("%index%")
+			fj_schedule = 0b111111111111111111111111 //Hours always
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = Torch
+			fj_bam_resref = flamblu2
+		END
+	END
+
+COPY_EXISTING ~%Candlekeep_Ch6%.are~ ~override~
+	PATCH_IF SOURCE_SIZE > 0x11b BEGIN // Valid size check
+		WRITE_BYTE 0x48 (THIS BOR 0b01000000) // Toggle extended night flag on whether on or off
+		GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110
+		PHP_EACH actors AS i => off BEGIN
+			READ_ASCII off + 0x80 cre_resref
+			TO_LOWER cre_resref
+			PATCH_IF VARIABLE_IS_SET $turn_off_at_night("%cre_resref%") BEGIN
+				WRITE_LONG off + 0x40 0x1ffe0 // 05:30 to 17:29
+		END
+	END
+END
+
