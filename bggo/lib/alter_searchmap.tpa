@@ -1,0 +1,38 @@
+DEFINE_ACTION_FUNCTION ~ALTER_SEARCHMAP~
+	INT_VAR
+
+	STR_VAR
+	path_to_2da_file = ~~ // full path to the *changes.2da file, e.g. ~mymod/bmp/AR3700SR_changes_ee.2da~
+	areaname = ~~ 		  // area name, e.g. ~AR3700~
+
+	RET
+
+BEGIN
+	COPY ~%path_to_2da_file%~ ~%path_to_2da_file%~
+		READ_2DA_ENTRIES_NOW ~newpixelarray~ 4
+		COUNT_2DA_ROWS 4 ~pixelnumber~
+		
+	COPY_EXISTING ~%areaname%SR.bmp~ ~override~
+		FOR (cnt=0; cnt<pixelnumber; cnt=cnt+1) BEGIN
+			READ_2DA_ENTRY_FORMER ~newpixelarray~ cnt 0 ~offset~
+			READ_BYTE ~offset~ ~oldpixel~
+			READ_2DA_ENTRY_FORMER ~newpixelarray~ cnt 2 ~newpixel~
+			READ_2DA_ENTRY_FORMER ~newpixelarray~ cnt 3 ~byte~
+			SET left_oldpixel =  oldpixel / 16
+			SET right_oldpixel =  oldpixel MODULO 16
+			SET left_newpixel = newpixel / 16
+			SET right_newpixel = newpixel MODULO 16
+			PATCH_IF (~%byte%~ STRING_EQUAL ~b~)=1 BEGIN
+				SET setpixel = newpixel
+				//PATCH_PRINT ~%offset%: oldpixel %oldpixel% - newpixel %newpixel% - setpixel %setpixel%~
+				//PATCH_PRINT ~%offset%: lo %left_oldpixel% ro %right_oldpixel% - ln %left_newpixel% rn %right_newpixel% - setpixel %setpixel%~
+			END
+			PATCH_IF (~%byte%~ STRING_EQUAL ~r~)=1 BEGIN
+				SET setpixel = left_oldpixel * 16 + right_newpixel
+			END
+			PATCH_IF (~%byte%~ STRING_EQUAL ~l~)=1 BEGIN
+				SET setpixel = left_newpixel * 16 + right_oldpixel
+			END
+			WRITE_BYTE offset ~%setpixel%~ 
+		END
+END

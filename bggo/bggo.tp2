@@ -1,13 +1,15 @@
-BACKUP ~bggo/backup~
+BACKUP ~%MOD_FOLDER%/backup~
 AUTHOR ~White Agnus~
 VERSION ~v2.0 beta~
 
 ALWAYS
-	INCLUDE ~bggo/lib/a7_tools.tpa~
-	INCLUDE ~bggo/lib/macros.tpa~
-	INCLUDE ~bggo/lib/eet_cpmvars.tpa~
-	INCLUDE ~bggo/lib/g3_bgt_cpmvars.tpa~
-	INCLUDE ~bggo/lib/g3_tutu_cpmvars.tpa~
+	INCLUDE ~%MOD_FOLDER%/lib/a7_tools.tpa~
+	INCLUDE ~%MOD_FOLDER%/lib/macros.tpa~
+	INCLUDE ~%MOD_FOLDER%/lib/eet_cpmvars.tpa~
+	INCLUDE ~%MOD_FOLDER%/lib/g3_bgt_cpmvars.tpa~
+	INCLUDE ~%MOD_FOLDER%/lib/g3_tutu_cpmvars.tpa~
+	INCLUDE ~%MOD_FOLDER%/lib/g3_bgee_cpmvars.tpa~
+	INCLUDE ~%MOD_FOLDER%/lib/alter_searchmap.tpa~
 
 	ACTION_IF GAME_IS ~eet~ BEGIN
 		OUTER_SPRINT ee ~ee~
@@ -15,15 +17,9 @@ ALWAYS
 
 	ACTION_IF GAME_IS ~bgt tutu_totsc~ BEGIN
 		OUTER_SPRINT ee ~non-ee~
-//		MKDIR ~bggo/base/tbcD/BG0900~
-//		COPY_LARGE ~bggo/base/bridge/tbcD~ ~bggo/base/tbcD/BG0900~
-//		COPY_LARGE ~bggo/base/bridge/tbcN~ ~bggo/base/tbcN/BG0900~
-//		COPY + ~bggo/base/bridge/wedD~ ~bggo/base/wedD~
-//		COPY + ~bggo/base/bridge/wedN~ ~bggo/base/wedN~
-//		COPY + ~bggo/base/bridge/mosN~ ~bggo/base/mosN/%ee%~
-//		COPY + ~bggo/base/bridge/mosD~ ~bggo/base/mosD/%ee%~
-//		COPY + ~bggo/base/bridge/bmpN~ ~bggo/base/bmpN~
 	END
+	
+	// remove bif directory
 	ACTION_IF (DIRECTORY_EXISTS ~%MOD_FOLDER%/bif~) BEGIN
 		ACTION_IF ~%WEIDU_OS%~ STR_EQ ~win32~ BEGIN
 			AT_NOW ~rmdir /s /q %MOD_FOLDER%\bif~ EXACT
@@ -43,11 +39,16 @@ ALWAYS
 	END
 END
 
+
+
 /////////////////////////////
-BEGIN ~BGGO for BGT and EET~
-REQUIRE_PREDICATE GAME_IS ~eet bgt tutu_totsc~ ~This mod is currently for EET and BGT~
+BEGIN ~BGGO for EET, BGT, BGEE and Tutu~
+REQUIRE_PREDICATE GAME_IS ~eet bgt tutu_totsc bgee~ ~This mod is currently for EET, BGT, BGEE and Tutu~
 
 LAF ~INSTALL_MAIN~ END
+
+
+
 
 /////////////////////////////
 BEGIN ~Use extended BG1 areas for TDDz~
