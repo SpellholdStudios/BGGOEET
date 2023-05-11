@@ -214,7 +214,7 @@ BEGIN
 	INCLUDE ~%MOD_FOLDER%/base/animation/WyrmsCrossing.tpa~
 	
 
-	// Light Maps (not the areas)
+	// Light Maps (indoor)
 	ACTION_BASH_FOR ~%MOD_FOLDER%/base/bmpLM~ ~^.+$~ BEGIN
 		ACTION_TO_UPPER BASH_FOR_RES
         ACTION_IF ~%BASH_FOR_EXT%~ STRING_EQUAL_CASE ~bmp~ BEGIN //BMP
