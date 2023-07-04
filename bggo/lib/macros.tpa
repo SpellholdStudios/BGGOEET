@@ -169,7 +169,7 @@ DEFINE_ACTION_FUNCTION ~INSTALL_MAIN~
 BEGIN
 	MKDIR ~%MOD_FOLDER%/bif~
 	
-	ACTION_IF GAME_IS ~bgt tutu_totsc~ BEGIN
+/*	ACTION_IF GAME_IS ~bgt tutu_totsc~ BEGIN
 		LAF HANDLE_TILECONV
 			STR_VAR
 				input_path    = EVAL ~%MOD_FOLDER%/base/tbcN/ys/%ee%~
@@ -193,6 +193,18 @@ BEGIN
 				COPY + ~%MOD_FOLDER%/base/bam/%BASH_FOR_FILE%~ ~override~
 			END
 		//END
+	END
+*/
+	// tis files for water overlays
+	ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcN/ys~ ~^.+\.tis$~ BEGIN
+		ACTION_IF NOT FILE_EXISTS_IN_GAME ~%BASH_FOR_FILE%~ BEGIN
+			COPY + ~%MOD_FOLDER%/base/tbcN/ys/%BASH_FOR_FILE%~ ~override~
+		END
+	END
+	
+	// bam animations
+	ACTION_BASH_FOR ~%MOD_FOLDER%/base/bam~ ~^.+\.bam$~ BEGIN
+		COPY + ~%MOD_FOLDER%/base/bam/%BASH_FOR_FILE%~ ~override~
 	END
 
 	MAKE_BIFF ~goMAIN~ BEGIN ~%MOD_FOLDER%/bif/bggom~ ~^.*$~ END
