@@ -131,7 +131,7 @@ BEGIN
 				END
 				
 				// night lightmap
-				COPY ~%MOD_FOLDER%/base/bmpN/%ee%/%are%LN.bmp~ ~%MOD_FOLDER%/bif/%are2%/%are2%LN.bmp~
+				COPY ~%MOD_FOLDER%/base/bmpLN/%ee%/%are%LN.bmp~ ~%MOD_FOLDER%/bif/%are2%/%are2%LN.bmp~
 				
 				// searchmap
 				ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/bmpSR/%are%SR.2da~ BEGIN
@@ -207,7 +207,7 @@ BEGIN
 		COPY + ~%MOD_FOLDER%/base/bam/%BASH_FOR_FILE%~ ~override~
 	END
 
-	MAKE_BIFF ~goMAIN~ BEGIN ~%MOD_FOLDER%/bif/bggom~ ~^.*$~ END
+//	MAKE_BIFF ~goMAIN~ BEGIN ~%MOD_FOLDER%/bif/bggom~ ~^.*$~ END
 
 	
 	ACTION_FOR_EACH are IN  ~BG0100~ ~BG0200~ ~BG0300~ ~BG0400~ ~BG0500~ ~BG0600~ ~BG0621~ ~BG0700~ ~BG0800~ ~BG0900~ 
