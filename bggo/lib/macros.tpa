@@ -29,23 +29,25 @@ BEGIN
 			// Extended night & creatures sleep at night
 			COPY_EXISTING ~%are2%.are~ ~override~
 			PATCH_IF SOURCE_SIZE > 0x11b BEGIN // Valid size check
-				WRITE_BYTE 0x48 (THIS BOR 0b01000000) // Toggle extended night flag on whether on or off
-				GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110
-				PHP_EACH actors AS i => off BEGIN
-					READ_ASCII off + 0x80 cre_resref
-					TO_LOWER cre_resref
-					PATCH_IF VARIABLE_IS_SET $turn_off_at_night("%cre_resref%") BEGIN
-						WRITE_LONG off + 0x40 0x1ffe0 // 05:30 to 17:29
+					PATCH_IF (((BYTE_AT 0x48) << 7) BAND BIT7) BEGIN // Toggle only outdoor areas
+					WRITE_BYTE 0x48 ((THIS BOR BIT6) BOR BIT1) // Toggle extended night flag (BIT6) and day/night flag (BIT1) on whether on or off
+					GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110
+					PHP_EACH actors AS i => off BEGIN
+						READ_ASCII off + 0x80 cre_resref
+						TO_LOWER cre_resref
+						PATCH_IF VARIABLE_IS_SET $turn_off_at_night("%cre_resref%") BEGIN
+							WRITE_LONG off + 0x40 0x1ffe0 // 05:30 to 17:29
+						END
 					END
-				END
-				GET_OFFSET_ARRAY animations 0xb0 4 0xac 4 0 0 0x4c
-				PHP_EACH animations AS i => off BEGIN
-					READ_ASCII off + 0x0028 animation
-					TO_UPPER animation
-					PATCH_IF VARIABLE_IS_SET $turn_off_anim_at_night("%animation%") BEGIN
-							WRITE_LONG off+0x34 0x00
+					GET_OFFSET_ARRAY animations 0xb0 4 0xac 4 0 0 0x4c
+					PHP_EACH animations AS i => off BEGIN
+						READ_ASCII off + 0x0028 animation
+						TO_UPPER animation
+						PATCH_IF VARIABLE_IS_SET $turn_off_anim_at_night("%animation%") BEGIN
+								WRITE_LONG off+0x34 0x00
+						END
+						
 					END
-					
 				END
 			END
 			BUT_ONLY
@@ -216,7 +218,7 @@ BEGIN
 							~BG3100~ ~BG3200~ ~BG3300~ ~BG3400~ ~BG3500~ ~BG3600~ ~BG3700~ ~BG3800~ ~BG3900~ ~BG4000~ 
 							~BG4100~ ~BG4200~ ~BG4300~ ~BG4400~ ~BG4500~ ~BG4600~ ~BG4700~ ~BG4800~ ~BG4900~ ~BG5000~ 
 							~BG5100~ ~BG5200~ ~BG5300~ ~BG5400~ ~BG5500~ ~BG5600~ ~BG5700~ ~BG5800~ ~BG5900~ ~BG6000~ 
-							~BG6100~ BEGIN
+							~BG6100~ ~BG1008~ ~BG1009~ BEGIN
 		LAF ~INSTALL_TILESETS~ STR_VAR purple = ~~ END 
 	END
 	
@@ -224,6 +226,7 @@ BEGIN
 	INCLUDE ~%MOD_FOLDER%/base/animation/Candlekeep.tpa~
 	INCLUDE ~%MOD_FOLDER%/base/animation/BaldursGateCity.tpa~
 	INCLUDE ~%MOD_FOLDER%/base/animation/WyrmsCrossing.tpa~
+	INCLUDE ~%MOD_FOLDER%/base/animation/IceIsland.tpa~
 	
 
 	// Light Maps (indoor)
