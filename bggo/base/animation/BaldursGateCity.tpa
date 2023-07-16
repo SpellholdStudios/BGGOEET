@@ -158,7 +158,7 @@ COPY_EXISTING "%SWBaldursGate_FlamingFistHQ_L1%.are" override
 	END
 
 //**************************************************
-// Light the candles in the Ducal Palace
+// Light the candles in the Flaming Fist HQ
 //**************************************************
 COPY_EXISTING "%SWBaldursGate_FlamingFistHQ_L1%.are" override
 	PATCH_DEFINE_ARRAY ar607cxs BEGIN 871 896 1031 1003 END
@@ -176,6 +176,28 @@ COPY_EXISTING "%SWBaldursGate_FlamingFistHQ_L1%.are" override
 			fj_bam_resref = flame2s
 		END
 	END
+
+//**************************************************
+// Light the candles Ducal Palace Leaving BG
+//**************************************************
+COPY_EXISTING "BD0101.are" override
+	PATCH_DEFINE_ARRAY x_coord BEGIN 1235 END
+	PATCH_DEFINE_ARRAY y_coord BEGIN  847 END
+	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPF fj_are_structure
+		INT_VAR
+			fj_loc_x = $x_coord("%index%")
+			fj_loc_y = $y_coord("%index%")
+			fj_schedule = 0b111111111111111111111111 //Hours All
+			fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+			STR_VAR
+			fj_structure_type = animation
+			fj_name = flamlav1
+			fj_bam_resref = flamlav1
+		END
+	END
+	CLEAR_ARRAY ~x_coord~
+	CLEAR_ARRAY ~y_coord~
 
 ///////////////////////////////////
 // From Jarl's Adventure Pack 0.8.0

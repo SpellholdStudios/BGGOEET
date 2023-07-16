@@ -214,7 +214,7 @@ BEGIN
 		LAF ~INSTALL_TILESETS~ STR_VAR purple = ~BG1~ END 
 	END
 	
-/*	// BG2+TOB Areas
+	// BG2+TOB Areas
 	ACTION_IF GAME_IS ~eet bgt~ BEGIN
 		ACTION_FOR_EACH are IN  ~AR0042~ BEGIN
 			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~TOB~ END 
@@ -223,12 +223,10 @@ BEGIN
 	
 	// SoD Areas
 	ACTION_IF GAME_INCLUDES ~sod~ BEGIN
-		PRINT ~SoD vorhanden~
-//		ACTION_FOR_EACH are IN  ~AR0042~ BEGIN
-//			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~TOB~ END 
-//		END
+		ACTION_FOR_EACH are IN  ~BD0101~ BEGIN
+			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~SOD~ END 
+		END
 	END
-*/
 	
 	// Add torches, fires, candles and animations
 	INCLUDE ~%MOD_FOLDER%/base/animation/Candlekeep.tpa~
