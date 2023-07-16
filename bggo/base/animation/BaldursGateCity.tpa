@@ -194,6 +194,7 @@ COPY_EXISTING ~%WBaldursGate_RagefastsHouse%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 297 344 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 135 141 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -213,6 +214,7 @@ COPY_EXISTING ~%NBaldursGate_RamazithsTower_L6%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 76  289 228 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 181 270 71  END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -232,6 +234,7 @@ COPY_EXISTING ~%NBaldursGate_RamazithsTower_L2%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 328 254 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 196 325 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -251,6 +254,7 @@ COPY_EXISTING ~%NBaldursGate_RamazithsTower_L3%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 176 265 329 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 193 309 264 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -270,6 +274,7 @@ COPY_EXISTING ~%NBaldursGate_RamazithsTower_L4%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 344 156 162 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 211 272 195 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -289,6 +294,7 @@ COPY_EXISTING ~%NBaldursGate_RamazithsTower_L5%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 333 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 213 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -314,6 +320,7 @@ COPY_EXISTING ~%NBaldursGate_DucalPalace_L1%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 1123 1115 858 863 546 365 375 365 375 323 330 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 782  787  912 924 674 597 597 604 603 204 200 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -335,6 +342,7 @@ COPY_EXISTING ~%NBaldursGate_DucalPalace_L2%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 1143 1135 1037 327 334 725 728 732 803 806 809 884 888 892 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 746  751  612  179 175 361 362 365 414 416 419 473 474 476 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -356,6 +364,7 @@ COPY_EXISTING ~%NBaldursGate_DucalPalace_L3%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 708 332 617 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 560 385 291 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -377,6 +386,7 @@ COPY_EXISTING ~%NBaldursGate_DucalPalace_Cellar%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 653 455 257 551 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 218 358 498 246 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -402,6 +412,7 @@ COPY_EXISTING ~%SWBaldursGate_SevenSuns_L1%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 694 447 457 447 457 331 176 82  92  82  91  174 302 424 407 529 279 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 223 73  73  80  79  163 272 379 379 386 386 390 299 213 374 288 464 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -423,6 +434,7 @@ COPY_EXISTING ~%SWBaldursGate_SevenSuns_L2%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 473 483 472 483 601 684 679 675 205 302 393 470 466 480 475 142 151 141 152 143 147 150 230 233 236 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 44  44  50  50  133 254 253 254 239 170 189 278 283 280 286 283 283 289 289 396 399 402 454 456 459 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -444,6 +456,7 @@ COPY_EXISTING ~%SWBaldursGate_SevenSuns_Cellar%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 208 350 91  260 305 416 518 469 569 518 610 703 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 483 504 321 203 321 243 384 165 235 71  136 202 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -468,6 +481,7 @@ COPY_EXISTING ~%SWBaldursGate_MerchantLeague_L1%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 841 1001 1181 449 619 785 591 195 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 871 746  627  631 494 352 186 503 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -489,6 +503,7 @@ COPY_EXISTING ~%SWBaldursGate_MerchantLeague_L2%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 673 376 707 838 968 884 954 921 952 1262 1298 1311 1319 1409 1418 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 331 555 805 887 947 765 637 614 502 652  669  528  533	 593  598 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")
@@ -510,6 +525,7 @@ COPY_EXISTING ~%SWBaldursGate_MerchantLeague_L3%.ARE~ ~override~
 	PATCH_DEFINE_ARRAY x_coord BEGIN 795 799 803 625 624 624 677 681 684 758 761 762 838 842 846 924 928 931 END
 	PATCH_DEFINE_ARRAY y_coord BEGIN 494 491 490 606 608 612 650 651 654 704 707 709 525 522 521 572 574 577 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
+		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
 		  INT_VAR
 			fj_loc_x = $x_coord("%index%")

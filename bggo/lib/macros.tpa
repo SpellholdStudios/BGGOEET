@@ -15,6 +15,17 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN
 		seagul => 1
 END
 
+DEFINE_PATCH_MACRO ~DELETE_EXISTING_ANIMATIONS~
+BEGIN
+	GET_OFFSET_ARRAY animation_array ARE_V10_ANIMATIONS
+	PATCH_PHP_EACH animation_array AS animation_num => animation_offset BEGIN
+		READ_SHORT animation_offset+0x20 animation_pos_x
+		READ_SHORT animation_offset+0x22 animation_pos_y
+		PATCH_IF ((~%animation_pos_x%~ = $x_coord("%index%")) AND (~%animation_pos_y%~ =  $y_coord("%index%"))) BEGIN
+			LPF fj_are_structure INT_VAR fj_delete_mode = animation_num	STR_VAR fj_structure_type = animation END
+		END
+	END
+END
 
 DEFINE_ACTION_FUNCTION ~INSTALL_TILESETS~
 	STR_VAR
