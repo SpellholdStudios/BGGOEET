@@ -11,7 +11,7 @@ ALWAYS
 	INCLUDE ~%MOD_FOLDER%/lib/g3_bgee_cpmvars.tpa~
 	INCLUDE ~%MOD_FOLDER%/lib/alter_searchmap.tpa~
 
-	ACTION_IF GAME_IS ~eet~ BEGIN
+	ACTION_IF GAME_IS ~eet bgee~ BEGIN
 		OUTER_SPRINT ee ~ee~
 	END
 
@@ -36,6 +36,16 @@ ALWAYS
 		AT_UNINSTALL ~rmdir /s /q %MOD_FOLDER%\bif~ EXACT
 	END ELSE BEGIN //osx, unix
 		AT_UNINSTALL ~rm -rf %MOD_FOLDER%/bif~ EXACT
+	END
+	
+	// remove old goXXXX.bif in data directory
+	// prevents a long loading time, if a bif file should still be present in the data folder during installation
+	// close the program (e.g. Near Infinity, weidu)
+	ACTION_BASH_FOR ~data~ ~^go.*\.bif$~ BEGIN
+		DELETE + ~%BASH_FOR_FILESPEC%~
+		ACTION_IF FILE_EXISTS ~%BASH_FOR_FILESPEC%~ BEGIN
+			FAIL ~The %BASH_FOR_FILESPEC% is still in use by a program. e.g.: Near Infinity or WeiDU~
+		END
 	END
 END
 
