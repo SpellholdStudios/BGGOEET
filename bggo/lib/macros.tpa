@@ -27,6 +27,7 @@ BEGIN
 	END
 END
 
+
 DEFINE_ACTION_FUNCTION ~INSTALL_TILESETS~
 	STR_VAR
 		purple = ~~
@@ -73,49 +74,62 @@ BEGIN
 			BUT_ONLY
 								
 			MKDIR ~%MOD_FOLDER%/bif/%are2%~
-
+			
 			//**************************************************
 			// Day files
 			//**************************************************
+			
+			// day tis v1 or tis v2 file 
 			ACTION_IF (FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tbc~ OR FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tis~) BEGIN
-				
-				// day tis v1 or tis v2 file 
-				ACTION_IF GAME_IS ~bgt tutu_totsc~ BEGIN
+				ACTION_IF GAME_IS ~bgt tutu_totsc bg2~ BEGIN
 					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tbc~ BEGIN
 						LAF HANDLE_TILECONV
 							STR_VAR
 								input_path    = EVAL ~%MOD_FOLDER%/base/tbcD/%are%/%ee%~
 								output_path	  = EVAL ~%MOD_FOLDER%/bif/%are2%~
 						END
-						ACTION_IF (~%purple%~ STRING_EQUAL ~TOB~)=0 BEGIN 
+						ACTION_IF (~%are%~ STR_EQ ~%are2%~)=0 BEGIN 
 							MOVE + ~%MOD_FOLDER%/bif/%are2%/%are%.tis~ ~%MOD_FOLDER%/bif/%are2%/%are2%.tis~
 						END
 					END
 				END
-				ACTION_IF GAME_IS ~eet bgee~ BEGIN
+				ACTION_IF GAME_IS ~eet bgee bg2ee~ BEGIN
 					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tis~ BEGIN
-						COPY + ~%MOD_FOLDER%/base/tbcD/%are%/%ee%~ ~%MOD_FOLDER%/bif/%are2%~
+						COPY + ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tis~ ~%MOD_FOLDER%/bif/%are2%/%are2%.tis~
+						ACTION_IF (GAME_IS ~bgee~ AND (~%purple%~ STRING_EQUAL ~BG1~)) BEGIN
+							ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/~ ~.*\.pvrz$~ BEGIN
+								OUTER_PATCH_SAVE newname ~%BASH_FOR_RES%~ BEGIN
+									REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~B~ ~A~
+								END
+								COPY ~%BASH_FOR_FILESPEC%~ ~%MOD_FOLDER%/bif/%are2%/%newname%.pvrz~
+							END
+						END ELSE BEGIN
+							ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/~ ~.*\.pvrz$~ BEGIN
+								COPY ~%BASH_FOR_FILESPEC%~ ~%MOD_FOLDER%/bif/%are2%~
+							END
+						END
 					END
 				END
-				
-				// day mos file
-				//COPY ~%MOD_FOLDER%/base/mosD/%ee%/%are%.mos~ ~%MOD_FOLDER%/bif/%are2%/%are2%.mos~
+			END
+			
+			
+			// day mos file
+			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/mbcD/%ee%/%are%/%are%.mbc~ BEGIN			
 				LAF HANDLE_TILECONV
 					STR_VAR
 						input_path = EVAL ~%MOD_FOLDER%/base/mbcD/%ee%/%are%~
 						output_path	  = EVAL ~%MOD_FOLDER%/bif/%are2%~
 				END
-				ACTION_IF !GAME_IS ~eet~ BEGIN
-					ACTION_IF (~%purple%~ STRING_EQUAL ~TOB~)=0 BEGIN 
-						MOVE + ~%MOD_FOLDER%/bif/%are2%/%are%.mos~ ~%MOD_FOLDER%/bif/%are2%/%are2%.mos~
-					END
+				ACTION_IF GAME_IS ~bgee bgt tutu~ AND (~%are%~ STR_EQ ~%are2%~)=0 BEGIN
+					MOVE + ~%MOD_FOLDER%/bif/%are2%/%are%.mos~ ~%MOD_FOLDER%/bif/%are2%/%are2%.mos~
 				END
-				
-				// day lightmap
-				COPY_EXISTING ~%are2%LM.bmp~ ~%MOD_FOLDER%/bif/%are2%~
-			
+			END ELSE BEGIN
+				COPY_EXISTING ~%are2%.mos~ ~%MOD_FOLDER%/bif/%are2%~
 			END
-					
+			
+			// day lightmap
+			COPY_EXISTING ~%are2%LM.bmp~ ~%MOD_FOLDER%/bif/%are2%~
+			
 			// day wed file
 			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/wedD/%ee%/%are%.wed~ BEGIN
 				COPY ~%MOD_FOLDER%/base/wedD/%ee%/%are%.wed~ ~%MOD_FOLDER%/bif/%are2%/%are2%.wed~
@@ -127,56 +141,72 @@ BEGIN
 			//**************************************************
 			// Night files
 			//**************************************************		
+			
+			// night tis v1 or tis v2
 			ACTION_IF (FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tbc~ OR FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~) BEGIN
-				
-				// night tis v1 or tis v2
-				ACTION_IF GAME_IS ~bgt tutu_totsc~ BEGIN
+				ACTION_IF GAME_IS ~bgt tutu_totsc tob bg2~ BEGIN
 					LAF HANDLE_TILECONV
 						STR_VAR
 							input_path    = EVAL ~%MOD_FOLDER%/base/tbcN/%are%/%ee%~
 							output_path	  = EVAL ~%MOD_FOLDER%/bif/%are2%~
 					END
-					ACTION_IF (~%purple%~ STRING_EQUAL ~TOB~)=0 BEGIN 
+					ACTION_IF (~%are%~ STR_EQ ~%are2%~)=0 BEGIN 
 						MOVE + ~%MOD_FOLDER%/bif/%are2%/%are%N.tis~ ~%MOD_FOLDER%/bif/%are2%/%are2%N.tis~
 					END
 				END
-				ACTION_IF GAME_IS ~eet bgee~ BEGIN
+				ACTION_IF GAME_IS ~eet bgee bg2ee~ BEGIN
 					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~ BEGIN
-						COPY + ~%MOD_FOLDER%/base/tbcN/%are%/%ee%~ ~%MOD_FOLDER%/bif/%are2%~
+						COPY + ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~ ~%MOD_FOLDER%/bif/%are2%/%are2%N.tis~
+						ACTION_IF (GAME_IS ~bgee~ AND (~%purple%~ STRING_EQUAL ~BG1~)) BEGIN
+							ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/~ ~.*\.pvrz$~ BEGIN
+								OUTER_PATCH_SAVE newname ~%BASH_FOR_RES%~ BEGIN
+									REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~B~ ~A~
+								END
+								COPY ~%BASH_FOR_FILESPEC%~ ~%MOD_FOLDER%/bif/%are2%/%newname%.pvrz~
+							END
+						END ELSE BEGIN
+							ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/~ ~.*\.pvrz$~ BEGIN
+								COPY ~%BASH_FOR_FILESPEC%~ ~%MOD_FOLDER%/bif/%are2%~
+							END
+						END
 					END
 				END
-				
-				// night mos
-				//COPY ~%MOD_FOLDER%/base/mosN/%ee%/%are%N.mos~ ~%MOD_FOLDER%/bif/%are2%/%are2%N.mos~
+			END
+			
+			// night mos
+			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/mbcN/%ee%/%are%N/%are%N.mbc~ BEGIN						
 				LAF HANDLE_TILECONV
 					STR_VAR
 						input_path    = EVAL ~%MOD_FOLDER%/base/mbcN/%ee%/%are%N~
 						output_path	  = EVAL ~%MOD_FOLDER%/bif/%are2%~
 				END
-				ACTION_IF !GAME_IS ~eet~ BEGIN
-					ACTION_IF (~%purple%~ STRING_EQUAL ~TOB~)=0 BEGIN 
-						MOVE + ~%MOD_FOLDER%/bif/%are2%/%are%N.mos~ ~%MOD_FOLDER%/bif/%are2%/%are2%N.mos~
-					END
+				ACTION_IF GAME_IS ~bgee bgt tutu~ AND (~%are%~ STR_EQ ~%are2%~)=0 BEGIN
+					MOVE + ~%MOD_FOLDER%/bif/%are2%/%are%N.mos~ ~%MOD_FOLDER%/bif/%are2%/%are2%N.mos~
 				END
-				
-				// night lightmap
-				COPY ~%MOD_FOLDER%/base/bmpLN/%ee%/%are%LN.bmp~ ~%MOD_FOLDER%/bif/%are2%/%are2%LN.bmp~
-				
-				// searchmap
-				ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/bmpSR/%are%SR.2da~ BEGIN
-					LAF ALTER_SEARCHMAP
-						STR_VAR
-							path_to_2da_file = EVAL ~%MOD_FOLDER%/base/bmpSR/%are%SR.2da~ // full path to the *changes.2da file, e.g. ~mymod/bam/AR3700SR_changes_ee.2da~
-							areaname 		 = EVAL ~%are2%~			                  // area name, e.g. ~AR3700~
-					END
-				END
-				COPY_EXISTING ~%are2%SR.bmp~ ~%MOD_FOLDER%/bif/%are2%~
-								
-				// heightmap
-				COPY_EXISTING ~%are2%HT.bmp~ ~%MOD_FOLDER%/bif/%are2%~
-			
 			END
 			
+			// night lightmap
+			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/bmpLN/%ee%/%are%LN.bmp~ BEGIN		
+				COPY ~%MOD_FOLDER%/base/bmpLN/%ee%/%are%LN.bmp~ ~%MOD_FOLDER%/bif/%are2%/%are2%LN.bmp~
+			END ELSE BEGIN
+				ACTION_IF FILE_EXISTS_IN_GAME ~%are2%LN.bmp~ BEGIN
+					COPY_EXISTING ~%are2%LN.bmp~ ~%MOD_FOLDER%/bif/%are2%~
+				END
+			END 
+			
+			// searchmap
+			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/bmpSR/%are%SR.2da~ BEGIN
+				LAF ALTER_SEARCHMAP
+					STR_VAR
+						path_to_2da_file = EVAL ~%MOD_FOLDER%/base/bmpSR/%are%SR.2da~ // full path to the *changes.2da file, e.g. ~mymod/bam/AR3700SR_changes_ee.2da~
+						areaname 		 = EVAL ~%are2%~			                  // area name, e.g. ~AR3700~
+				END
+			END
+			COPY_EXISTING ~%are2%SR.bmp~ ~%MOD_FOLDER%/bif/%are2%~
+								
+			// heightmap
+			COPY_EXISTING ~%are2%HT.bmp~ ~%MOD_FOLDER%/bif/%are2%~
+				
 			// night wed
 			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/wedN/%ee%/%are%N.wed~ BEGIN
 				COPY ~%MOD_FOLDER%/base/wedN/%ee%/%are%N.wed~ ~%MOD_FOLDER%/bif/%are2%/%are2%N.wed~
@@ -189,7 +219,7 @@ BEGIN
 			END
 			
 			MAKE_BIFF ~go%are2%~ BEGIN ~%MOD_FOLDER%/bif/%are2%~ ~^.*$~ END
-
+			
 		END
 	END
 END
@@ -212,18 +242,20 @@ BEGIN
 
 	//	BG1 Areas
 	PRINT ~BG1 Areas~
-	ACTION_FOR_EACH are IN  ~BG0100~ ~BG0200~ ~BG0300~ ~BG0400~ ~BG0500~ ~BG0600~ ~BG0621~ ~BG0700~ ~BG0800~ ~BG0900~ 
-							~BG1000~ ~BG1008~ ~BG1009~ ~BG1100~ ~BG1200~ ~BG1300~ ~BG1400~ ~BG1500~ ~BG1600~ ~BG1700~ 
-							~BG1800~ ~BG1900~ ~BG2000~ ~BG2100~ ~BG2200~ ~BG2300~ ~BG2400~ ~BG2600~ ~BG2700~ ~BG2800~ 
-							~BG2900~ ~BG3000~ ~BG3100~ ~BG3200~ ~BG3300~ ~BG3400~ ~BG3500~ ~BG3600~ ~BG3700~ ~BG3800~ 
-							~BG3900~ ~BG4000~ ~BG4100~ ~BG4200~ ~BG4300~ ~BG4400~ ~BG4500~ ~BG4600~ ~BG4700~ ~BG4800~ 
-							~BG4900~ ~BG5000~ ~BG5100~ ~BG5200~ ~BG5300~ ~BG5400~ ~BG5500~ ~BG5600~ ~BG5700~ ~BG5800~ 
-							~BG5900~ ~BG6000~ ~BG6100~ BEGIN
-		LAF ~INSTALL_TILESETS~ STR_VAR purple = ~BG1~ END 
+	ACTION_IF GAME_IS ~eet bgee bgt tutu~ BEGIN
+		ACTION_FOR_EACH are IN  ~BG0100~ ~BG0200~ ~BG0300~ ~BG0400~ ~BG0500~ ~BG0600~ ~BG0621~ ~BG0700~ ~BG0800~ ~BG0900~ 
+								~BG1000~ ~BG1008~ ~BG1009~ ~BG1100~ ~BG1200~ ~BG1300~ ~BG1400~ ~BG1500~ ~BG1600~ ~BG1700~ 
+								~BG1800~ ~BG1900~ ~BG2000~ ~BG2100~ ~BG2200~ ~BG2300~ ~BG2400~ ~BG2600~ ~BG2700~ ~BG2800~ 
+								~BG2900~ ~BG3000~ ~BG3100~ ~BG3200~ ~BG3300~ ~BG3400~ ~BG3500~ ~BG3600~ ~BG3700~ ~BG3800~
+								~BG3900~ ~BG4000~ ~BG4100~ ~BG4200~ ~BG4300~ ~BG4400~ ~BG4500~ ~BG4600~ ~BG4700~ ~BG4800~ 
+								~BG4900~ ~BG5000~ ~BG5100~ ~BG5200~ ~BG5300~ ~BG5400~ ~BG5500~ ~BG5600~ ~BG5700~ ~BG5800~ 
+								~BG5900~ ~BG6000~ ~BG6100~ BEGIN
+			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~BG1~ END 
+		END
 	END
 	
 	// BG2+TOB Areas
-	ACTION_IF GAME_IS ~eet bgt~ BEGIN
+	ACTION_IF GAME_IS ~eet bgt bg2ee~ BEGIN
 		PRINT ~BG2 + ToB Areas~
 		ACTION_FOR_EACH are IN  ~AR0042~ ~AR0043~ ~AR0044~ BEGIN
 			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~TOB~ END 

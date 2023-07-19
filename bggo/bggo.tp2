@@ -11,11 +11,11 @@ ALWAYS
 	INCLUDE ~%MOD_FOLDER%/lib/g3_bgee_cpmvars.tpa~
 	INCLUDE ~%MOD_FOLDER%/lib/alter_searchmap.tpa~
 
-	ACTION_IF GAME_IS ~eet bgee~ BEGIN
+	ACTION_IF GAME_IS ~eet bgee bg2ee~ BEGIN
 		OUTER_SPRINT ee ~ee~
 	END
 
-	ACTION_IF GAME_IS ~bgt tutu_totsc~ BEGIN
+	ACTION_IF GAME_IS ~bgt tutu_totsc bg2 tob~ BEGIN
 		OUTER_SPRINT ee ~non-ee~
 	END
 	
