@@ -15,7 +15,7 @@ ALWAYS
 		OUTER_SPRINT ee ~ee~
 	END
 
-	ACTION_IF GAME_IS ~bgt tutu_totsc bg2 tob~ BEGIN
+	ACTION_IF GAME_IS ~bgt tutu_totsc tob~ BEGIN
 		OUTER_SPRINT ee ~non-ee~
 	END
 	

@@ -81,7 +81,7 @@ BEGIN
 			
 			// day tis v1 or tis v2 file 
 			ACTION_IF (FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tbc~ OR FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tis~) BEGIN
-				ACTION_IF GAME_IS ~bgt tutu_totsc bg2~ BEGIN
+				ACTION_IF GAME_IS ~bgt tutu_totsc tob~ BEGIN
 					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tbc~ BEGIN
 						LAF HANDLE_TILECONV
 							STR_VAR
@@ -120,7 +120,7 @@ BEGIN
 						input_path = EVAL ~%MOD_FOLDER%/base/mbcD/%ee%/%are%~
 						output_path	  = EVAL ~%MOD_FOLDER%/bif/%are2%~
 				END
-				ACTION_IF GAME_IS ~bgee bgt tutu~ AND (~%are%~ STR_EQ ~%are2%~)=0 BEGIN
+				ACTION_IF GAME_IS ~bgee bgt tutu_totsc~ AND (~%are%~ STR_EQ ~%are2%~)=0 BEGIN
 					MOVE + ~%MOD_FOLDER%/bif/%are2%/%are%.mos~ ~%MOD_FOLDER%/bif/%are2%/%are2%.mos~
 				END
 			END ELSE BEGIN
@@ -144,7 +144,7 @@ BEGIN
 			
 			// night tis v1 or tis v2
 			ACTION_IF (FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tbc~ OR FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~) BEGIN
-				ACTION_IF GAME_IS ~bgt tutu_totsc tob bg2~ BEGIN
+				ACTION_IF GAME_IS ~bgt tutu_totsc tob tob~ BEGIN
 					LAF HANDLE_TILECONV
 						STR_VAR
 							input_path    = EVAL ~%MOD_FOLDER%/base/tbcN/%are%/%ee%~
@@ -180,7 +180,7 @@ BEGIN
 						input_path    = EVAL ~%MOD_FOLDER%/base/mbcN/%ee%/%are%N~
 						output_path	  = EVAL ~%MOD_FOLDER%/bif/%are2%~
 				END
-				ACTION_IF GAME_IS ~bgee bgt tutu~ AND (~%are%~ STR_EQ ~%are2%~)=0 BEGIN
+				ACTION_IF GAME_IS ~bgee bgt tutu_totsc~ AND (~%are%~ STR_EQ ~%are2%~)=0 BEGIN
 					MOVE + ~%MOD_FOLDER%/bif/%are2%/%are%N.mos~ ~%MOD_FOLDER%/bif/%are2%/%are2%N.mos~
 				END
 			END
@@ -242,7 +242,7 @@ BEGIN
 
 	//	BG1 Areas
 	PRINT ~BG1 Areas~
-	ACTION_IF GAME_IS ~eet bgee bgt tutu~ BEGIN
+	ACTION_IF GAME_IS ~eet bgee bgt tutu_totsc~ BEGIN
 		ACTION_FOR_EACH are IN  ~BG0100~ ~BG0200~ ~BG0300~ ~BG0400~ ~BG0500~ ~BG0600~ ~BG0621~ ~BG0700~ ~BG0800~ ~BG0900~ 
 								~BG1000~ ~BG1008~ ~BG1009~ ~BG1100~ ~BG1200~ ~BG1300~ ~BG1400~ ~BG1500~ ~BG1600~ ~BG1700~ 
 								~BG1800~ ~BG1900~ ~BG2000~ ~BG2100~ ~BG2200~ ~BG2300~ ~BG2400~ ~BG2600~ ~BG2700~ ~BG2800~ 
@@ -255,9 +255,9 @@ BEGIN
 	END
 	
 	// BG2+TOB Areas
-	ACTION_IF GAME_IS ~eet bgt bg2ee~ BEGIN
+	ACTION_IF GAME_IS ~eet bgt bg2ee tob~ BEGIN
 		PRINT ~BG2 + ToB Areas~
-		ACTION_FOR_EACH are IN  ~AR0042~ ~AR0043~ ~AR0044~ BEGIN
+		ACTION_FOR_EACH are IN  ~AR0042~ ~AR0043~ ~AR0044~ ~AR1100~ BEGIN
 			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~TOB~ END 
 		END
 	END
