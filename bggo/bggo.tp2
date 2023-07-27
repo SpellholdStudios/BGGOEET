@@ -53,7 +53,7 @@ END
 
 /////////////////////////////
 BEGIN ~BGGO for EET, BGT, BGEE and Tutu~
-REQUIRE_PREDICATE GAME_IS ~eet bgt tutu_totsc bgee~ ~This mod is currently for EET, BGT, BGEE and Tutu~
+REQUIRE_PREDICATE GAME_IS ~eet bgt tutu_totsc bgee bg2ee tob ~ ~This mod is currently for EET, BGT, BGEE and Tutu~
 
 LAF ~INSTALL_MAIN~ END
 
