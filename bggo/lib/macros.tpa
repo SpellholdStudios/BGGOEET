@@ -128,7 +128,11 @@ BEGIN
 			END
 			
 			// day lightmap
-			COPY_EXISTING ~%are2%LM.bmp~ ~%MOD_FOLDER%/bif/%are2%~
+			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/bmpLM/%are2%LM.bmp~ BEGIN
+				COPY ~%MOD_FOLDER%/base/bmpLM/%are2%LM.bmp~ ~%MOD_FOLDER%/bif/%are2%~
+			END ELSE BEGIN
+				COPY_EXISTING ~%are2%LM.bmp~ ~%MOD_FOLDER%/bif/%are2%~
+			END
 			
 			// day wed file
 			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/wedD/%ee%/%are%.wed~ BEGIN
@@ -144,7 +148,7 @@ BEGIN
 			
 			// night tis v1 or tis v2
 			ACTION_IF (FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tbc~ OR FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~) BEGIN
-				ACTION_IF GAME_IS ~bgt tutu_totsc tob tob~ BEGIN
+				ACTION_IF GAME_IS ~bgt tutu_totsc tob~ BEGIN
 					LAF HANDLE_TILECONV
 						STR_VAR
 							input_path    = EVAL ~%MOD_FOLDER%/base/tbcN/%are%/%ee%~
@@ -200,9 +204,15 @@ BEGIN
 					STR_VAR
 						path_to_2da_file = EVAL ~%MOD_FOLDER%/base/bmpSR/%are%SR.2da~ // full path to the *changes.2da file, e.g. ~mymod/bam/AR3700SR_changes_ee.2da~
 						areaname 		 = EVAL ~%are2%~			                  // area name, e.g. ~AR3700~
+						destination		 = EVAL ~%MOD_FOLDER%/bif/%are2%~
+				END
+			END ELSE BEGIN
+				ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/bmpSR/%are%SR.bmp~ BEGIN
+					COPY ~%MOD_FOLDER%/base/bmpSR/%are%SR.bmp~ ~%MOD_FOLDER%/bif/%are2%/%are2%SR.bmp~
+				END ELSE BEGIN
+					COPY_EXISTING ~%are2%SR.bmp~ ~%MOD_FOLDER%/bif/%are2%~
 				END
 			END
-			COPY_EXISTING ~%are2%SR.bmp~ ~%MOD_FOLDER%/bif/%are2%~
 								
 			// heightmap
 			COPY_EXISTING ~%are2%HT.bmp~ ~%MOD_FOLDER%/bif/%are2%~
@@ -257,7 +267,7 @@ BEGIN
 	// BG2+TOB Areas
 	ACTION_IF GAME_IS ~eet bgt bg2ee tob~ BEGIN
 		PRINT ~BG2 + ToB Areas~
-		ACTION_FOR_EACH are IN  ~AR0042~ ~AR0043~ ~AR0044~ ~AR1100~ BEGIN
+		ACTION_FOR_EACH are IN  ~AR0042~ ~AR0043~ ~AR0044~ ~AR1100~ ~AR1102~ BEGIN
 			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~TOB~ END 
 		END
 	END
