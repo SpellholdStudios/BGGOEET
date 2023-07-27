@@ -204,7 +204,7 @@ BEGIN
 					STR_VAR
 						path_to_2da_file = EVAL ~%MOD_FOLDER%/base/bmpSR/%are%SR.2da~ // full path to the *changes.2da file, e.g. ~mymod/bam/AR3700SR_changes_ee.2da~
 						areaname 		 = EVAL ~%are2%~			                  // area name, e.g. ~AR3700~
-						destination		 = EVAL ~%MOD_FOLDER%/bif/%are2%~
+						output			 = EVAL ~%MOD_FOLDER%/bif/%are2%~			  // output directory
 				END
 			END ELSE BEGIN
 				ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/bmpSR/%are%SR.bmp~ BEGIN
