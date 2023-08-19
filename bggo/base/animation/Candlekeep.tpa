@@ -7,7 +7,7 @@ COPY_EXISTING "%Candlekeep%.are" override
 	
 	//Add candles and torches
 	PATCH_DEFINE_ARRAY x_coord BEGIN 3933 4086 4201 4321 END
-	PATCH_DEFINE_ARRAY y_coord BEGIN 416  253  323  360 END	
+	PATCH_DEFINE_ARRAY y_coord BEGIN 416  253  323  360 END
 	PATCH_PHP_EACH x_coord AS index => x BEGIN
 		LPM ~DELETE_EXISTING_ANIMATIONS~
 		LPF fj_are_structure
@@ -22,8 +22,6 @@ COPY_EXISTING "%Candlekeep%.are" override
 			fj_bam_resref = FLAME2S
 		END
 	END
-	CLEAR_ARRAY ~x_coord~
-	CLEAR_ARRAY ~y_coord~
 BUT_ONLY
 
 COPY_EXISTING ~%Candlekeep_Ch6%.are~ ~override~

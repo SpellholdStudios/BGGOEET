@@ -4,7 +4,8 @@ DEFINE_ACTION_FUNCTION ~ALTER_SEARCHMAP~
 	STR_VAR
 	path_to_2da_file = ~~ // full path to the *changes.2da file, e.g. ~mymod/bmp/AR3700SR_changes_ee.2da~
 	areaname = ~~ 		  // area name, e.g. ~AR3700~
-	output = ~override~   // output directory
+	output_path = ~override~
+	type = ~SR~ // SR searchmap; HT heightmap; LM LN lightmap
 
 	RET
 
@@ -13,7 +14,7 @@ BEGIN
 		READ_2DA_ENTRIES_NOW ~newpixelarray~ 4
 		COUNT_2DA_ROWS 4 ~pixelnumber~
 		
-	COPY_EXISTING ~%areaname%SR.bmp~ ~%output%~
+	COPY_EXISTING ~%areaname%%type%.bmp~ ~%output_path%~
 		FOR (cnt=0; cnt<pixelnumber; cnt=cnt+1) BEGIN
 			READ_2DA_ENTRY_FORMER ~newpixelarray~ cnt 0 ~offset~
 			READ_BYTE ~offset~ ~oldpixel~

@@ -41,19 +41,24 @@ ALWAYS
 	// remove old goXXXX.bif in data directory
 	// prevents a long loading time, if a bif file should still be present in the data folder during installation
 	// close the program (e.g. Near Infinity, weidu)
-	ACTION_BASH_FOR ~data~ ~^go.*\.bif$~ BEGIN
-		DELETE + ~%BASH_FOR_FILESPEC%~
-		ACTION_IF FILE_EXISTS ~%BASH_FOR_FILESPEC%~ BEGIN
-			FAIL ~The %BASH_FOR_FILESPEC% is still in use by a program. e.g.: Near Infinity or WeiDU~
+	ACTION_TRY
+		ACTION_BASH_FOR ~data~ ~^go.*\.bif$~ BEGIN
+			DELETE + ~%BASH_FOR_FILESPEC%~
 		END
+	WITH
+		DEFAULT
+			PRINT ~**********************************************************************************~
+			PRINT ~The %BASH_FOR_FILESPEC% is still in use by a program. e.g.: Near Infinity or WeiDU%LNL%Please close the programs and try again~
+			PRINT ~**********************************************************************************~
+			ACTION_RERAISE
 	END
 END
 
 
 
 /////////////////////////////
-BEGIN ~BGGO for EET, BGT, BGEE and Tutu~
-REQUIRE_PREDICATE GAME_IS ~eet bgt tutu_totsc bgee bg2ee tob ~ ~This mod is currently for EET, BGT, BGEE and Tutu~
+BEGIN ~BGGO for EET, BGT, BGEE, BG2EE, ToB and Tutu~
+REQUIRE_PREDICATE GAME_IS ~eet bgt tutu_totsc bgee bg2ee tob ~ ~This mod is currently for EET, BGT, BGEE, BG2EE, ToB and Tutu~
 
 LAF ~INSTALL_MAIN~ END
 

@@ -1,5 +1,10 @@
-DEFINE_PATCH_MACRO ~patchGavin~ BEGIN
-sz = SOURCE_SIZE
+///////////////////////
+// Gavin BG1
+///////////////////////
+
+	PATCH_IF (FILE_EXISTS_IN_GAME ~GavinNPC.B~) OR MOD_IS_INSTALLED "gavin.tp2" "0" BEGIN
+		PATCH_PRINT ~GavinNPC detected~
+		sz = SOURCE_SIZE
 		PATCH_IF sz > 0x48 BEGIN
 			READ_LONG 0x8 ovr_count //Read initial offsets
 			READ_LONG 0xc door_count
@@ -82,4 +87,4 @@ sz = SOURCE_SIZE
 			WRITE_LONG (sec_hdr + 0xc) (wall_offset + 0x1a)
 			WRITE_LONG (sec_hdr + 0x10) (poly_table + 0x1a + 0x24)
 		END
-END
+	END

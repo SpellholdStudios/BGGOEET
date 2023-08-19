@@ -25,8 +25,6 @@ COPY_EXISTING ~%FriendlyArmInn_L1%.ARE~ ~override~
 			fj_bam_resref = FLAME2S
 		END
 	END
-	CLEAR_ARRAY ~x_coord~
-	CLEAR_ARRAY ~y_coord~
 BUT_ONLY
 
 COPY_EXISTING ~%FriendlyArmInn_L2%.ARE~ ~override~
@@ -55,8 +53,6 @@ COPY_EXISTING ~%FriendlyArmInn_L2%.ARE~ ~override~
 			fj_bam_resref = FLAME2S
 		END
 	END
-	CLEAR_ARRAY ~x_coord~
-	CLEAR_ARRAY ~y_coord~
 BUT_ONLY
 
 COPY_EXISTING ~%FriendlyArmInn_L3%.ARE~ ~override~
@@ -85,6 +81,4 @@ COPY_EXISTING ~%FriendlyArmInn_L3%.ARE~ ~override~
 			fj_bam_resref = FLAME2S
 		END
 	END
-	CLEAR_ARRAY ~x_coord~
-	CLEAR_ARRAY ~y_coord~
 BUT_ONLY

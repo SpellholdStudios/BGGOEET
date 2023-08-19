@@ -20,6 +20,4 @@ COPY_EXISTING ~%IceIslandMaze_L1%.ARE~ ~override~
 			fj_bam_resref = YSFLBLU2
 		END
 	END
-	CLEAR_ARRAY ~x_coord~
-	CLEAR_ARRAY ~y_coord~
 BUT_ONLY
