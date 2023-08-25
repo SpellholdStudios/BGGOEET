@@ -333,7 +333,7 @@ BEGIN
 	ACTION_IF GAME_IS ~eet bgt bg2ee tob~ BEGIN
 		PRINT ~BG2 + ToB Areas~
 		ACTION_FOR_EACH are IN  // outdoor
-								~AR0042~ ~AR0043~ ~AR0044~ ~AR1100~ ~AR1200~ ~AR1300~ ~AR1304~ ~AR1500~
+								~AR0042~ ~AR0043~ ~AR0044~ ~AR1100~ ~AR1200~ ~AR1300~ ~AR1304~ ~AR1500~ ~AR1600~
 								// indoor
 								~AR1102~ 
 								BEGIN
