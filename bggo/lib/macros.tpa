@@ -361,22 +361,10 @@ BEGIN
 	END
 	
 	// Add torches, fires, candles and animations
-	ACTION_IF GAME_IS ~eet bgee bgt tutu_totsc~ BEGIN
-		INCLUDE ~%MOD_FOLDER%/base/animation/Candlekeep.tpa~
-		INCLUDE ~%MOD_FOLDER%/base/animation/BaldursGateCity.tpa~
-		INCLUDE ~%MOD_FOLDER%/base/animation/WyrmsCrossing.tpa~
-		INCLUDE ~%MOD_FOLDER%/base/animation/IceIsland.tpa~
-		INCLUDE ~%MOD_FOLDER%/base/animation/FriendlyArmInn.tpa~
+	ACTION_BASH_FOR ~%MOD_FOLDER%/base/animation~  ~^.+\.tpa$~ BEGIN
+		INCLUDE ~%MOD_FOLDER%/base/animation/%BASH_FOR_FILE%~
 	END
-
-	ACTION_IF GAME_IS ~eet bgt bg2ee tob~ BEGIN
-		// INCLUDE ~%MOD_FOLDER%/base/animation/xxx.tpa~
-	END
-
-	ACTION_IF GAME_INCLUDES ~sod~ BEGIN
-		// INCLUDE ~%MOD_FOLDER%/base/animation/xxx.tpa~
-	END
-	
+		
 	MAKE_BIFF ~goMAIN~ BEGIN ~%MOD_FOLDER%/bif/goMAIN~ ~^.*$~ END
 END
 
