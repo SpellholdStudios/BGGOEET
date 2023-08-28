@@ -28,6 +28,19 @@ BEGIN
 	END
 END
 
+DEFINE_PATCH_MACRO ~RENAME_OVL_NAMES~ // replace ovl tis names automatically
+BEGIN
+	READ_LONG 0x08 ovl_num
+	READ_LONG 0x10 ovl_off
+	FOR (cnt=0; cnt<ovl_num; cnt+=1) BEGIN
+		READ_ASCII ovl_off+cnt*0x18+0x04 tis_name
+		INNER_PATCH_SAVE new_tis_name ~%tis_name%~ BEGIN
+			REPLACE_TEXTUALLY EXACT_MATCH ~WT~ ~YS~
+		END
+		WRITE_ASCIIE ovl_off+cnt*0x18+0x04 ~%new_tis_name%~
+	END
+END
+
 DEFINE_PATCH_MACRO ~DELETE_EXISTING_ANIMATIONS~ // torches, candles ...
 BEGIN
 	GET_OFFSET_ARRAY animation_array ARE_V10_ANIMATIONS
@@ -224,10 +237,12 @@ BEGIN
 				END
 				MOVE + ~%temp%/%are%N.mos~ ~%biffdir%/%are2%N.mos~
 			END ELSE BEGIN
-				ACTION_IF FILE_EXISTS_IN_GAME ~%are2%N.mos~ AND (area_biff = 1) AND (night = 1) BEGIN
-					COPY_EXISTING + ~%are2%N.mos~ ~%biffdir%~
-				END ELSE BEGIN
-					COPY_EXISTING + ~%are2%.mos~ ~%biffdir%/%are2%N.mos~
+				ACTION_IF (area_biff = 1) AND (night = 1) BEGIN
+					ACTION_IF FILE_EXISTS_IN_GAME ~%are2%N.mos~ BEGIN
+						COPY_EXISTING + ~%are2%N.mos~ ~%biffdir%~
+					END ELSE BEGIN
+						COPY_EXISTING + ~%are2%.mos~ ~%biffdir%/%are2%N.mos~
+					END
 				END
 			END
 			
@@ -238,10 +253,12 @@ BEGIN
 				ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/bmpLN/%ee%/%are%LN.bmp~ BEGIN
 					COPY + ~%MOD_FOLDER%/base/bmpLN/%ee%/%are%LN.bmp~ ~%biffdir%/%are2%LN.bmp~
 				END ELSE BEGIN
-					ACTION_IF FILE_EXISTS_IN_GAME ~%are2%LN.bmp~ AND (area_biff = 1) AND (night = 1) BEGIN
-						COPY_EXISTING + ~%are2%LN.bmp~ ~%biffdir%~
-					END ELSE BEGIN
-						COPY_EXISTING + ~%are2%LM.bmp~ ~%biffdir%/%are2%LN.bmp~
+					ACTION_IF (area_biff = 1) AND (night = 1) BEGIN
+						ACTION_IF FILE_EXISTS_IN_GAME ~%are2%LN.bmp~ BEGIN
+							COPY_EXISTING + ~%are2%LN.bmp~ ~%biffdir%~
+						END ELSE BEGIN
+							COPY_EXISTING + ~%are2%LM.bmp~ ~%biffdir%/%are2%LN.bmp~
+						END
 					END
 				END
 			END
@@ -254,12 +271,14 @@ BEGIN
 						PATCH_INCLUDE ~%MOD_FOLDER%/base/patches/%are%_patch.tpa~
 					END
 			END ELSE BEGIN
-				ACTION_IF  FILE_EXISTS_IN_GAME ~%are2%N.wed~ AND (area_biff = 1) AND (night = 1) BEGIN
-					COPY_EXISTING + ~%are2%N.wed~ ~%biffdir%~
-				END ELSE BEGIN
-					COPY_EXISTING + ~%are2%.wed~ ~%biffdir%/%are2%N.wed~
-						WRITE_BYTE 0x2a 0x4e // add the N to the area name 
-						LPM ~RENAME_OVL_NAMES~ // change known ovl from WT to YS
+				ACTION_IF (area_biff = 1) AND (night = 1) BEGIN
+					ACTION_IF FILE_EXISTS_IN_GAME ~%are2%N.wed~ BEGIN
+						COPY_EXISTING + ~%are2%N.wed~ ~%biffdir%~
+					END ELSE BEGIN
+						COPY_EXISTING + ~%are2%.wed~ ~%biffdir%/%are2%N.wed~
+							WRITE_BYTE 0x2a 0x4e // add the N to the area name 
+							LPM ~RENAME_OVL_NAMES~ // change known ovl from WT to YS
+					END
 				END
 			END
 			
@@ -320,32 +339,15 @@ BEGIN
 	//	BG1 Areas
 	ACTION_IF GAME_IS ~eet bgee bgt tutu_totsc~ BEGIN
 		PRINT ~BG1 Areas~
-		ACTION_FOR_EACH are IN  // outdoor
-								~BG0100~ ~BG0200~ ~BG0300~ ~BG0400~ ~BG0500~ ~BG0600~ ~BG0621~ ~BG0700~ ~BG0800~ ~BG0900~ 
-								~BG1000~ ~BG1008~ ~BG1100~ ~BG1200~ ~BG1300~ ~BG1400~ ~BG1500~ ~BG1600~ ~BG1700~ ~BG1800~
-								~BG1900~ ~BG2000~ ~BG2100~ ~BG2200~ ~BG2300~ ~BG2400~ ~BG2600~ ~BG2700~ ~BG2800~ ~BG2900~
-								~BG3000~ ~BG3100~ ~BG3200~ ~BG3300~ ~BG3400~ ~BG3500~ ~BG3600~ ~BG3700~ ~BG3800~ ~BG3900~
-								~BG4000~ ~BG4100~ ~BG4200~ ~BG4300~ ~BG4400~ ~BG4500~ ~BG4600~ ~BG4700~ ~BG4800~ ~BG4900~
-								~BG5000~ ~BG5100~ ~BG5200~ ~BG5300~ ~BG5400~ ~BG5500~ ~BG5600~ ~BG5700~ ~BG5800~ ~BG5900~
-								~BG6000~ ~BG6100~ 
-								// indoor
-								~BG0101~ ~BG0102~ ~BG0103~ ~BG0130~ ~BG0131~ ~BG0162~ ~BG0166~ ~BG0224~ ~BG0225~ ~BG0226~
-								~BG0304~ ~BG0607~ ~BG0611~ ~BG0612~ ~BG0613~ ~BG0614~ ~BG0615~ ~BG0616~ ~BG0719~ ~BG1009~
-								~BG1101~ ~BG1102~ ~BG1207~ ~BG1208~ ~BG1320~ ~BG3202~
-								BEGIN
-			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~BG1~ END 
+		ACTION_PHP_EACH bg1_areas AS idx => are BEGIN
+			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~BG1~ END
 		END
 	END
 	
 	// BG2+TOB Areas
 	ACTION_IF GAME_IS ~eet bgt bg2ee tob~ BEGIN
 		PRINT ~BG2 + ToB Areas~
-		ACTION_FOR_EACH are IN  // outdoor
-								~AR0042~ ~AR0043~ ~AR0044~ ~AR1100~ ~AR1200~ ~AR1300~ ~AR1304~ ~AR1500~ ~AR1600~ ~AR1700~
-								~AR1800~ ~AR2500~ ~AR2600~ ~AR2700~
-								// indoor
-								~AR1102~ 
-								BEGIN
+		ACTION_PHP_EACH bg2_tob_areas AS idx => are BEGIN
 			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~TOB~ END 
 		END
 	END
@@ -353,21 +355,27 @@ BEGIN
 	// SoD Areas
 	ACTION_IF GAME_INCLUDES ~sod~ BEGIN
 		PRINT ~SoD Areas~
-		ACTION_FOR_EACH are IN  // outdoor
-								~BD0010~ ~BD0101~ 
-								// indoor
-								BEGIN
+		ACTION_PHP_EACH sod_areas AS idx => are BEGIN
 			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~SOD~ END 
 		END
 	END
 	
 	// Add torches, fires, candles and animations
-	INCLUDE ~%MOD_FOLDER%/base/animation/Candlekeep.tpa~
-	INCLUDE ~%MOD_FOLDER%/base/animation/BaldursGateCity.tpa~
-	INCLUDE ~%MOD_FOLDER%/base/animation/WyrmsCrossing.tpa~
-	INCLUDE ~%MOD_FOLDER%/base/animation/IceIsland.tpa~
-	INCLUDE ~%MOD_FOLDER%/base/animation/FriendlyArmInn.tpa~
-	
+	ACTION_IF GAME_IS ~eet bgee bgt tutu_totsc~ BEGIN
+		INCLUDE ~%MOD_FOLDER%/base/animation/Candlekeep.tpa~
+		INCLUDE ~%MOD_FOLDER%/base/animation/BaldursGateCity.tpa~
+		INCLUDE ~%MOD_FOLDER%/base/animation/WyrmsCrossing.tpa~
+		INCLUDE ~%MOD_FOLDER%/base/animation/IceIsland.tpa~
+		INCLUDE ~%MOD_FOLDER%/base/animation/FriendlyArmInn.tpa~
+	END
+
+	ACTION_IF GAME_IS ~eet bgt bg2ee tob~ BEGIN
+		// INCLUDE ~%MOD_FOLDER%/base/animation/xxx.tpa~
+	END
+
+	ACTION_IF GAME_INCLUDES ~sod~ BEGIN
+		// INCLUDE ~%MOD_FOLDER%/base/animation/xxx.tpa~
+	END
 	
 	MAKE_BIFF ~goMAIN~ BEGIN ~%MOD_FOLDER%/bif/goMAIN~ ~^.*$~ END
 END
