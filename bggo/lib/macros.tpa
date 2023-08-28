@@ -224,8 +224,10 @@ BEGIN
 				END
 				MOVE + ~%temp%/%are%N.mos~ ~%biffdir%/%are2%N.mos~
 			END ELSE BEGIN
-				ACTION_IF (area_biff = 1) AND (night = 1) BEGIN
+				ACTION_IF FILE_EXISTS_IN_GAME ~%are2%N.mos~ AND (area_biff = 1) AND (night = 1) BEGIN
 					COPY_EXISTING + ~%are2%N.mos~ ~%biffdir%~
+				END ELSE BEGIN
+					COPY_EXISTING + ~%are2%.mos~ ~%biffdir%/%are2%N.mos~
 				END
 			END
 			
@@ -238,6 +240,8 @@ BEGIN
 				END ELSE BEGIN
 					ACTION_IF FILE_EXISTS_IN_GAME ~%are2%LN.bmp~ AND (area_biff = 1) AND (night = 1) BEGIN
 						COPY_EXISTING + ~%are2%LN.bmp~ ~%biffdir%~
+					END ELSE BEGIN
+						COPY_EXISTING + ~%are2%LM.bmp~ ~%biffdir%/%are2%LN.bmp~
 					END
 				END
 			END
@@ -250,8 +254,12 @@ BEGIN
 						PATCH_INCLUDE ~%MOD_FOLDER%/base/patches/%are%_patch.tpa~
 					END
 			END ELSE BEGIN
-				ACTION_IF (area_biff = 1) AND (night = 1) BEGIN
+				ACTION_IF  FILE_EXISTS_IN_GAME ~%are2%N.wed~ AND (area_biff = 1) AND (night = 1) BEGIN
 					COPY_EXISTING + ~%are2%N.wed~ ~%biffdir%~
+				END ELSE BEGIN
+					COPY_EXISTING + ~%are2%.wed~ ~%biffdir%/%are2%N.wed~
+						WRITE_BYTE 0x2a 0x4e // add the N to the area name 
+						LPM ~RENAME_OVL_NAMES~ // change known ovl from WT to YS
 				END
 			END
 			
@@ -334,7 +342,7 @@ BEGIN
 		PRINT ~BG2 + ToB Areas~
 		ACTION_FOR_EACH are IN  // outdoor
 								~AR0042~ ~AR0043~ ~AR0044~ ~AR1100~ ~AR1200~ ~AR1300~ ~AR1304~ ~AR1500~ ~AR1600~ ~AR1700~
-								~AR1800~ ~AR2500~ ~AR2600~
+								~AR1800~ ~AR2500~ ~AR2600~ ~AR2700~
 								// indoor
 								~AR1102~ 
 								BEGIN
