@@ -68,6 +68,12 @@ BEGIN
 		ACTION_IF (~%purple%~ STR_EQ ~SOD~) BEGIN
 			OUTER_TEXT_SPRINT are2 ~%are%~
 		END
+		ACTION_IF (~%purple%~ STR_EQ ~BG2EE~) BEGIN
+			OUTER_TEXT_SPRINT are2 ~%are%~
+		END
+		ACTION_IF (~%purple%~ STR_EQ ~BGEE~) BEGIN
+			OUTER_TEXT_SPRINT are2 ~%are%~
+		END
 		
 		
 		ACTION_IF FILE_EXISTS_IN_GAME ~%are2%.are~ BEGIN
@@ -75,8 +81,8 @@ BEGIN
 			// Extended night & creatures sleep at night
 			COPY_EXISTING ~%are2%.are~ ~override~
 			PATCH_IF SOURCE_SIZE > 0x11b BEGIN // Valid size check
-				PATCH_IF (((BYTE_AT 0x48) << 7) BAND BIT7) BEGIN // Toggle only outdoor areas
-					WRITE_BYTE 0x48 ((THIS BOR BIT6) BOR BIT1) // Toggle extended night flag (BIT6) and day/night flag (BIT1) on whether on or off
+				PATCH_IF (((BYTE_AT 0x48) << 7) & BIT7) BEGIN // Toggle only outdoor areas
+					WRITE_BYTE 0x48 (THIS | BIT6 | BIT1 | BIT2) // Toggle extended night flag (BIT6) and day/night flag (BIT1) and weather flag (BIT2)
 					GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110		// turn off creatures at night time
 					PHP_EACH actors AS i => off BEGIN
 						READ_ASCII off + 0x80 cre_resref
@@ -359,6 +365,23 @@ BEGIN
 			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~SOD~ END 
 		END
 	END
+	
+	// BG1EE Areas
+	ACTION_IF GAME_IS ~eet bgee~ BEGIN
+		PRINT ~BG1EE~
+		ACTION_PHP_EACH bgee_areas AS idx => are BEGIN
+			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~BG1EE~ END 
+		END
+	END
+	
+	// BG2EE Areas
+	ACTION_IF GAME_IS ~eet bg2ee~ BEGIN
+		PRINT ~BG2EE~
+		ACTION_PHP_EACH bg2ee_areas AS idx => are BEGIN
+			LAF ~INSTALL_TILESETS~ STR_VAR purple = ~BG2EE~ END 
+		END
+	END
+	
 	
 	// Add torches, fires, candles and animations
 	ACTION_BASH_FOR ~%MOD_FOLDER%/base/animation~  ~^.+\.tpa$~ BEGIN
