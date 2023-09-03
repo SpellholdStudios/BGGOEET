@@ -71,7 +71,7 @@ BEGIN
 		ACTION_IF (~%purple%~ STR_EQ ~BG2EE~) BEGIN
 			OUTER_TEXT_SPRINT are2 ~%are%~
 		END
-		ACTION_IF (~%purple%~ STR_EQ ~BGEE~) BEGIN
+		ACTION_IF (~%purple%~ STR_EQ ~BG1EE~) BEGIN
 			OUTER_TEXT_SPRINT are2 ~%are%~
 		END
 		

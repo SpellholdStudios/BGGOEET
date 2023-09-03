@@ -100,7 +100,7 @@ END
 
 ACTION_DEFINE_ARRAY bg2ee_areas BEGIN
 	// outdoor
-	OH4010  OH4290 /*OH5400*/
+	OH4010  OH4290 OH5400
 	// indoor
 END
 
