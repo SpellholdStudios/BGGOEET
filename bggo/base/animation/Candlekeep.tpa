@@ -23,7 +23,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%Candlekeep%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
-	BUT_ONLY
+		LPM ~CLEAR_ARRAY~
 END
 ACTION_IF FILE_EXISTS_IN_GAME ~%Candlekeep_Ch6%.are~ BEGIN
 	COPY_EXISTING ~%Candlekeep_Ch6%.are~ ~override~
@@ -37,6 +37,7 @@ ACTION_IF FILE_EXISTS_IN_GAME ~%Candlekeep_Ch6%.are~ BEGIN
 					WRITE_LONG off + 0x40 0x1ffe0 // 05:30 to 17:29
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 	END
 END
 

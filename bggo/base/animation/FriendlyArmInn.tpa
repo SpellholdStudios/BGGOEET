@@ -26,6 +26,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%FriendlyArmInn_L1%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%FriendlyArmInn_L2%.are" BEGIN
@@ -55,6 +56,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%FriendlyArmInn_L2%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%FriendlyArmInn_L3%.are" BEGIN
@@ -84,4 +86,5 @@ ACTION_IF FILE_EXISTS_IN_GAME "%FriendlyArmInn_L3%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END

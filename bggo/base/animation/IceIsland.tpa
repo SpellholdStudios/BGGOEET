@@ -21,4 +21,5 @@ ACTION_IF FILE_EXISTS_IN_GAME "%IceIslandMaze_L1%.are" BEGIN
 				fj_bam_resref = YSFLBLU2
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END

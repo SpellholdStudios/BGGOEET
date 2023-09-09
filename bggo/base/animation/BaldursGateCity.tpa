@@ -19,6 +19,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NWBaldursGate%.are" BEGIN
 				fj_bam_resref = fire_3
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate%.are" BEGIN
@@ -39,6 +40,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate%.are" BEGIN
 				fj_bam_resref = fire_3
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate%.are" BEGIN
@@ -59,6 +61,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate%.are" BEGIN
 				fj_bam_resref = flame2l
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NEBaldursGate%.are" BEGIN
@@ -79,6 +82,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NEBaldursGate%.are" BEGIN
 				fj_bam_resref = fire_3
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%WBaldursGate%.are" BEGIN
@@ -99,6 +103,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%WBaldursGate%.are" BEGIN
 				fj_bam_resref = fire_3
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%CentralBaldursGate%.are" BEGIN
@@ -119,6 +124,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%CentralBaldursGate%.are" BEGIN
 				fj_bam_resref = fire_3
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%EBaldursGate%.are" BEGIN
@@ -139,6 +145,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%EBaldursGate%.are" BEGIN
 				fj_bam_resref = fire_3
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate%.are" BEGIN
@@ -159,6 +166,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate%.are" BEGIN
 				fj_bam_resref = fire_3
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 //**************************************************
@@ -182,6 +190,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_FlamingFistHQ_L1%.are" BEGIN
 				fj_bam_resref = flame2m
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 //**************************************************
@@ -205,6 +214,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_FlamingFistHQ_L1%.are" BEGIN
 				fj_bam_resref = flame2s
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 //**************************************************
@@ -228,6 +238,7 @@ ACTION_IF GAME_INCLUDES ~sod~ BEGIN
 				fj_bam_resref = flamlav1
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ///////////////////////////////////
@@ -261,6 +272,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%WBaldursGate_RagefastsHouse%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L6%.are" BEGIN
@@ -281,6 +293,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L6%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L2%.are" BEGIN
@@ -301,6 +314,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L2%.are" BEGIN
 				fj_bam_resref = BUTRFLY
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L3%.are" BEGIN
@@ -321,6 +335,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L3%.are" BEGIN
 				fj_bam_resref = BUTRFLY
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L4%.are" BEGIN
@@ -341,6 +356,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L4%.are" BEGIN
 				fj_bam_resref = BUTRFLY
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L5%.are" BEGIN
@@ -361,6 +377,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_RamazithsTower_L5%.are" BEGIN
 				fj_bam_resref = BUTRFLY
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 /////////////////////////
@@ -386,6 +403,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_DucalPalace_L1%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_DucalPalace_L2%.are" BEGIN
@@ -407,6 +425,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_DucalPalace_L2%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_DucalPalace_L3%.are" BEGIN
@@ -428,6 +447,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_DucalPalace_L3%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_DucalPalace_Cellar%.are" BEGIN
@@ -449,6 +469,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%NBaldursGate_DucalPalace_Cellar%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 //////////////////////////////
@@ -474,6 +495,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_SevenSuns_L1%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_SevenSuns_L2%.are" BEGIN
@@ -495,6 +517,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_SevenSuns_L2%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_SevenSuns_Cellar%.are" BEGIN
@@ -516,6 +539,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_SevenSuns_Cellar%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ///////////////////////////////////
@@ -540,6 +564,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_MerchantLeague_L1%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 	
 ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_MerchantLeague_L2%.are" BEGIN
@@ -561,6 +586,7 @@ ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_MerchantLeague_L2%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
 
 ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_MerchantLeague_L3%.are" BEGIN
@@ -582,4 +608,5 @@ ACTION_IF FILE_EXISTS_IN_GAME "%SWBaldursGate_MerchantLeague_L3%.are" BEGIN
 				fj_bam_resref = FLAME2S
 			END
 		END
+		LPM ~CLEAR_ARRAY~
 END
