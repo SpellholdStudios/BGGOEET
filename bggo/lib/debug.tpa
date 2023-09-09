@@ -1,0 +1,434 @@
+DEFINE_PATCH_MACRO ~BIFF_NAMES~
+BEGIN
+	SET pointer = 0
+	SOURCE_BIFF name ~%value%~
+	INNER_PATCH_SAVE biff_name ~%name%~ BEGIN
+		REPLACE_TEXTUALLY ~DATA/~ ~~
+	END
+	PATCH_IF FILE_EXISTS ~override/%value%~ OR FILE_EXISTS ~backup_ovr/%value%~ BEGIN
+		SPRINT biff_name ~override%TAB%~
+		SET pointer = 1
+	END
+	ELSE BEGIN
+		PATCH_IF ~%biff_name%~ STR_EQ ~~ BEGIN
+			SPRINT biff_name ~don't exist~
+		END
+	END
+END
+<<<<<<<< .../debug_include.tpa
+	OUTER_PATCH xyz BEGIN
+		PATCH_FOR_EACH ext IN ".tis" ".mos" "LM.bmp" ".wed" "N.tis" "N.mos" "LN.bmp" "N.wed" "SR.bmp" "HT.bmp" BEGIN
+			PATCH_IF VARIABLE_IS_SET $"include_%are2%%ext%"(0) BEGIN
+				SPRINT value $"include_%are2%%ext%"(0)
+				SPRINT point $"include_%are2%%ext%"(2)
+				SPRINT goMAIN $"include_%are2%%ext%"(3)
+				LPM ~BIFF_NAMES~
+				PATCH_IF ~%goMAIN%~ STR_EQ ~BGGO/bif/goMAIN~ BEGIN
+					SPRINT biff_name ~goMAIN.BIF~
+				END
+				PATCH_IF ~%point%~ STR_EQ ~.~ BEGIN
+					PATCH_IF pointer BEGIN
+						SPRINT $"include_%are2%%ext%"(2) ~override~
+					END ELSE BEGIN
+						SPRINT $"include_%are2%%ext%"(2) $"include_%are2%%ext%"(1)
+					END
+				END
+				SPRINT file_list ~%file_list%new_bif: %biff_name% <= ~
+				PHP_EACH "include_%are2%%ext%" AS num => value BEGIN
+					PATCH_IF num = 0 BEGIN SPRINT file_list ~%file_list%%value%  %TAB%orig_bif: ~ END
+					PATCH_IF num = 1 BEGIN SPRINT file_list ~%file_list%%value%%TAB%| from ~ END
+					PATCH_IF num = 2 BEGIN SPRINT file_list ~%file_list%%value% => ~ END
+					PATCH_IF num = 3 BEGIN SPRINT file_list ~%file_list%%value%%LNL%%TAB%~ END
+				END
+			END
+		END
+	END
+>>>>>>>>
+
+
+DEFINE_PATCH_MACRO ~DEBUG~
+BEGIN
+	PATCH_IF debug BEGIN
+		SPRINT value ~%DEST_FILE%~
+		LPM ~BIFF_NAMES~
+		DEFINE_ARRAY "include_%DEST_FILE%" BEGIN
+			 "%DEST_FILE%" "%biff_name%" "%SOURCE_DIRECTORY%" "%DEST_DIRECTORY%"
+		END
+		PATCH_IF ~%DEST_EXT%~ STRING_EQUAL_CASE ~wed~ BEGIN
+			SPRINT wed_list ~%wed_list%%LNL%%seperator%%LNL%%DEST_FILE%%TAB%|| ~
+			READ_LONG 0x08 ovl_num
+			READ_LONG 0x10 ovl_off
+			FOR (cnt=0; cnt<ovl_num; cnt+=1) BEGIN
+				READ_ASCII ovl_off+cnt*0x18+0x04 tis_name
+				SPRINT wed_list ~%wed_list%%tis_name%%TAB%|  ~
+			END
+		END
+	END
+END     
+
+DEFINE_ACTION_MACRO ~COMPLETE_LIST_OF_FILES~
+BEGIN
+	OUTER_SPRINT seperator            ~------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%LNL%~
+//	OUTER_SPRINT seperator ~~
+	OUTER_SPRINT all_files ~Explanation:%TAB% i: installed file%TAB%x: another existing file with the same name (ee and non-ee version)%LNL%~
+	OUTER_SPRINT all_files ~%all_files%       |      |      | ee   | non  |        |        | ee   | non  |      |      | ee   | non  | ee     | non    | ee     | non    | ee   | non  |        |        |        |        |          %LNL%~
+	OUTER_SPRINT all_files ~%all_files%area   | tisD | tbcD | mbcD | mbcD | LM.2da | LM.bmp | wedD | wedD | tisN | tbcN | mbcN | mbcN | LN.2da | LN.2da | LN.bmp | LN.bmp | wedN | wedN | SR.2da | SR.bmp | HT.2da | HT.bmp | patch.tpa%LNL%~
+	OUTER_SPRINT all_files ~%all_files%%seperator%~
+	
+	ACTION_FOR_EACH var IN bg1_areas bg2_tob_areas sod_areas bgee_areas bg2ee_areas BEGIN
+		ACTION_PHP_EACH "%var%" AS idx => are BEGIN
+				
+			OUTER_SET LM2da = 0
+			OUTER_SET LN2da = 0
+			OUTER_SET SR2da = 0
+			OUTER_SET HT2da = 0
+			
+			OUTER_SPRINT all_files ~%all_files%%are% |~
+////////////////////////////////////////////////////////////////////////////////////////			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/tbcD/%are%/ee/%are%.tis~ BEGIN
+				OUTER_SPRINT file_name ~%are%.tis~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					OUTER_SPRINT all_files ~%all_files%   i  |~
+				END ELSE BEGIN
+					OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+					OUTER_SPRINT all_files ~%all_files%      |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/tbcD/%are%/non-ee/%are%.tbc~ BEGIN
+				OUTER_SPRINT file_name ~%are%.tbc~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					OUTER_SPRINT all_files ~%all_files%   i  |~
+				END ELSE BEGIN
+					OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+					OUTER_SPRINT all_files ~%all_files%      |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/mbcD/ee/%are%/%are%.mbc~ BEGIN
+				OUTER_SET ee = 1
+				OUTER_SPRINT file_name ~%are%.mos~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~bgee bg2ee eet~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%   i  |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%      |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/mbcD/non-ee/%are%/%are%.mbc~ BEGIN
+				OUTER_SPRINT file_name ~%are%.mos~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~tob bgt tutu_totsc~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%   i  |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%      |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpLM/%are%LM.2da~ BEGIN
+				OUTER_SPRINT file_name ~%are%LM.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					OUTER_SPRINT all_files ~%all_files%   i    |~
+					OUTER_SET LM2da = 1
+				END ELSE BEGIN
+					OUTER_SPRINT all_files ~%all_files%   x    |~
+				END
+			END ELSE BEGIN 
+					OUTER_SPRINT all_files ~%all_files%        |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpLM/%are%LM.bmp~ BEGIN
+				OUTER_SPRINT file_name ~%are%LM.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF LM2da BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x    |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   i    |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x    |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%        |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/wedD/ee/%are%.wed~ BEGIN
+				OUTER_SPRINT file_name ~%are%.wed~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~bgee bg2ee eet~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%   i  |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%      |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/wedD/non-ee/%are%.wed~ BEGIN
+				OUTER_SPRINT file_name ~%are%.wed~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~tob bgt tutu_totsc~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%   i  |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%      |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/tbcN/%are%/ee/%are%N.tis~ BEGIN
+				OUTER_SPRINT file_name ~%are%N.tis~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					OUTER_SPRINT all_files ~%all_files%   i  |~
+				END ELSE BEGIN
+					OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+					OUTER_SPRINT all_files ~%all_files%      |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/tbcN/%are%/non-ee/%are%N.tbc~ BEGIN
+				OUTER_SPRINT file_name ~%are%N.tbc~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					OUTER_SPRINT all_files ~%all_files%   i  |~
+				END ELSE BEGIN
+					OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+					OUTER_SPRINT all_files ~%all_files%      |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/mbcN/ee/%are%N/%are%N.mbc~ BEGIN
+				OUTER_SET ee = 1
+				OUTER_SPRINT file_name ~%are%N.mos~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~bgee bg2ee eet~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%   i  |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%      |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/mbcN/non-ee/%are%N/%are%N.mbc~ BEGIN
+				OUTER_SPRINT file_name ~%are%N.mos~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~tob bgt tutu_totsc~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%   i  |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%      |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpLN/ee/%are%LN.2da~ BEGIN
+				OUTER_SPRINT file_name ~%are%LN.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~bgee bg2ee eet~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%    i   |~
+						OUTER_SET LN2da = 1
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%    x   |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%    x   |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%        |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpLN/non-ee/%are%LN.2da~ BEGIN
+				OUTER_SPRINT file_name ~%are%LN.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~tob bgt tutu_totsc~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%    i   |~
+						OUTER_SET LN2da = 1
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%    x   |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%    x   |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%        |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpLN/ee/%are%LN.bmp~ BEGIN
+				OUTER_SPRINT file_name ~%are%LN.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~bgee bg2ee eet~ BEGIN
+						ACTION_IF LN2da BEGIN
+							OUTER_SPRINT all_files ~%all_files%    x   |~
+						END ELSE BEGIN
+							OUTER_SPRINT all_files ~%all_files%    i   |~
+						END	
+					END ELSE BEGIN
+							OUTER_SPRINT all_files ~%all_files%    x   |~
+					END
+				END
+			END ELSE BEGIN 
+							OUTER_SPRINT all_files ~%all_files%        |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpLN/non-ee/%are%LN.bmp~ BEGIN
+				OUTER_SPRINT file_name ~%are%LN.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~tob bgt tutu_totsc~ BEGIN
+						ACTION_IF LN2da BEGIN
+							OUTER_SPRINT all_files ~%all_files%    x   |~
+						END ELSE BEGIN
+							OUTER_SPRINT all_files ~%all_files%    i   |~
+						END	
+					END ELSE BEGIN
+							OUTER_SPRINT all_files ~%all_files%    x   |~
+					END
+				END
+			END ELSE BEGIN 
+							OUTER_SPRINT all_files ~%all_files%        |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/wedN/ee/%are%N.wed~ BEGIN
+				OUTER_SPRINT file_name ~%are%N.wed~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~bgee bg2ee eet~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%   i  |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%      |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/wedN/non-ee/%are%N.wed~ BEGIN
+				OUTER_SPRINT file_name ~%are%N.wed~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF GAME_IS ~tob bgt tutu_totsc~ BEGIN
+						OUTER_SPRINT all_files ~%all_files%   i  |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%   x  |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%      |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////	
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpSR/%are%SR.2da~ BEGIN
+				OUTER_SPRINT file_name ~%are%SR.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					OUTER_SPRINT all_files ~%all_files%    i   |~
+					OUTER_SET SR2da = 1
+				END ELSE BEGIN
+					OUTER_SPRINT all_files ~%all_files%    x   |~
+				END
+			END ELSE BEGIN 
+					OUTER_SPRINT all_files ~%all_files%        |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpSR/%are%SR.bmp~ BEGIN
+				OUTER_SPRINT file_name ~%are%AR.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF SR2da BEGIN
+						OUTER_SPRINT all_files ~%all_files%    x   |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%    i   |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%    x   |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%        |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpHT/%are%HT.2da~ BEGIN
+				OUTER_SPRINT file_name ~%are%HT.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					OUTER_SPRINT all_files ~%all_files%    i   |~
+					OUTER_SET HT2da = 1
+				END ELSE BEGIN
+					OUTER_SPRINT all_files ~%all_files%    x   |~
+				END
+			END ELSE BEGIN 
+					OUTER_SPRINT all_files ~%all_files%        |~
+			END
+			
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpHT/%are%HT.bmp~ BEGIN
+				OUTER_SPRINT file_name ~%are%HT.bmp~
+				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
+				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+					ACTION_IF HT2da BEGIN
+						OUTER_SPRINT all_files ~%all_files%    x   |~
+					END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%    i   |~
+					END
+				END ELSE BEGIN
+						OUTER_SPRINT all_files ~%all_files%    x   |~
+				END
+			END ELSE BEGIN 
+						OUTER_SPRINT all_files ~%all_files%        |~
+			END
+////////////////////////////////////////////////////////////////////////////////////////
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/patches/%are%_patch.tpa~ BEGIN
+				OUTER_SPRINT all_files ~%all_files%    x ~
+			END
+		
+		OUTER_SPRINT all_files ~%all_files%%LNL%%seperator%~
+			
+		END
+	END
+	COPY ~.../debug.log~ ~%MOD_FOLDER%/all_files.log~
+	APPEND_OUTER + ~%MOD_FOLDER%/all_files.log~ ~%all_files%~
+END
+
