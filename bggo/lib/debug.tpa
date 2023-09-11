@@ -1,3 +1,8 @@
+OUTER_SPRINT file_list ~1. destination biff%LNL%2. filename%LNL%3. original biff%LNL%4. source and destination folder~
+OUTER_SPRINT seperator ~===================================================================~
+OUTER_SPRINT wed_list ~%seperator%%LNL%%seperator%%LNL%List of all wed files with their ovl tis files~
+
+
 DEFINE_PATCH_MACRO ~BIFF_NAMES~
 BEGIN
 	SET pointer = 0

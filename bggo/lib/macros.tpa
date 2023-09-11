@@ -426,13 +426,6 @@ BEGIN
 	MKDIR ~%MOD_FOLDER%/bif/temp~
 	MKDIR ~%MOD_FOLDER%/backup_ovr~
 	
-	// debug variables
-	ACTION_IF debug BEGIN
-		OUTER_SPRINT file_list ~1. destination biff%LNL%2. filename%LNL%3. original biff%LNL%4. source and destination folder~
-		OUTER_SPRINT seperator ~===================================================================~
-		OUTER_SPRINT wed_list ~%seperator%%LNL%%seperator%%LNL%List of all wed files with their ovl tis files~
-	END
-	
 	// tis files for water overlays
 	ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcN/ys~ ~^.+\.tis$~ BEGIN
 		ACTION_IF NOT FILE_EXISTS_IN_GAME ~%BASH_FOR_FILE%~ BEGIN
