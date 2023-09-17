@@ -1,6 +1,6 @@
 INCLUDE ~%MOD_FOLDER%/lib/remapped_tis.tpa~
 
-ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_anim_at_night BEGIN
+ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_anim_at_night BEGIN // to remove distracting animations of the maps
 		AR1200TN => BG1200
 		AR900WN1 => BG0900
 		AR900WN2 => BG0900
@@ -8,14 +8,14 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_anim_at_night BEGIN
 		AR900WD1 => BG0900
 END
 
-ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN
+ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN // turn off sleeping animals at night
 		bird => 1
 		eagle => 1
 		vultur => 1
 		seagul => 1
 END
 
-DEFINE_ACTION_FUNCTION ~SRHTLMLN~
+DEFINE_ACTION_FUNCTION ~SRHTLMLN~	// add to the bmp files
 	STR_VAR
 		type = ~~
 BEGIN
@@ -28,7 +28,7 @@ BEGIN
 	END
 END
 
-DEFINE_ACTION_FUNCTION ~BACKUP_BIFFING~
+DEFINE_ACTION_FUNCTION ~BACKUP_BIFFING~ // for the uninstallation of the mod
 	STR_VAR
 		ext = ~~
 BEGIN
@@ -57,7 +57,7 @@ BEGIN
 	CLEAR_ARRAY y_coord
 END
 
-DEFINE_PATCH_MACRO ~DELETE_EXISTING_ANIMATIONS~ // torches, candles ...
+DEFINE_PATCH_MACRO ~DELETE_EXISTING_ANIMATIONS~ // to delete torches, candles ...
 BEGIN
 	GET_OFFSET_ARRAY animation_array ARE_V10_ANIMATIONS
 	PATCH_PHP_EACH animation_array AS animation_num => animation_offset BEGIN
@@ -125,6 +125,9 @@ BEGIN
 						
 					END
 				END
+				PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/are_patch/%are%_are.tpa~ BEGIN // add animation for braziers, candles ...
+					PATCH_INCLUDE ~%MOD_FOLDER%/base/are_patch/%are%_are.tpa~
+				END
 			END
 			BUT_ONLY
 			
@@ -160,8 +163,8 @@ BEGIN
 								input_path    = EVAL ~%MOD_FOLDER%/base/tbcD/%are%/%ee%~
 								output_path	  = EVAL ~%temp%~
 						END
-						COPY ~%temp%/%are%.tis~ ~%biffdir%/%are2%.tis~
-							LPM ~DEBUG~
+						COPY_LARGE ~%temp%/%are%.tis~ ~%biffdir%/%are2%.tis~
+						OUTER_PATCH ~~ BEGIN LPM ~DEBUG~ END
 						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.tis~ END
 					END
 				END
@@ -232,7 +235,7 @@ BEGIN
 				COPY ~%MOD_FOLDER%/base/wedD/%ee%/%are%.wed~ ~%biffdir%/%are2%.wed~
 					REPLACE_TEXTUALLY ~%are%~ ~%are2%~
 					PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/patches/%are%_patch.tpa~ BEGIN
-						PATCH_INCLUDE ~%MOD_FOLDER%/base/patches/%are%_patch.tpa~
+						PATCH_INCLUDE ~%MOD_FOLDER%/base/wed_patch/%are%_wed.tpa~
 					END
 					LPM ~DEBUG~
 				LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.wed~ END
@@ -263,8 +266,8 @@ BEGIN
 							input_path    = EVAL ~%MOD_FOLDER%/base/tbcN/%are%/%ee%~
 							output_path	  = EVAL ~%temp%~
 					END
-					COPY ~%temp%/%are%N.tis~ ~%biffdir%/%are2%N.tis~
-						LPM ~DEBUG~
+					COPY_LARGE ~%temp%/%are%N.tis~ ~%biffdir%/%are2%N.tis~
+					OUTER_PATCH ~~ BEGIN LPM ~DEBUG~ END
 					LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.tis~ END
 					END
 				ACTION_IF GAME_IS ~eet bgee bg2ee~ BEGIN
@@ -345,7 +348,7 @@ BEGIN
 				COPY ~%MOD_FOLDER%/base/wedN/%ee%/%are%N.wed~ ~%biffdir%/%are2%N.wed~
 					REPLACE_TEXTUALLY ~%are%~ ~%are2%~
 					PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/patches/%are%_patch.tpa~ BEGIN
-						PATCH_INCLUDE ~%MOD_FOLDER%/base/patches/%are%_patch.tpa~
+						PATCH_INCLUDE ~%MOD_FOLDER%/base/wed_patch/%are%_wed.tpa~
 					END
 					LPM ~DEBUG~
 				LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.wed~ END
@@ -493,12 +496,6 @@ BEGIN
 		END
 	END
 	
-	
-	// Add torches, fires, candles and animations
-	ACTION_BASH_FOR ~%MOD_FOLDER%/base/animation~  ~^.+\.tpa$~ BEGIN
-		INCLUDE ~%MOD_FOLDER%/base/animation/%BASH_FOR_FILE%~
-	END
-		
 	MAKE_BIFF ~goMAIN~ BEGIN ~%MOD_FOLDER%/bif/goMAIN~ ~^.*$~ END
 	
 	// create the log files
