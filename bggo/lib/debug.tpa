@@ -111,10 +111,9 @@ BEGIN
 				OUTER_SPRINT all_files ~%all_files%       |~
 			END
 ////////////////////////////////////////////////////////////////////////////////////////			
-			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/tbcD/%are%/ee/%are%.tis~ BEGIN
+			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/tbcD/%are%/ee/%are%.tis~  BEGIN
 				OUTER_SPRINT file_name ~%are%.tis~
-				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
-				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+				ACTION_IF  GAME_IS ~eet bg2ee bgee~ BEGIN
 					OUTER_SPRINT all_files ~%all_files%   i  |~
 				END ELSE BEGIN
 					OUTER_SPRINT all_files ~%all_files%   x  |~
@@ -125,8 +124,7 @@ BEGIN
 			
 			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/tbcD/%are%/non-ee/%are%.tbc~ BEGIN
 				OUTER_SPRINT file_name ~%are2%.tis~
-				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
-				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+				ACTION_IF GAME_IS ~tob bgt tutu_totsc~ BEGIN
 					OUTER_SPRINT all_files ~%all_files%   i  |~
 				END ELSE BEGIN
 					OUTER_SPRINT all_files ~%all_files%   x  |~
@@ -231,8 +229,7 @@ BEGIN
 ////////////////////////////////////////////////////////////////////////////////////////			
 			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/tbcN/%are%/ee/%are%N.tis~ BEGIN
 				OUTER_SPRINT file_name ~%are%N.tis~
-				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
-				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+				ACTION_IF  GAME_IS ~eet bg2ee bgee~ BEGIN
 					OUTER_SPRINT all_files ~%all_files%   i  |~
 				END ELSE BEGIN
 					OUTER_SPRINT all_files ~%all_files%   x  |~
@@ -243,8 +240,7 @@ BEGIN
 			
 			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/tbcN/%are%/non-ee/%are%N.tbc~ BEGIN
 				OUTER_SPRINT file_name ~%are2%N.tis~
-				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
-				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
+				ACTION_IF  GAME_IS ~tob bgt tutu_totsc~ BEGIN
 					OUTER_SPRINT all_files ~%all_files%   i  |~
 				END ELSE BEGIN
 					OUTER_SPRINT all_files ~%all_files%   x  |~
@@ -335,7 +331,6 @@ BEGIN
 			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpLN/non-ee/%are%LN.bmp~ BEGIN
 				OUTER_SPRINT file_name ~%are2%LN.bmp~
 				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
-								PRINT ~file_name: %file_name%, biff: %biff%~
 				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
 					ACTION_IF GAME_IS ~tob bgt tutu_totsc~ BEGIN
 						ACTION_IF LN2da BEGIN
@@ -384,7 +379,7 @@ BEGIN
 			END
 ////////////////////////////////////////////////////////////////////////////////////////	
 			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpSR/%are%SR.2da~ BEGIN
-				OUTER_SPRINT file_name ~%are%SR.bmp~
+				OUTER_SPRINT file_name ~%are2%SR.bmp~
 				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
 				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
 					OUTER_SPRINT all_files ~%all_files%    i   |~
@@ -413,7 +408,7 @@ BEGIN
 			END
 ////////////////////////////////////////////////////////////////////////////////////////
 			ACTION_IF FILE_EXISTS  ~%MOD_FOLDER%/base/bmpHT/%are%HT.2da~ BEGIN
-				OUTER_SPRINT file_name ~%are%HT.bmp~
+				OUTER_SPRINT file_name ~%are2%HT.bmp~
 				OUTER_PATCH xyc BEGIN SOURCE_BIFF biff ~%file_name%~ END
 				ACTION_IF ~%biff%~ STR_CMP ~~ BEGIN
 					OUTER_SPRINT all_files ~%all_files%    i   |~
