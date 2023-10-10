@@ -234,7 +234,7 @@ BEGIN
 			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/wedD/%ee%/%are%.wed~ BEGIN
 				COPY ~%MOD_FOLDER%/base/wedD/%ee%/%are%.wed~ ~%biffdir%/%are2%.wed~
 					REPLACE_TEXTUALLY ~%are%~ ~%are2%~
-					PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/patches/%are%_patch.tpa~ BEGIN
+					PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/wed_patch/%are%_wed.tpa~ BEGIN
 						PATCH_INCLUDE ~%MOD_FOLDER%/base/wed_patch/%are%_wed.tpa~
 					END
 					LPM ~DEBUG~
@@ -347,7 +347,7 @@ BEGIN
 			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/wedN/%ee%/%are%N.wed~ BEGIN
 				COPY ~%MOD_FOLDER%/base/wedN/%ee%/%are%N.wed~ ~%biffdir%/%are2%N.wed~
 					REPLACE_TEXTUALLY ~%are%~ ~%are2%~
-					PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/patches/%are%_patch.tpa~ BEGIN
+					PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/wed_patch/%are%_wed.tpa~ BEGIN
 						PATCH_INCLUDE ~%MOD_FOLDER%/base/wed_patch/%are%_wed.tpa~
 					END
 					LPM ~DEBUG~

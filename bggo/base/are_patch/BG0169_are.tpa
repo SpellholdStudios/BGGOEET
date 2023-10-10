@@ -35,3 +35,16 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 	END
 END
 LPM ~CLEAR_ARRAY~
+
+//Add candles and torches
+LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = 512
+		fj_loc_y = 128
+		fj_schedule = 0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000101000111	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = Fire0169
+		fj_bam_resref = Fire0169 
+	END
