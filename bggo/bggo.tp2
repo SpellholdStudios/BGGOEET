@@ -119,7 +119,7 @@ END
 
 
 LAF ~INSTALL_MAIN~ 
-	INT_VAR debug = 1  // list of all new used files
+	INT_VAR debug = 0  // list of all new used files
 END
 
 
