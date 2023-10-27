@@ -1,6 +1,8 @@
 BACKUP ~bggo/backup~
 AUTHOR ~Yovaneth, White Agnus, Weigo~
-VERSION ~v3.0 beta~
+VERSION ~v3.0~
+
+README ~bggo/readme.html~
 
 ALWAYS
 	INCLUDE ~%MOD_FOLDER%/lib/a7_tools.tpa~
