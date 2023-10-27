@@ -1,0 +1,90 @@
+///////////////////////
+// Gavin BG1
+///////////////////////
+
+	PATCH_IF (FILE_EXISTS_IN_GAME ~GavinNPC.B~) OR MOD_IS_INSTALLED "gavin.tp2" "0" BEGIN
+		PATCH_PRINT ~GavinNPC detected~
+		sz = SOURCE_SIZE
+		PATCH_IF sz > 0x48 BEGIN
+			READ_LONG 0x8 ovr_count //Read initial offsets
+			READ_LONG 0xc door_count
+			READ_LONG 0x10 ovr_offset
+			READ_LONG 0x14 sec_hdr
+			READ_LONG 0x18 door_offset
+			READ_LONG 0x1c dtc_indices
+			READ_LONG sec_hdr poly_count
+			READ_LONG (sec_hdr + 4) poly_offset
+			READ_LONG (sec_hdr + 8) vert_offset
+			READ_LONG (sec_hdr + 0xc) wall_offset
+			READ_LONG (sec_hdr + 0x10) poly_table
+			new_door_offset = door_offset + door_count * 0x1a
+			new_vert_index = ((SOURCE_SIZE - vert_offset) / 4)
+
+			INSERT_BYTES sz 0x20 //Insert 8 new vertex pairs
+			WRITE_SHORT sz 2370 //Open door
+			WRITE_SHORT (sz + 2) 1563
+			WRITE_SHORT (sz + 4) 2325
+			WRITE_SHORT (sz + 6) 1563
+			WRITE_SHORT (sz + 8) 2325
+			WRITE_SHORT (sz + 0xa) 1478
+			WRITE_SHORT (sz + 0xc) 2370
+			WRITE_SHORT (sz + 0xe) 1478
+			WRITE_SHORT (sz + 0x10) 2370 //Closed door
+			WRITE_SHORT (sz + 0x12) 1562
+			WRITE_SHORT (sz + 0x14) 2330
+			WRITE_SHORT (sz + 0x16) 1620
+			WRITE_SHORT (sz + 0x18) 2330
+			WRITE_SHORT (sz + 0x1a) 1536
+			WRITE_SHORT (sz + 0x1c) 2370
+			WRITE_SHORT (sz + 0x1e) 1478
+
+			INSERT_BYTES poly_table 0x24 //Insert 2 new polygons
+			WRITE_LONG poly_table new_vert_index //Starting vertex index
+			WRITE_LONG (poly_table + 4) 4 //Vertex count
+			WRITE_BYTE (poly_table + 8) 0x80 //Open door
+			WRITE_BYTE (poly_table + 9) 0xff //Unknown
+			WRITE_SHORT (poly_table + 0xa) 2325 //Boundary minimum X coordinate
+			WRITE_SHORT (poly_table + 0xc) 2370 //Boundary maximum X coordinate
+			WRITE_SHORT (poly_table + 0xe) 1478 //Boundary minimum Y coordinate
+			WRITE_SHORT (poly_table + 0x10) 1563 //Boundary maximum Y coordinate
+			WRITE_LONG (poly_table + 0x12) (new_vert_index + 4) //Starting vertex index
+			WRITE_LONG (poly_table + 0x16) 4 //Vertex count
+			WRITE_BYTE (poly_table + 0x1a) 0x80 //Closed door
+			WRITE_BYTE (poly_table + 0x1b) 0xff //Unknown
+			WRITE_SHORT (poly_table + 0x1c) 2330 //Boundary minimum X coordinate
+			WRITE_SHORT (poly_table + 0x1e) 2370 //Boundary maximum X coordinate
+			WRITE_SHORT (poly_table + 0x20) 1478 //Boundary minimum Y coordinate
+			WRITE_SHORT (poly_table + 0x22) 1620 //Boundary maximum Y coordinate
+
+			FOR (i = 0; i < door_count; i += 1) BEGIN //Update door polygon offsets
+				WRITE_LONG (i * 0x1a + door_offset + 0x12) (THIS + 0x1a) //Open polygons offset
+				WRITE_LONG (i * 0x1a + door_offset + 0x16) (THIS + 0x1a) //Closed polygons offset
+				PATCH_IF (i = (door_count - 1)) BEGIN
+					READ_SHORT (i * 0x1a + door_offset + 0xa) tile_index
+					READ_SHORT (i * 0x1a + door_offset + 0xc) tile_count
+				END
+			END
+
+			INSERT_BYTES new_door_offset 0x1a //Insert new door
+			WRITE_ASCII new_door_offset ~Door4437~ //Name
+			WRITE_SHORT (new_door_offset + 8) 1 //Closed
+			WRITE_SHORT (new_door_offset + 0xa) (tile_index + tile_count) //Tile cell index
+			WRITE_SHORT (new_door_offset + 0xe) 1 //Open polygons count
+			WRITE_SHORT (new_door_offset + 0x10) 1 //Closed polygons count
+			WRITE_LONG (new_door_offset + 0x12) (poly_table + 0x1a) //Open polygons offset
+			WRITE_LONG (new_door_offset + 0x16) (poly_table + 0x1a + 0x12) //Closed polygons offset
+
+			//Update offsets for new objects
+			FOR (j = 0; j < ovr_count; j += 1) BEGIN //Update overlays
+				WRITE_LONG (j * 0x18 + ovr_offset + 0x10) (THIS + 0x1a) //Tilemap offset
+				WRITE_LONG (j * 0x18 + ovr_offset + 0x14) (THIS + 0x1a) //Tile index lookup offset
+			END
+			door_count += 1
+			WRITE_LONG 0xc door_count
+			WRITE_LONG 0x1c (dtc_indices + 0x1a)
+			WRITE_LONG (sec_hdr + 4) (poly_offset + 0x1a)
+			WRITE_LONG (sec_hdr + 8) (vert_offset + 0x1a + 0x24)
+			WRITE_LONG (sec_hdr + 0xc) (wall_offset + 0x1a)
+			WRITE_LONG (sec_hdr + 0x10) (poly_table + 0x1a + 0x24)
+		END
+	END

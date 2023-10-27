@@ -1,0 +1,26 @@
+//Add candles and torches
+GET_OFFSET_ARRAY ambients_array ARE_V10_AMBIENTS 
+PHP_EACH ambients_array AS ambients_num => ambients_offset BEGIN
+	READ_ASCII ambients_offset ambients_name (32) NULL
+	READ_SHORT ambients_offset+0x20 ambients_pos_x
+	PATCH_IF ((~%ambients_pos_x%~ = 1163) AND (~%ambients_name%~ STR_EQ  ~Fireplace~)) BEGIN
+		WRITE_SHORT ambients_offset+0x24 700 //Ambient Radius
+	END
+END
+PATCH_DEFINE_ARRAY x_coord BEGIN 379 388 249 572 749 757 750 760 750 760 904 970 1089 1082 1096 1088 1277 1287 1278 1287 1489 1300 1307 1115 1122 912 920 827 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 537 541 670 411 276 280 170 170 176 176 196 247 306  310  311  315	 438  438  444  444  626  665  670  795  801  914 919 664 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2S
+		fj_bam_resref = FLAME2S
+	END
+END
+LPM ~CLEAR_ARRAY~

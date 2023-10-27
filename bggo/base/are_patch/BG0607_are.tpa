@@ -1,0 +1,44 @@
+//**************************************************
+// Light the wall sconces in the Flaming Fist HQ
+//**************************************************
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 226 305 420 542 671 1170 1260 1346 1438 1546 1492 1406 1316 1291 1209 1405 1533 1654 860 803  713  627  481  566  656 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 434 355 397 457 522 459  368  282  217  271  354  440  531  844  927  883  947  1007 970 1049 1141 1226 1155 1069 978 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111111111111111111111111 //Hours All
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = Sconce
+		fj_bam_resref = flame2m
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+
+//**************************************************
+// Light the candles in the Flaming Fist HQ
+//**************************************************
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 871 896 1031 1003 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 769 744 810  836 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111111111111111111111111 //Hours All
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = Candle
+		fj_bam_resref = flame2s
+	END
+END
+LPM ~CLEAR_ARRAY~

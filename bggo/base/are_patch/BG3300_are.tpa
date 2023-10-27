@@ -1,0 +1,30 @@
+// TDDz patch: Use extended BG1 areas for TDDz
+INNER_ACTION BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~DD8000.are~ BEGIN
+		COPY_EXISTING ~DD8000.are~ ~override~
+			PATCH_IF SOURCE_SIZE > 0x11b BEGIN	
+				PATCH_IF (((BYTE_AT 0x48) << 7) & BIT7) BEGIN // Toggle only outdoor areas
+					WRITE_BYTE 0x48 (THIS | BIT6 | BIT1 | BIT2) // Toggle extended night flag (BIT6) and day/night flag (BIT1) and weather flag (BIT2)
+					GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110		// turn off creatures at night time
+					PHP_EACH actors AS i => off BEGIN
+						READ_ASCII off + 0x80 cre_resref
+						TO_LOWER cre_resref
+						PATCH_IF VARIABLE_IS_SET $turn_off_at_night("%cre_resref%") BEGIN
+							WRITE_LONG off + 0x40 0x1ffe0 // 05:30 to 17:29
+						END
+					END
+					GET_OFFSET_ARRAY animations 0xb0 4 0xac 4 0 0 0x4c	// turn off animations at night time
+					PHP_EACH animations AS i => off BEGIN
+						READ_ASCII off + 0x0028 animation
+						TO_UPPER animation
+						PATCH_IF VARIABLE_IS_SET $turn_off_anim_at_night("%animation%") BEGIN
+							WRITE_LONG off+0x34 0x00
+						END
+						
+					END
+				END
+				WRITE_ASCIIE 0x08 ~%Larswood%~ #8
+			END
+		BUT_ONLY
+	END
+END
