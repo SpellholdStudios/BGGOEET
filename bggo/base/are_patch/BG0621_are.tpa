@@ -1,0 +1,190 @@
+// repairs the BGT version and adds ambient sounds to EET BG1EE
+
+// regions repair for BGT Tutu_Totsc
+PATCH_IF GAME_IS ~bgt tutu_totsc~ BEGIN
+	READ_LONG 0x5c offset
+	FOR( i = SHORT_AT 0x5a ; i ; --i )BEGIN
+		SET off = offset + (i - 1) * 0xc4
+		READ_SHORT off+0x20 type
+		PATCH_IF type = 2 BEGIN
+			READ_ASCII off+0x38 dest_name
+			PATCH_IF (~%dest_name%~ STR_EQ ~AR7615~) OR (~%dest_name%~ STR_EQ ~FW0615~) BEGIN
+				READ_ASCII off+0x40 trigger_dest_name
+				READ_ASCII off trigger_name_door
+				LPF fj_are_structure
+					INT_VAR 
+					fj_delete_mode = i - 1
+					STR_VAR 
+					fj_structure_type = region
+				END
+			END
+		END
+		PATCH_IF type = 1 BEGIN
+			READ_ASCII off trigger_name (32) NULL
+ 			PATCH_IF ~%trigger_name%~ STR_EQ ~Info 1~ BEGIN
+				READ_LONG off+0x64 trigger_name_fence
+				LPF fj_are_structure
+					INT_VAR 
+					fj_delete_mode = i - 1
+					STR_VAR 
+					fj_structure_type = region
+				END
+			END
+			PATCH_IF ~%trigger_name%~ STR_EQ ~Trigger Point 3~ BEGIN
+				READ_LONG off+0x64 trigger_name_long_way_down
+				LPF fj_are_structure
+					INT_VAR 
+					fj_delete_mode = i - 1
+					STR_VAR 
+					fj_structure_type = region
+				END
+			END
+		END
+	END
+	LPF fj_are_structure
+		INT_VAR
+		fj_type 		= 2
+		fj_box_left		= 1232
+		fj_box_top 		= 514
+		fj_box_right 	= 1244
+		fj_box_bottom 	= 577
+		fj_cursor_idx 	= 42
+		fj_vertex_0		= 1232 + (558 << 16)
+		fj_vertex_1		= 1232 + (514 << 16)
+		fj_vertex_2		= 1244 + (544 << 16)
+		fj_vertex_3		= 1244 + (585 << 16)
+		
+		STR_VAR
+		fj_structure_type = region
+		fj_name	= EVAL ~%trigger_name_door%~
+		fj_destination_area = EVAL ~%BaldursGateDocks_IronThrone_L5%~
+		fj_destination_name = EVAL ~%trigger_dest_name%~
+	END
+	LPF fj_are_structure
+		INT_VAR
+		fj_type 		= 1
+		fj_box_left		= 1031
+		fj_box_top 		= 539
+		fj_box_right 	= 1077
+		fj_box_bottom 	= 632
+		fj_cursor_idx 	= 22
+		fj_info_point_strref = EVAL trigger_name_fence
+		fj_vertex_0		= 1031 + (551 << 16)
+		fj_vertex_1		= 1069 + (632 << 16)
+		fj_vertex_2		= 1077 + (618 << 16)
+		fj_vertex_3		= 1043 + (539 << 16)
+		STR_VAR
+		fj_structure_type = region
+		fj_name	= ~Info 1~
+	END
+	LPF fj_are_structure
+		INT_VAR
+		fj_type 		= 1
+		fj_box_left		= 918
+		fj_box_top 		= 417
+		fj_box_right 	= 1433
+		fj_box_bottom 	= 886
+		fj_cursor_idx 	= 22
+		fj_info_point_strref = EVAL trigger_name_long_way_down
+		fj_vertex_0		= 1073 + (690 << 16)
+		fj_vertex_1		= 1335 + (632 << 16)
+		fj_vertex_2		= 1433 + (789 << 16)
+		fj_vertex_3		= 1027 + (886 << 16)
+		fj_vertex_4		= 918  + (511 << 16)
+		fj_vertex_5		= 1213 + (417 << 16)
+		fj_vertex_6		= 1268 + (477 << 16)
+		fj_vertex_7		= 995  + (515 << 16)
+		STR_VAR
+		fj_structure_type = region
+		fj_name	= ~Trigger Point 3~
+	END
+END
+
+// ambient sound for eet bgee
+PATCH_IF GAME_IS ~eet bgee~ BEGIN
+	LPF fj_are_structure
+		INT_VAR
+		fj_loc_x	= 256
+		fj_loc_y	= 192
+		fj_radius	= 500
+		fj_pitch_variance	= 0
+		fj_volume_variance	= 0
+		fj_volume	= 60 
+		fj_sound_num	= 3
+		fj_delay	= 15
+		fj_variation	= 5
+		fj_schedule	= 0b111111111111111111111111
+		fj_flags	= 0b00001101
+		STR_VAR
+		fj_structure_type = ambient
+		fj_name  = Dogs
+		fj_wav_resref0	= AMB_M26A
+		fj_wav_resref1	= AMB_M26G
+		fj_wav_resref2	= AMB_M26K
+	END
+	LPF fj_are_structure
+		INT_VAR
+		fj_loc_x	= 256
+		fj_loc_y	= 192
+		fj_radius	= 1500
+		fj_pitch_variance	= 0
+		fj_volume_variance	= 0
+		fj_volume	= 100 
+		fj_sound_num	= 2
+		fj_delay	= 30
+		fj_variation	= 10
+		fj_schedule	= 0b111111111111111111111111
+		fj_flags	= 0b00001101
+		STR_VAR
+		fj_structure_type = ambient
+		fj_name  = Horses
+		fj_wav_resref0	= AMB_E46A
+		fj_wav_resref1	= AMB_E46B
+	END
+	LPF fj_are_structure
+		INT_VAR
+		fj_loc_x	= 256
+		fj_loc_y	= 192
+		fj_radius	= 500
+		fj_pitch_variance	= 0
+		fj_volume_variance	= 0
+		fj_volume	= 50 
+		fj_sound_num	= 10
+		fj_delay	= 20
+		fj_variation	= 10
+		fj_schedule	= 0b000111110000000011000000
+		fj_flags	= 0b00001101
+		STR_VAR
+		fj_structure_type = ambient
+		fj_name  = NightSounds
+		fj_wav_resref0	= AMB_M12H
+		fj_wav_resref1	= AMB_M16A
+		fj_wav_resref2	= AMB_M16B
+		fj_wav_resref3	= AMB_M16C
+		fj_wav_resref4	= AMB_M16D
+		fj_wav_resref5	= AMB_M16K
+		fj_wav_resref6	= AMB_M16M
+		fj_wav_resref7	= AMB_M16Z
+		fj_wav_resref8	= AMB_M161
+		fj_wav_resref9	= AMB_M162
+	END
+	LPF fj_are_structure
+		INT_VAR
+		fj_loc_x	= 256
+		fj_loc_y	= 192
+		fj_radius	= 500
+		fj_pitch_variance	= 20
+		fj_volume_variance	= 20
+		fj_volume	= 70 
+		fj_sound_num	= 2
+		fj_delay	= 25
+		fj_variation	= 6
+		fj_schedule	= 0b111111111111111111111111
+		fj_flags	= 0b00001101
+		STR_VAR
+		fj_structure_type = ambient
+		fj_name  = Bells
+		fj_wav_resref0	= AMB_E34A
+		fj_wav_resref1	= AMB_E34B
+	END
+END
