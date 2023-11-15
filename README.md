@@ -1,5 +1,3 @@
-![Latest Release](https://img.shields.io/github/v/release/SpellholdStudios/Shadows_over_Soubar?label=Release&include_prereleases&color=darkred)
-![Downloads](https://img.shields.io/github/downloads/SpellholdStudios/Shadows_over_Soubar/total.svg?color=blue&label=Downloads)
 ![Platform](https://img.shields.io/static/v1?label=Platform&message=Windows%20%7C%20Mac%20%7C%20Linux&color=informational)
 ![Language](https://img.shields.io/static/v1?label=Language&message=every%20language&color=limegreen)
 ![SupportedGames](https://img.shields.io/static/v1?label=Supported%20games&message=EET%20%7C%20BGT%20%7C%20BG2%3AEE%20%7C%20TOB%20%7C%20BG1%3AEE%20%7C%20TuTu_TOSC&color=blue)
