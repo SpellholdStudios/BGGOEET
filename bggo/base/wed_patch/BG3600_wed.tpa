@@ -1,0 +1,9 @@
+///////////////////////////////////////////////////
+// Lure of Sirines Call Extended Lighthouse patch
+///////////////////////////////////////////////////
+
+PATCH_IF MOD_IS_INSTALLED ~SiriensCall/setup-sirinescall.tp2~ (ID_OF_LABEL "setup-sirinescall.tp2" "SirinesCall-ExtendedLighthouseArea" ) OR FILE_EXISTS ~data/WA%Lighthouse%.bif~BEGIN
+	PATCH_PRINT ~Lure of Sirines Call Extended Lighthouse detected~
+	SET area_biff = 0	// The biff directory will not be biffed and thus will be deleted again 
+						//=> The Sirines Call biff files will be not overwritten
+END
