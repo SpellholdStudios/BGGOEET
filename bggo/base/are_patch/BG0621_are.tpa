@@ -8,9 +8,9 @@ PATCH_IF GAME_IS ~bgt tutu_totsc~ BEGIN
 		READ_SHORT off+0x20 type
 		PATCH_IF type = 2 BEGIN
 			READ_ASCII off+0x38 dest_name
-			PATCH_IF (~%dest_name%~ STR_EQ ~AR7615~) OR (~%dest_name%~ STR_EQ ~FW0615~) BEGIN
+			PATCH_IF (~%dest_name%~ STR_EQ ~%BaldursGateDocks_IronThrone_L5%~) BEGIN
+				READ_ASCII off 		trigger_name_door
 				READ_ASCII off+0x40 trigger_dest_name
-				READ_ASCII off trigger_name_door
 				LPF fj_are_structure
 					INT_VAR 
 					fj_delete_mode = i - 1
