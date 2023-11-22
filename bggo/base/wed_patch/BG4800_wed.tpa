@@ -1,0 +1,15 @@
+// patch for Jarls Adventure Pack
+
+PATCH_IF MOD_IS_INSTALLED ~Setup-JA#BGT_AdvPack.tp2~ "101" BEGIN
+	DELETE_BYTES 0x00 SOURCE_SIZE		// delete data night wed file from BGGO
+	INNER_ACTION BEGIN
+		COPY_EXISTING ~%are2%.wed~ ~%biffdir%/%are2%.wed~
+			SET length = BUFFER_LENGTH
+			READ_ASCII 0x00 file_data (%length%)	// get data from mod day wed file (Jarl)
+		LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.wed~ END
+	END
+	INSERT_BYTES 0x00 length
+	WRITE_ASCIIE 0x00 ~%file_data%~ (%length%)	// insert data from mod day wed file (Jarl) in night wed file from BGGO
+	LPM ~RENAME_OVL_NAMES~						// and change ovl names
+END
+			
