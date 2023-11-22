@@ -7,21 +7,34 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_anim_at_night BEGIN // to remove distra
 		AR900WN4 => BG0900
 		AR900WD1 => BG0900
 END
-
-ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN // turn off sleeping animals at night
+ACTION_IF GAME_IS ~tutu_tosc~ BEGIN
+	ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN // turn off sleeping animals at night
+		_bird => 1
+		_eagle => 1
+		_vultur => 1
+		_seagul => 1
+	END
+ELSE BEGIN
+	ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN // turn off sleeping animals at night
 		bird => 1
 		eagle => 1
 		vultur => 1
 		seagul => 1
+	END
 END
 
 DEFINE_ACTION_FUNCTION ~SRHTLMLN~	// add to the bmp files
 	STR_VAR
 		type = ~~
 BEGIN
+	ACTION_IF ~%type%~ STR_EQ ~LN~ BEGIN
+		OUTER_SPRINT folder ~%ee%~
+	END ELSE BEGIN
+		OUTER_SPRINT folder ~~
+	END
 	LAF ALTER_SEARCHMAP
 		STR_VAR
-			path_to_2da_file 	= EVAL ~%MOD_FOLDER%/base/bmp%type%/%are%%type%.2da~ 
+			path_to_2da_file 	= EVAL ~%MOD_FOLDER%/base/%folder%/bmp%type%/%are%%type%.2da~ 
 			areaname 			= EVAL ~%are2%~ // area name, e.g. ~AR3700~
 			output_path			= EVAL ~%biffdir%~ // output directory
 			type				= EVAL ~%type%~
@@ -44,6 +57,9 @@ BEGIN
 	READ_LONG 0x10 ovl_off
 	FOR (cnt=0; cnt<ovl_num; cnt+=1) BEGIN
 		READ_ASCII ovl_off+cnt*0x18+0x04 tis_name
+		PATCH_IF ~%tis_name%~ STR_EQ ~%are2%~ BEGIN
+			WRITE_ASCIIE ovl_off+cnt*0x18+0x04 ~%are2%N~
+		END
 		INNER_PATCH_SAVE new_tis_name ~%tis_name%~ BEGIN
 			REPLACE_TEXTUALLY EXACT_MATCH ~WT~ ~YS~
 		END
