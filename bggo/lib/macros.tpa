@@ -14,7 +14,7 @@ ACTION_IF GAME_IS ~tutu_tosc~ BEGIN
 		_vultur => 1
 		_seagul => 1
 	END
-ELSE BEGIN
+END ELSE BEGIN
 	ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN // turn off sleeping animals at night
 		bird => 1
 		eagle => 1
