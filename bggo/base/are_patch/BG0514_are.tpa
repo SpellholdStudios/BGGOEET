@@ -1,0 +1,61 @@
+// add missing Door001 from original Baldurs Gate Tales of the Sword Coast
+
+GET_OFFSET_ARRAY door_array ARE_V10_DOORS
+PATCH_PHP_EACH door_array AS i => off BEGIN
+	READ_ASCII off door_name (32) NULL
+	PATCH_IF ~%door_name%~ STR_EQ ~Door001~ BEGIN
+		LPF fj_are_structure INT_VAR fj_delete_mode = i STR_VAR fj_structure_type = door END
+	END
+END
+
+LPF fj_are_structure
+		INT_VAR
+		fj_flags               = 0b01000000
+		fj_open_box_left       = 3395
+		fj_open_box_top        = 383
+		fj_open_box_right      = 3432
+		fj_open_box_bottom     = 440
+		fj_closed_box_left     = 3407
+		fj_closed_box_top      = 402
+		fj_closed_box_right    = 3432
+		fj_closed_box_bottom   = 452
+		fj_cursor_idx          = 30
+		fj_trap_loc_x          = 3668
+		fj_trap_loc_y          = 660
+		fj_open_loc_x          = 3433
+		fj_open_loc_y          = 471
+		fj_closed_loc_x        = 3357
+		fj_closed_loc_y        = 406
+		fj_door_open_vert_0    = 3432 + (440 << 16)
+		fj_door_open_vert_1    = 3395 + (418 << 16)
+		fj_door_open_vert_2    = 3395 + (385 << 16)
+		fj_door_open_vert_3    = 3400 + (383 << 16)
+		fj_door_open_vert_4    = 3408 + (383 << 16)
+		fj_door_open_vert_5    = 3428 + (394 << 16)
+		fj_door_open_vert_6    = 3432 + (402 << 16)
+		fj_door_closed_vert_0  = 3403 + (452 << 16)
+		fj_door_closed_vert_1  = 3432 + (437 << 16)
+		fj_door_closed_vert_2  = 3432 + (404 << 16)
+		fj_door_closed_vert_3  = 3424 + (402 << 16)
+		fj_door_closed_vert_4  = 3413 + (408 << 16)
+		fj_door_closed_vert_5  = 3406 + (417 << 16)
+		fj_door_closed_vert_6  = 3403 + (428 << 16)
+		fj_cell_open_vert_0 = 212 + (35 << 16)
+		fj_cell_open_vert_1 = 212 + (33 << 16)
+		fj_cell_open_vert_2 = 211 + (33 << 16)
+		fj_cell_open_vert_3 = 212 + (34 << 16)
+		fj_cell_open_vert_4 = 213 + (34 << 16)
+		fj_cell_closed_vert_0 = 212 + (36 << 16)
+		fj_cell_closed_vert_1 = 212 + (37 << 16)
+		fj_cell_closed_vert_2 = 212 + (38 << 16)
+		fj_cell_closed_vert_3 = 213 + (37 << 16)
+		fj_cell_closed_vert_4 = 213 + (36 << 16)
+		fj_lockpick_strref = 0
+		fj_dlg_strref = 0
+		STR_VAR                       
+		fj_structure_type      = door
+		fj_name                = Door001
+		fj_door_wed_id         = DOOR001
+		fj_travel_trigger	   = ~~
+END
+
