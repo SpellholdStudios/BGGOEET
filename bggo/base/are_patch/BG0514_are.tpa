@@ -1,10 +1,15 @@
 // add missing Door001 from original Baldurs Gate Tales of the Sword Coast
+// add missing Door008 from original Baldurs Gate Tales of the Sword Coast
 
+SET found_door008 = 0
 GET_OFFSET_ARRAY door_array ARE_V10_DOORS
 PATCH_PHP_EACH door_array AS i => off BEGIN
 	READ_ASCII off door_name (32) NULL
 	PATCH_IF ~%door_name%~ STR_EQ ~Door001~ BEGIN
 		LPF fj_are_structure INT_VAR fj_delete_mode = i STR_VAR fj_structure_type = door END
+	END
+	PATCH_IF ~%door_name%~ STR_EQ ~Door008~ BEGIN
+		SET found_door008 = 1
 	END
 END
 
@@ -59,3 +64,89 @@ LPF fj_are_structure
 		fj_travel_trigger	   = ~~
 END
 
+PATCH_IF found_door008 = 0 BEGIN
+	LPF fj_are_structure
+		INT_VAR
+		fj_flags               = 0b01001010
+		fj_open_box_left       = 2355
+		fj_open_box_top        = 2317
+		fj_open_box_right      = 2391
+		fj_open_box_bottom     = 2394
+		fj_closed_box_left     = 2391
+		fj_closed_box_top      = 2310
+		fj_closed_box_right    = 2439
+		fj_closed_box_bottom   = 2376
+		fj_cursor_idx          = 30
+		fj_trap_loc_x          = 2708
+		fj_trap_loc_y          = 2324
+		fj_open_loc_x          = 2413
+		fj_open_loc_y          = 2404
+		fj_closed_loc_x        = 2448
+		fj_closed_loc_y        = 2300
+		fj_door_open_vert_0    = 2391 + (2368 << 16)
+		fj_door_open_vert_1    = 2355 + (2394 << 16)
+		fj_door_open_vert_2    = 2355 + (2346 << 16)
+		fj_door_open_vert_3    = 2362 + (2332 << 16)
+		fj_door_open_vert_4    = 2371 + (2323 << 16)
+		fj_door_open_vert_5    = 2382 + (2317 << 16)
+		fj_door_open_vert_6    = 2391 + (2319 << 16)
+		fj_door_closed_vert_0  = 2391 + (2362 << 16)
+		fj_door_closed_vert_1  = 2439 + (2376 << 16)
+		fj_door_closed_vert_2  = 2439 + (2336 << 16)
+		fj_door_closed_vert_3  = 2435 + (2325 << 16)
+		fj_door_closed_vert_4  = 2424 + (2316 << 16)
+		fj_door_closed_vert_5  = 2412 + (2311 << 16)
+		fj_door_closed_vert_6  = 2399 + (2310 << 16)
+		fj_door_closed_vert_7  = 2391 + (2317 << 16)
+		fj_cell_open_vert_0 = 149 + (197 << 16)
+		fj_cell_open_vert_1 = 148 + (198 << 16)
+		fj_cell_open_vert_2 = 147 + (198 << 16)
+		fj_cell_open_vert_3 = 147 + (199 << 16)
+		fj_cell_open_vert_4 = 148 + (199 << 16)
+		fj_cell_open_vert_5 =  149 + (198 << 16)
+		fj_cell_closed_vert_0  = 149 + (194 << 16)
+		fj_cell_closed_vert_1  = 149 + (195 << 16)
+		fj_cell_closed_vert_2  = 149 + (196 << 16)
+		fj_cell_closed_vert_3  = 149 + (197 << 16)
+		fj_cell_closed_vert_4  = 150 + (194 << 16)
+		fj_cell_closed_vert_5  = 150 + (195 << 16)
+		fj_cell_closed_vert_6  = 150 + (196 << 16)
+		fj_cell_closed_vert_7  = 150 + (197 << 16)
+		fj_cell_closed_vert_8  = 151 + (193 << 16)
+		fj_cell_closed_vert_9  = 151 + (194 << 16)
+		fj_cell_closed_vert_10 = 151 + (195 << 16)
+		fj_cell_closed_vert_11 = 151 + (196 << 16)
+		fj_cell_closed_vert_12 = 151 + (197 << 16)
+		fj_cell_closed_vert_13 = 151 + (198 << 16)
+		fj_cell_closed_vert_14 = 152 + (193 << 16)
+		fj_cell_closed_vert_15 = 152 + (194 << 16)
+		fj_cell_closed_vert_16 = 152 + (195 << 16)
+		fj_cell_closed_vert_17 = 152 + (196 << 16)
+		fj_cell_closed_vert_18 = 152 + (197 << 16)
+		fj_cell_closed_vert_19 = 153 + (193 << 16)
+		fj_cell_closed_vert_20 = 153 + (194 << 16)
+		fj_cell_closed_vert_21 = 153 + (195 << 16)
+		fj_cell_closed_vert_22 = 154 + (193 << 16)
+		
+		fj_lockpick_strref = 0
+		fj_dlg_strref = 0
+		
+		//trap
+		fj_trap_detect		   = 50
+		fj_trap_remove		   = 60
+		fj_trap_active		   = 1
+		fj_trap_status		   = 0
+		fj_locked_diff		   = 50
+		
+		STR_VAR                       
+		fj_structure_type      = door
+		fj_name                = Door008
+		fj_door_wed_id         = DOOR008
+		fj_travel_trigger	   = ~~
+		
+		// trap
+		fj_door_script		   = CTLB
+	END
+
+
+END
