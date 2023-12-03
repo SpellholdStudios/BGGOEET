@@ -7,7 +7,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_anim_at_night BEGIN // to remove distra
 		AR900WN4 => BG0900
 		AR900WD1 => BG0900
 END
-ACTION_IF GAME_IS ~tutu_tosc~ BEGIN
+ACTION_IF GAME_IS ~tutu_totsc~ BEGIN
 	ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN // turn off sleeping animals at night
 		_bird => 1
 		_eagle => 1
