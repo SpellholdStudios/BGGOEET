@@ -1,3 +1,8 @@
+//////////////////////////////////////
+// identical maps: BG3313
+// BG3313 BG3325 BG3331 BG3345 BG3349
+//////////////////////////////////////
+
 //Add candles and torches
 PATCH_DEFINE_ARRAY x_coord BEGIN 177 286 285 297 449 624 635 622 END
 PATCH_DEFINE_ARRAY y_coord BEGIN 249 387 394 388 83  215 216 222 END

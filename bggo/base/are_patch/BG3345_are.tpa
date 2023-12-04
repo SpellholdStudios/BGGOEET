@@ -1,37 +1,10 @@
-//Add candles and torches
-PATCH_DEFINE_ARRAY x_coord BEGIN 177 286 285 297 449 624 635 622 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 249 387 394 388 83  215 216 222 END
-PATCH_PHP_EACH x_coord AS index => x BEGIN
-	LPM ~DELETE_EXISTING_ANIMATIONS~
-	LPF fj_are_structure
-	INT_VAR
-		fj_loc_x = $x_coord("%index%")
-		fj_loc_y = $y_coord("%index%")
-		fj_schedule = 0b111111111111111111111111 //Hours 0.00 - 24.00
-		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
-		STR_VAR
-		fj_structure_type = animation
-		fj_name = FLAME2S
-		fj_bam_resref = FLAME2S //bgrd
-	END
-END
-LPM ~CLEAR_ARRAY~
+//////////////////////////////////////
+// identical maps: BG3313
+// BG3313 BG3325 BG3331 BG3345 BG3349
+//////////////////////////////////////
 
-//Add candles and torches
-PATCH_DEFINE_ARRAY x_coord BEGIN 323 440 439 242 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 295 233 170 277 END
-PATCH_PHP_EACH x_coord AS index => x BEGIN
-	LPM ~DELETE_EXISTING_ANIMATIONS~
-	LPF fj_are_structure
-	INT_VAR
-		fj_loc_x = $x_coord("%index%")
-		fj_loc_y = $y_coord("%index%")
-		fj_schedule = 0b111111111111111111111111 //Hours 0.00 - 24.00
-		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
-		STR_VAR
-		fj_structure_type = animation
-		fj_name = FLMS
-		fj_bam_resref = FLMS 
-	END
+SPRINT identical_area "BG3313"
+
+PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~ BEGIN // add animation for braziers, candles ...
+	PATCH_INCLUDE ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~
 END
-LPM ~CLEAR_ARRAY~

@@ -1,3 +1,8 @@
+//////////////////////////////////////
+// identical maps: BG0807
+// BG0154 BG0807 BG1109
+//////////////////////////////////////
+
 //Add candles and torches
 PATCH_DEFINE_ARRAY x_coord BEGIN 487 355 224 68  207 432 642 881 754 614 618 703 399 214 528 END
 PATCH_DEFINE_ARRAY y_coord BEGIN 156 250 343 454 587 658 509 279 191 138 268 375 370 484 589 END
