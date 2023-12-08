@@ -6,6 +6,11 @@
 // If there is any problems with this, this part can be removed at any time.
 ///////////////////////////////////
 
+//////////////////////////////////////
+// identical maps: BG0109
+// BG0109 AR0016 TU0016
+//////////////////////////////////////
+
 //Add candles and torches
 PATCH_DEFINE_ARRAY x_coord BEGIN 1143 1135 1037 327 334 725 728 732 803 806 809 884 888 892 END
 PATCH_DEFINE_ARRAY y_coord BEGIN 746  751  612  179 175 361 362 365 414 416 419 473 474 476 END
