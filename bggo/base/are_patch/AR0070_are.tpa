@@ -1,0 +1,23 @@
+//////////////////////////////////////
+// identical maps: AR0070
+// AR0070 AR1515
+//////////////////////////////////////
+
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 438  456  321 602 585 437 421 347 329 261 244 167 151 211 228 397 414 507 675 691 837 930 946 1133 1303 1320 1235 1218 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 1031 1020 948 953 941 837 826 772 758 712 700 645 634 477 465 346 334 269 150 138 104 169 182 313  433  446  516  528  END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
