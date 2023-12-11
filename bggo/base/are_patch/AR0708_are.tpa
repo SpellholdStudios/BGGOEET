@@ -1,0 +1,10 @@
+//////////////////////////////////////
+// identical maps: AR0531
+// AR0708 AR1612
+//////////////////////////////////////
+
+SPRINT identical_area "AR0531"
+
+PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~ BEGIN // add animation for braziers, candles ...
+	PATCH_INCLUDE ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~
+END
