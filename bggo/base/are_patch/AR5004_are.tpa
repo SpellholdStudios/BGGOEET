@@ -1,0 +1,19 @@
+
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 442 296 300 230 248 241 456 478 567 626 696 717 768 838 848 754 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 773 606 568 485 353 332 264 220 237 317 399 413 482 564 341 260 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FIRE_4W
+		fj_bam_resref = FIRE_4W //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~

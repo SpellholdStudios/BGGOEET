@@ -8,12 +8,12 @@
 
 //////////////////////////////////////
 // identical maps: BG0109
-// BG0109 AR0016 TU0016
+// BG0109 AR0016 TU0016 BD0100 BD0118
 //////////////////////////////////////
 
 //Add candles and torches
-PATCH_DEFINE_ARRAY x_coord BEGIN 1143 1135 1037 327 334 725 728 732 803 806 809 884 888 892 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 746  751  612  179 175 361 362 365 414 416 419 473 474 476 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 1143 1135 1037 327 334 725 728 732 803 806 809 884 888 892 232 369 827 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 746  751  612  179 175 361 362 365 414 416 419 473 474 476 444 574 838 END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -24,8 +24,8 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
 		STR_VAR
 		fj_structure_type = animation
-		fj_name = FLAME2S
-		fj_bam_resref = FLAME2S
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N
 	END
 END
 LPM ~CLEAR_ARRAY~
