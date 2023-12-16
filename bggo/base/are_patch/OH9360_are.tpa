@@ -1,0 +1,26 @@
+
+// offset to rest encounters offset is 0. Adding empty table
+PATCH_IF LONG_AT 0xc0 = 0 BEGIN
+	WRITE_LONG 0xc0 BUFFER_LENGTH
+	INSERT_BYTES BUFFER_LENGTH 0xe4
+END
+
+
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 356 250 454 385 501 600 790 1061 1158 1171 1023 849 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 927 711 560 506 405 435 329 347  406  652  765  860 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLSM1W
+		fj_bam_resref = FLSM1W //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
