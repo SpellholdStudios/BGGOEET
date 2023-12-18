@@ -635,7 +635,7 @@ ACTION_IF GAME_IS "eet" BEGIN
 	OUTER_SPRINT "Beregost_KagainsStore" "BG3353"
 	OUTER_SPRINT "Beregost_House09" "BG3354"
 	OUTER_SPRINT "Beregost_House08" "BG3355"
-	OUTER_SPRINT "Beregost_House08" "BG3356"
+	OUTER_SPRINT "Beregost_House08_L2" "BG3356"
 	OUTER_SPRINT "Beregost_RedSheaf_L1" "BG3357"
 	OUTER_SPRINT "Temple" "BG3400"
 	OUTER_SPRINT "Temple_Vestibule" "BG3401"
