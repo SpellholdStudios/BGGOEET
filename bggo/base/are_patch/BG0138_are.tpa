@@ -6,8 +6,8 @@
 // If there is any problems with this, this part can be removed at any time.
 ///////////////////////////////////
 
-PATCH_DEFINE_ARRAY x_coord BEGIN 76  289 228 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 181 270 71  END
+PATCH_DEFINE_ARRAY x_coord BEGIN 76  289 228 121 105 136 369 385 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 181 270 71  101 146 275 277 102 END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -18,8 +18,8 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
 		STR_VAR
 		fj_structure_type = animation
-		fj_name = FLAME2S
-		fj_bam_resref = FLAME2S
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N
 	END
 END
 LPM ~CLEAR_ARRAY~
