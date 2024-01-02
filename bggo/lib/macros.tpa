@@ -75,6 +75,15 @@ END
 
 DEFINE_PATCH_MACRO ~DELETE_EXISTING_ANIMATIONS~ // to delete torches, candles ...
 BEGIN
+	// offset to rest encounters and songlist is 0. Adding empty table
+	PATCH_IF LONG_AT 0xc0 = 0 BEGIN
+		WRITE_LONG 0xc0 BUFFER_LENGTH
+		INSERT_BYTES BUFFER_LENGTH 0xe4
+	END
+	PATCH_IF LONG_AT 0xbc = 0 BEGIN
+		WRITE_LONG 0xbc BUFFER_LENGTH
+		INSERT_BYTES BUFFER_LENGTH 0x90
+	END
 	GET_OFFSET_ARRAY animation_array ARE_V10_ANIMATIONS
 	PATCH_PHP_EACH animation_array AS animation_num => animation_offset BEGIN
 		READ_SHORT animation_offset+0x20 animation_pos_x
@@ -183,11 +192,6 @@ BEGIN
 						OUTER_PATCH ~~ BEGIN LPM ~DEBUG~ END
 						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.tis~ END
 					END
-					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tis~ BEGIN	// some areas have artefacts during compression, no tbc file
-						COPY_LARGE ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tis~ ~%biffdir%/%are2%.tis~
-						OUTER_PATCH ~~ BEGIN LPM ~DEBUG~ END
-						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.tis~ END
-					END
 				END
 				ACTION_IF GAME_IS ~eet bgee bg2ee~ BEGIN
 					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tis~ BEGIN
@@ -282,22 +286,15 @@ BEGIN
 			
 			ACTION_IF (FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tbc~ OR FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~) BEGIN
 				ACTION_IF GAME_IS ~bgt tutu_totsc tob~ BEGIN
-					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tbc~ BEGIN
-						LAF HANDLE_TILECONV
-							STR_VAR
-								input_path    = EVAL ~%MOD_FOLDER%/base/tbcN/%are%/%ee%~
-								output_path	  = EVAL ~%temp%~
-						END
-						COPY_LARGE ~%temp%/%are%N.tis~ ~%biffdir%/%are2%N.tis~
-						OUTER_PATCH ~~ BEGIN LPM ~DEBUG~ END
-						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.tis~ END
+					LAF HANDLE_TILECONV
+						STR_VAR
+							input_path    = EVAL ~%MOD_FOLDER%/base/tbcN/%are%/%ee%~
+							output_path	  = EVAL ~%temp%~
 					END
-					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~ BEGIN // some areas have artefacts during compression, no tbc file
-						COPY_LARGE ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~ ~%biffdir%/%are2%N.tis~
-						OUTER_PATCH ~~ BEGIN LPM ~DEBUG~ END
-						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.tis~ END
+					COPY_LARGE ~%temp%/%are%N.tis~ ~%biffdir%/%are2%N.tis~
+					OUTER_PATCH ~~ BEGIN LPM ~DEBUG~ END
+					LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.tis~ END
 					END
-				END
 				ACTION_IF GAME_IS ~eet bgee bg2ee~ BEGIN
 					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~ BEGIN
 						COPY ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~ ~%biffdir%/%are2%N.tis~

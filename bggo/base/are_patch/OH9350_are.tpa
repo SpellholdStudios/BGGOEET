@@ -1,11 +1,4 @@
 
-// offset to rest encounters offset is 0. Adding empty table
-PATCH_IF LONG_AT 0xc0 = 0 BEGIN
-	WRITE_LONG 0xc0 BUFFER_LENGTH
-	INSERT_BYTES BUFFER_LENGTH 0xe4
-END
-
-
 //Add candles and torches
 PATCH_DEFINE_ARRAY x_coord BEGIN 160 426 854 1121 END
 PATCH_DEFINE_ARRAY y_coord BEGIN 256 126 126 255  END
