@@ -1,0 +1,23 @@
+//////////////////////////////////////
+// identical maps: BG2004
+// BG2004 BG2005
+//////////////////////////////////////
+ 
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 158 208 263 377 531 481 153 371 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 353 402 300 243 238 189 270 159 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2M
+		fj_bam_resref = FLAME2M //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
