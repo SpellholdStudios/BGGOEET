@@ -448,3 +448,22 @@ BEGIN
 	APPEND_OUTER + ~%MOD_FOLDER%/all_files.log~ ~%all_files%~
 END
 
+DEFINE_PATCH_FUNCTION ~animation_counter~
+BEGIN
+	PATCH_IF NOT FILE_EXISTS ~%MOD_FOLDER%/anim_count.log~ BEGIN
+		INNER_ACTION BEGIN
+			<<<<<<<< .../anim_count.log
+			0
+			>>>>>>>>
+			COPY ~.../anim_count.log~ ~%MOD_FOLDER%/anim_count.log~
+				READ_2DA_ENTRY 0 0 1 count
+				SET_2DA_ENTRY 0 0 1 count+1
+		END
+	END ELSE BEGIN
+		INNER_ACTION BEGIN
+			COPY ~%MOD_FOLDER%/anim_count.log~ ~%MOD_FOLDER%/anim_count.log~
+				READ_2DA_ENTRY 0 0 1 count
+				SET_2DA_ENTRY 0 0 1 count+1
+		END
+	END
+END

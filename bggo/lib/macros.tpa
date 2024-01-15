@@ -76,6 +76,9 @@ END
 DEFINE_PATCH_MACRO ~DELETE_EXISTING_ANIMATIONS~ // to delete torches, candles ...
 BEGIN
 	// offset to rest encounters and songlist is 0. Adding empty table
+	PATCH_IF debug BEGIN
+		LPF animation_counter END 
+	END
 	PATCH_IF LONG_AT 0xc0 = 0 BEGIN
 		WRITE_LONG 0xc0 BUFFER_LENGTH
 		INSERT_BYTES BUFFER_LENGTH 0xe4

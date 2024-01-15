@@ -8,10 +8,16 @@
 // Add torches to the temple in Candlekeep
 //**************************************************
 
+FOR( i = SHORT_AT 0xac ; i ; --i )BEGIN
+	READ_ASCII ((SHORT_AT 0xb0) + (i - 1) * 0x4c) anim_name (32) NULL
+	PATCH_IF ~%anim_name%~ STR_EQ ~Torch~ BEGIN
+		LPF fj_are_structure INT_VAR fj_delete_mode = i - 1 STR_VAR fj_structure_type = animation END
+	END
+END
 	
 //Add candles and torches
-PATCH_DEFINE_ARRAY x_coord BEGIN 3933 4086 4201 4321 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 416  253  323  360 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 3933 4087 4201 4321 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 419  254  325  363  END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -22,8 +28,8 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
 		STR_VAR
 		fj_structure_type = animation
-		fj_name = FLAME2S
-		fj_bam_resref = FLAME2S
+		fj_name = FLAMBLU2
+		fj_bam_resref = FLAMBLU2
 	END
 END
 LPM ~CLEAR_ARRAY~
