@@ -1,7 +1,7 @@
 
 //Add candles and torches
-PATCH_DEFINE_ARRAY x_coord BEGIN 411 509 390 421 342 750 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 121 147 300 251 750 342 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 91  216 266 365 416 530 262 411 557 641 787 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 147 148 162 190 205 237 94  137 184 158 201 END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -18,26 +18,8 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 END
 LPM ~CLEAR_ARRAY~
 
-PATCH_DEFINE_ARRAY x_coord BEGIN 75  113 216 558 560 693 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 205 138 62  214 341 199 END
-PATCH_PHP_EACH x_coord AS index => x BEGIN
-	LPM ~DELETE_EXISTING_ANIMATIONS~
-	LPF fj_are_structure
-	INT_VAR
-		fj_loc_x = $x_coord("%index%")
-		fj_loc_y = $y_coord("%index%")
-		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
-		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
-		STR_VAR
-		fj_structure_type = animation
-		fj_name = FLMSW
-		fj_bam_resref = FLMSW //bgrd
-	END
-END
-LPM ~CLEAR_ARRAY~
-
-PATCH_DEFINE_ARRAY x_coord BEGIN 770 307 191 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 259 228 124 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 165 650 702 204 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 250 374 279 286 END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
