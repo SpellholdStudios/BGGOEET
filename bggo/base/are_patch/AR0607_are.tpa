@@ -4,7 +4,7 @@
 //////////////////////////////////////
 
 //Add candles and torches
-PATCH_DEFINE_ARRAY x_coord BEGIN 189 200 207 293 309 645 659 661 777 790 774 666 671 653 355 370 497 509 491 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 189 200 207 293 309 645 659 661 777 791 774 666 671 653 355 370 497 509 491 END
 PATCH_DEFINE_ARRAY y_coord BEGIN 293 301 291 535 531 543 550 538 370 364 359 190 179 182 157 153 340 331 330 END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
@@ -34,8 +34,8 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
 		STR_VAR
 		fj_structure_type = animation
-		fj_name = FLAME2S
-		fj_bam_resref = FLAME2S //bgrd
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
 	END
 END
 LPM ~CLEAR_ARRAY~
