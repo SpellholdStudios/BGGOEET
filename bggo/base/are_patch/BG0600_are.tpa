@@ -2,8 +2,33 @@
 // Add some braziers in Baldur's Gate
 //**************************************************
 
-PATCH_DEFINE_ARRAY x_coord BEGIN 385 383 556 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 81  420 2478 END
+FOR( i = SHORT_AT 0xac ; i ; --i )BEGIN
+	READ_ASCII ((SHORT_AT 0xb0) + (i - 1) * 0x4c) anim_name (32) NULL
+	PATCH_IF ~%anim_name%~ STR_EQ ~FLAME2M~ BEGIN
+		LPF fj_are_structure INT_VAR fj_delete_mode = i - 1 STR_VAR fj_structure_type = animation END
+	END
+END
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 1737 2067 2469 2782 3131 3462 3863 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 2410 2221 1976 1771 1598 1409 1164 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")+2
+		fj_loc_y = $y_coord("%index%")-12
+		fj_schedule =  0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FIRE_4
+		fj_bam_resref = FIRE_4 //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 385 383 556  1567 2144 2656 2783 3587 1236 4174 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 81  420 2478 2546 2898 2558 2524 2002 1986 942  END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -16,6 +41,24 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_structure_type = animation
 		fj_name = Brazier
 		fj_bam_resref = fire_3
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 866 898 4097 4149 3436 570  1080 1227 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 655 629 291  309  3130 3165 3209 3216 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
 	END
 END
 LPM ~CLEAR_ARRAY~

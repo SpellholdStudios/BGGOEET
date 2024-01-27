@@ -25,8 +25,8 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 END
 LPM ~CLEAR_ARRAY~
 
-PATCH_DEFINE_ARRAY x_coord BEGIN 420 90  END
-PATCH_DEFINE_ARRAY y_coord BEGIN 576 491 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 90  END
+PATCH_DEFINE_ARRAY y_coord BEGIN 491 END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -57,6 +57,24 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_structure_type = animation
 		fj_name = FIRE_3
 		fj_bam_resref = FIRE_3
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 419 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 575 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111100000000000000111111 //Hours All
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N
 	END
 END
 LPM ~CLEAR_ARRAY~
