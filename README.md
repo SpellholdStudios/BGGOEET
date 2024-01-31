@@ -125,7 +125,7 @@ In addition to the methods above for removing individual components, you can com
 - <a href="http://www.spellholdstudios.net/">Spellhold Studios</a> team for hosting the mod (<a href="http://www.shsforums.net">Forums</a>).
 - <a href="https://www.gibberlings3.net/">Gibberlings3</a> team for hosting the mod (<a href="https://www.gibberlings3.net/forums">Forums</a>).
 - The creators of the Baldur's Gate series: <a href="http://www.bioware.com/">Bioware</a> and <a href="http://www.obsidian.net/">Black Isle Studios</a>.
-- For the great support and help: **Galactygon**, **Jastey**, **Salk**, **Sam**, **TotoR** ... without the constant feedback, everything would not have been so possible<br> and many more, which I can't look up now, because the SHSForum is down. Should it work again, I will add all the others here, or they should contact me :)
+- For the great support and help: **Galactygon**, **Jastey**, **Salk**, **Sam**, **TotoR** ... without the constant feedback, everything would not have been so possible and many more, which I can't look up now, because the SHSForum is down. Should it work again, I will add all the others here, or they should contact me :)
 - Everyone else from the <a href="http://gibberlings3.net/forums/">The Gibberlings Three</a>, <a href="http://www.shsforums.net/">Spellhold Studios</a> forums, and the other Infinity Engine gaming and modding communities who offered their help and support.
 
 ## 
@@ -141,7 +141,9 @@ In addition to the methods above for removing individual components, you can com
 - <a href="http://www.shsforums.net/topic/57564-bamworkshop/">BAMWorkshop 2</a>, by Andrew Bridges.
 - <a href="http://notepad-plus-plus.org/">Notepad++</a>, by the Notepad++ team, Don Ho, and the spellcheck plug-in.
 - <a href="http://www.shsforums.net/files/file/1048-weidu-highlighter-for-notepad/">WeiDU Notepad++ Highlighters </a>, by Argent77.
-
+- <a href="https://code.visualstudio.com/">Visual Studio Code</a>, modern, cross-platform editor.
+- <a href="https://marketplace.visualstudio.com/items?itemName=BGforge.bgforge-mls/">Visual Studio Code - BGforge MLS</a> - Syntax highlighting and more.
+- <a href="https://github.com/InfinityTools/InfinityAutoPackager/">Infinity Auto Packager</a>, automatically generates Infinity Engine mod packages.
 ## 
 
 #### Copyright Information
