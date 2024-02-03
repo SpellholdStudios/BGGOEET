@@ -1,3 +1,7 @@
+//////////////////////////////////////
+// identical maps: AR0011
+// AR0011 AR0028
+//////////////////////////////////////
 
 //Add candles and torches
 PATCH_DEFINE_ARRAY x_coord BEGIN 1952 2038 END
