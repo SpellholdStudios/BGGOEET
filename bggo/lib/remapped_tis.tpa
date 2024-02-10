@@ -482,6 +482,6 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_tis BEGIN
 	"BG1007"	=>	"%UlgothsBeard_House1%"
 	"BG1008"	=>	"%IceIsland%"
 	"BG1009"	=>	"%IceIslandMaze_L1%"
-	"BG1010"	=>	"IceIslandMaze_L2"
+	"BG1010"	=>	"%IceIslandMaze_L2%"
 END 
  
