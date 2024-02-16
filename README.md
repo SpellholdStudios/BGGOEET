@@ -142,7 +142,9 @@ In addition to the methods above for removing individual components, you can com
 - <a href="http://www.shsforums.net/topic/57564-bamworkshop/">BAMWorkshop 2</a>, by Andrew Bridges.
 - <a href="http://notepad-plus-plus.org/">Notepad++</a>, by the Notepad++ team, Don Ho, and the spellcheck plug-in.
 - <a href="http://www.shsforums.net/files/file/1048-weidu-highlighter-for-notepad/">WeiDU Notepad++ Highlighters </a>, by Argent77.
-
+- <a href="https://code.visualstudio.com/">Visual Studio Code</a>, modern, cross-platform editor.
+- <a href="https://marketplace.visualstudio.com/items?itemName=BGforge.bgforge-mls/">Visual Studio Code - BGforge MLS</a> - Syntax highlighting and more.
+- <a href="https://github.com/InfinityTools/InfinityAutoPackager/">Infinity Auto Packager</a>, automatically generates Infinity Engine mod packages.
 ## 
 
 #### Copyright Information
