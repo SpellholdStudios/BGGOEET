@@ -35,9 +35,10 @@ As luck would have it, two met by chance in the Beamdog and Gibberlings 3 forums
 One was trying to deal with all the problems of the two versions not working properly for both engine variants. The other was just tweaking and beautifying the graphics further. 
 Fortunately, when they finally got in contact, there was an incredible synergy effect. They understood each other right away and joined forces.
 Not only were all the old graphics from BG1 reworked, but they also decided to add all the areas from BG2, ToB, SoD, BG1EE and BG2EE without the original night map.
-This means that there are now 83 new night maps. In total 212 maps will be improved.
-These are the night maps and also day maps. Light maps are added, graphical bugs are fixed, animated water areas are added, animated candles, torches and lights are added.
+This means that there are now 83 new night maps. In total 636 maps will be improved.
+These are the night maps and also day maps. Light maps are added, graphical bugs are fixed, animated water areas are added, over 7000 animated candles, torches and lights are added.
 Especially with the animated candles, torches and lights, old maps can be improved at any time.
+
 <div align="right"><a href="#top">Back to top</a></div>
 
 
@@ -125,7 +126,7 @@ In addition to the methods above for removing individual components, you can com
 - <a href="http://www.spellholdstudios.net/">Spellhold Studios</a> team for hosting the mod (<a href="http://www.shsforums.net">Forums</a>).
 - <a href="https://www.gibberlings3.net/">Gibberlings3</a> team for hosting the mod (<a href="https://www.gibberlings3.net/forums">Forums</a>).
 - The creators of the Baldur's Gate series: <a href="http://www.bioware.com/">Bioware</a> and <a href="http://www.obsidian.net/">Black Isle Studios</a>.
-- For the great support and help: **Galactygon**, **Jastey**, **Salk**, **Sam**, **TotoR** ... without the constant feedback, everything would not have been so possible<br> and many more, which I can't look up now, because the SHSForum is down. Should it work again, I will add all the others here, or they should contact me :)
+- For the great support and help: **Galactygon**, **Jastey**, **Salk**, **Sam**, **TotoR**, **ALIENQuake**, **skellytz** ... without the constant feedback, everything would not have been so possible<br> and many more, which I can't look up now, because the SHSForum is down. Should it work again, I will add all the others here, or they should contact me :)
 - Everyone else from the <a href="http://gibberlings3.net/forums/">The Gibberlings Three</a>, <a href="http://www.shsforums.net/">Spellhold Studios</a> forums, and the other Infinity Engine gaming and modding communities who offered their help and support.
 
 ## 
