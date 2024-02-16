@@ -1,0 +1,10 @@
+//////////////////////////////////////
+// identical maps: BD0101
+// BD0101 BD0010
+//////////////////////////////////////
+
+SPRINT identical_area "BD0101"
+
+PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~ BEGIN // add animation for braziers, candles ...
+	PATCH_INCLUDE ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~
+END

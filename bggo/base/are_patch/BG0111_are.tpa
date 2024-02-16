@@ -6,9 +6,14 @@
 // If there is any problems with this, this part can be removed at any time.
 ///////////////////////////////////
 
+//////////////////////////////////////
+// identical maps: BG0111
+// BG0111 AR0018 TU0018 BD0116
+//////////////////////////////////////
+
 //Add candles and torches
-PATCH_DEFINE_ARRAY x_coord BEGIN 653 455 257 551 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 218 358 498 246 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 653 455 257 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 218 358 498 END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -19,8 +24,27 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
 		STR_VAR
 		fj_structure_type = animation
-		fj_name = FLAME2S
-		fj_bam_resref = FLAME2S
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 923 901 1004 1091 1146 1369 1372 1148 1229 817  458 251 1017 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 122 451 360  313  460  437  517  878  910  1031 862 630 528  END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLMS
+		fj_bam_resref = FLMS //bgrd
 	END
 END
 LPM ~CLEAR_ARRAY~

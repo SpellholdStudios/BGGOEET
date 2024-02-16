@@ -13,6 +13,7 @@ ACTION_IF GAME_IS ~tutu_totsc~ BEGIN
 		_eagle => 1
 		_vultur => 1
 		_seagul => 1
+		_butrfly => 1
 	END
 END ELSE BEGIN
 	ACTION_DEFINE_ASSOCIATIVE_ARRAY turn_off_at_night BEGIN // turn off sleeping animals at night
@@ -20,6 +21,7 @@ END ELSE BEGIN
 		eagle => 1
 		vultur => 1
 		seagul => 1
+		butrfly => 1
 	END
 END
 
@@ -75,6 +77,18 @@ END
 
 DEFINE_PATCH_MACRO ~DELETE_EXISTING_ANIMATIONS~ // to delete torches, candles ...
 BEGIN
+	// offset to rest encounters and songlist is 0. Adding empty table
+	PATCH_IF debug BEGIN
+		LPF animation_counter END 
+	END
+	PATCH_IF LONG_AT 0xc0 = 0 BEGIN
+		WRITE_LONG 0xc0 BUFFER_LENGTH
+		INSERT_BYTES BUFFER_LENGTH 0xe4
+	END
+	PATCH_IF LONG_AT 0xbc = 0 BEGIN
+		WRITE_LONG 0xbc BUFFER_LENGTH
+		INSERT_BYTES BUFFER_LENGTH 0x90
+	END
 	GET_OFFSET_ARRAY animation_array ARE_V10_ANIMATIONS
 	PATCH_PHP_EACH animation_array AS animation_num => animation_offset BEGIN
 		READ_SHORT animation_offset+0x20 animation_pos_x

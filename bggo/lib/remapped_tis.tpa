@@ -4,8 +4,8 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_tis BEGIN
 	"BG0005"	=>	"%NBaldursGate_BherensHouse_L2%"
 	"BG0006"	=>	"%NBaldursGate_RinniesHouse_L1%"
 	"BG0007"	=>	"%NBaldursGate_RinniesHouse_L2%"
-	"BG0008"	=>	"%%NBaldursGate_House1_L1%%"
-	"BG0009"	=>	"%%NBaldursGate_House1_L2%%"
+	"BG0008"	=>	"%NBaldursGate_House1_L1%"
+	"BG0009"	=>	"%NBaldursGate_House1_L2%"
 	"BG0010"	=>	"%NBaldursGate_JardaksHouse_L1%"
 	"BG0011"	=>	"%NBaldursGate_JardaksHouse_L2%"
 	"BG0012"	=>	"%NBaldursGate_House2_L1%"
@@ -343,7 +343,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_tis BEGIN
 	"BG3353"	=>	"%Beregost_KagainsStore%"
 	"BG3354"	=>	"%Beregost_House09%"
 	"BG3355"	=>	"%Beregost_House08%"
-	"BG3356"	=>	"%Beregost_House08%"
+	"BG3356"	=>	"%Beregost_House08_L2%"
 	"BG3357"	=>	"%Beregost_RedSheaf_L1%"
 	"BG3400"	=>	"%Temple%"
 	"BG3401"	=>	"%Temple_Vestibule%"
@@ -482,6 +482,6 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY remapped_tis BEGIN
 	"BG1007"	=>	"%UlgothsBeard_House1%"
 	"BG1008"	=>	"%IceIsland%"
 	"BG1009"	=>	"%IceIslandMaze_L1%"
-	"BG1010"	=>	"IceIslandMaze_L2"
+	"BG1010"	=>	"%IceIslandMaze_L2%"
 END 
  

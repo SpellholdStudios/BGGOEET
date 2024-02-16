@@ -1,0 +1,37 @@
+
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 168 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 657 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLMS
+		fj_bam_resref = FLMS //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 242 330 512 482 614 567 695 582 668 891 809 1002 1089 1261 1001 1095 164 275 309 476 394 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 770 706 785 580 638 483 542 380 288 388 480 565  474  551  669  720  308 356 130 204 295 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FIRE_4
+		fj_bam_resref = FIRE_4 //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~

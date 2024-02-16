@@ -2,8 +2,8 @@
 // Add some braziers in Baldur's Gate
 //**************************************************
 
-PATCH_DEFINE_ARRAY x_coord BEGIN 3186 3637 4121 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 1670 1566 1083 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 3186 3637 4121 18  1062 1308  END
+PATCH_DEFINE_ARRAY y_coord BEGIN 1670 1566 1083 939 2293 2293  END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -16,6 +16,42 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_structure_type = animation
 		fj_name = Brazier
 		fj_bam_resref = fire_3
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 275 677 1582 1683 1745 1932 4179 4314 4403 3817 3461 2543  END
+PATCH_DEFINE_ARRAY y_coord BEGIN 423 466 1326 1143 1020 680  848  687  2634 2998 2842 1285  END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 2392 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 78   END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = flamlav1
+		fj_bam_resref = flamlav1
 	END
 END
 LPM ~CLEAR_ARRAY~

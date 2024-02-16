@@ -1,3 +1,8 @@
+//////////////////////////////////////
+// identical maps: BG0166
+// BG0166 BG1114 BG1307
+//////////////////////////////////////
+
 //Add candles and torches
 PATCH_DEFINE_ARRAY x_coord BEGIN 203 317 435 252 290 366 405 492 330 459 565 434 544 579 682 END
 PATCH_DEFINE_ARRAY y_coord BEGIN 357 277 200 409 382 328 300 239 498 408 330 135 57  160 231 END
@@ -11,8 +16,8 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
 		STR_VAR
 		fj_structure_type = animation
-		fj_name = FLAME2S
-		fj_bam_resref = FLAME2S //bgrd
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
 	END
 END
 LPM ~CLEAR_ARRAY~

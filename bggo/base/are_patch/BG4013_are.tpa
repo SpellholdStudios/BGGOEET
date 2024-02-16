@@ -1,0 +1,10 @@
+//////////////////////////////////////
+// identical maps: BG4001
+// BG4001 BG4005 BG4007 BG4009 BG4011 BG4013
+//////////////////////////////////////
+
+SPRINT identical_area "BG4001"
+
+PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~ BEGIN // add animation for braziers, candles ...
+	PATCH_INCLUDE ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~
+END

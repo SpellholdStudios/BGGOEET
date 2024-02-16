@@ -1,0 +1,59 @@
+//////////////////////////////////////
+// identical maps: BG1801
+// BG1801 BG1801A(unused)
+//////////////////////////////////////
+ 
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 1967 1977 1976 1967 3110 3058 3006 2923 1857 1867 1871 1861 2316 2344 1526 1530 1540 1535 1262 1266 1275 1271 878  1583 1610 1634 1660 1685 1714 1738 1758 1852 1832 1838 1867 1890 1918 1939 1954 1971 1990 1759 1776 1796 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 2621 2622 2615 2614 947  916  888  765  365  368  362  359  2308 2306 543  549  546  539  783  789  786  779  1330 1381 1400 1415 1435 1452 1473 1476 1462 1529 1543 1560 1580 1598 1617 1633 1517 1504 1493 1379 1368 1353 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 2199 3131 3244 1604 1278 1016 674  792  1013 1124 1675 1862 2085 2219 2172 2195 2383 2615 2742 2712 1919 1409 1556 1762 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 2115 771  851  328  559  743  1190 1107 1109 1187 961  829  775  869  1137 1325 1191 1149 1239 1519 1671 1520 1414 1780 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2M
+		fj_bam_resref = FLAME2M //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 337  105  616  601  580  798  1019 1116 1443 1105 1393 1710 1967 2028 2287 2012 2207 2622 2492 2556 2795 2909 2883 3214 3395 3123 3230 3004 2887 2649 2410 2195 1931 2110 2299 1915 1817 1624 1523 1326 1201 1296 1450 1587 1753 1930 2110 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 1433 1596 1560 1434 1901 2056 2078 1832 1974 2272 2476 2460 2292 2410 2594 2927 2870 2850 2217 1881 1711 1630 1771 1643 1771 1479 1229 1069 986  818  647  496  232  103  184  503  572  709  781  920  1008 1510 1619 1716 1833 1958 2086 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")+2
+		fj_loc_y = $y_coord("%index%")-12
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FIRE_4
+		fj_bam_resref = FIRE_4 //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~

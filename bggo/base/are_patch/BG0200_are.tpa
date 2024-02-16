@@ -2,8 +2,8 @@
 // Add some braziers in Baldur's Gate
 //**************************************************
 
-PATCH_DEFINE_ARRAY x_coord BEGIN 941 3314 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 80  207 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 941 3314 603 609 1936 1437 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 80  207  580 853 2517 2027 END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -34,6 +34,78 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_structure_type = animation
 		fj_name = Brazier
 		fj_bam_resref = flame2l
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 9   74   343  2074 2194  END
+PATCH_DEFINE_ARRAY y_coord BEGIN 529 1431 1378 1946 1977  END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")+2
+		fj_loc_y = $y_coord("%index%")-12
+		fj_schedule =  0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FIRE_4
+		fj_bam_resref = FIRE_4 //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 1242 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 2794 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLMS
+		fj_bam_resref = FLMS //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 214  726  784  1570 4308 4025 3043 2743 2668 2476  END
+PATCH_DEFINE_ARRAY y_coord BEGIN 2238 2652 2667 2879 772  880  1158 1062 1056 1204  END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 2388 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 3149 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = flamlav1
+		fj_bam_resref = flamlav1
 	END
 END
 LPM ~CLEAR_ARRAY~

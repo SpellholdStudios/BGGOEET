@@ -1,0 +1,55 @@
+ 
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 781  841  861  1032 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 1179 1136 1318 1223 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 668  929 1121 1131 699  399  END
+PATCH_DEFINE_ARRAY y_coord BEGIN 1090 990 1125 1245 1421 1360 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2M
+		fj_bam_resref = FLAME2M //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 667 478 742 402 561 281 370 832  940  910  1046 1278 1311 1618 1848 1988 1713 1961 1762 1511 1762 1638 1064 1386 1473 1284 1049 759 1053 949 1218  END
+PATCH_DEFINE_ARRAY y_coord BEGIN 298 335 425 484 554 477 687 1520 1597 1687 1673 1608 1426 1366 1203 944  972  799  650  827  649  698  690  462  401  441  276  131 109  772 918   END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")+2
+		fj_loc_y = $y_coord("%index%")-12
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FIRE_4
+		fj_bam_resref = FIRE_4 //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~

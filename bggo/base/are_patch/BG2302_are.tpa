@@ -7,8 +7,8 @@ PHP_EACH ambients_array AS ambients_num => ambients_offset BEGIN
 		WRITE_SHORT ambients_offset+0x24 700 //Ambient Radius
 	END
 END
-PATCH_DEFINE_ARRAY x_coord BEGIN 379 388 249 572 749 757 750 760 750 760 904 970 1089 1082 1096 1088 1277 1287 1278 1287 1489 1300 1307 1115 1122 912 920 827 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 537 541 670 411 276 280 170 170 176 176 196 247 306  310  311  315	 438  438  444  444  626  665  670  795  801  914 919 664 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 379 387 249 571 748 756 750 760 750 760 904 970 1089 1082 1096 1088 1277 1287 1278 1287 1489 1299 1307 1115 1122 912 920 827 224 420 589 890 610 1241 1048 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 537 541 670 411 276 280 170 170 176 176 196 247 306  310  311  315	 438  438  444  444  626  665  670  795  801  914 919 664 589 450 328 451 489 677  802  END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -19,8 +19,26 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
 		STR_VAR
 		fj_structure_type = animation
-		fj_name = FLAME2S
-		fj_bam_resref = FLAME2S
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 401 448 594 641 779 826 982 1059 727 774 921 1105 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 724 690 588 554 456 423 462 517  955 922 823 687  END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLMS
+		fj_bam_resref = FLMS //bgrd
 	END
 END
 LPM ~CLEAR_ARRAY~

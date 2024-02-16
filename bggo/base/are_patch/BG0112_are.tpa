@@ -1,0 +1,57 @@
+
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 296 412 618 685 802 876 987 1061 1175 1878 2068 2220 2315 1614 1810 1842 1994 2028 2179 2232 2357 1139 809  941  619  754  432  252  285  378   END
+PATCH_DEFINE_ARRAY y_coord BEGIN 326 244 263 176 394 308 525 441  658  394  255  250  318  969  1108 1039 1236 1170 1368 1694 1606 1342 1147 1469 1279 1601 1412 1540 1614 1686  END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLMS
+		fj_bam_resref = FLMS //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 1294 1330 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 989  1014 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+//Add candles and torches
+PATCH_DEFINE_ARRAY x_coord BEGIN 1152 1148 1386 1464 1461 1375 1211 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 1042 962  944  983  1070 1116 1106 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule =  0b111111111111111111111111 //Hours 0.00 - 24.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLSM1W
+		fj_bam_resref = FLSM1W //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~

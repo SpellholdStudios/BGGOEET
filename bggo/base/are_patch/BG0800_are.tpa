@@ -2,8 +2,8 @@
 // Add some braziers in Baldur's Gate
 //**************************************************
 
-PATCH_DEFINE_ARRAY x_coord BEGIN 3311 3337 3422 853 715 585 168 END
-PATCH_DEFINE_ARRAY y_coord BEGIN 2614 2392 295  42  203 446 814 END
+PATCH_DEFINE_ARRAY x_coord BEGIN 3311 3335 3422 852 714 585 163 3670 3722 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 2614 2392 295  43  205 447 822 1203 1329 END
 PATCH_PHP_EACH x_coord AS index => x BEGIN
 	LPM ~DELETE_EXISTING_ANIMATIONS~
 	LPF fj_are_structure
@@ -19,3 +19,122 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 	END
 END
 LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 31  195 2834 2899 3000 1770 1598 1089 1841 1408 1479 1681 1757 2194 2278 559  502  200  128   END
+PATCH_DEFINE_ARRAY y_coord BEGIN 693 539 838  946  982  3293 3166 2890 2365 1211 1230 1155 1175 1213 851  2478 2505 2585 2680  END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN 1691 1766  END
+PATCH_DEFINE_ARRAY y_coord BEGIN 1141 1159  END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		fj_transparent = 220
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLAME2N
+		fj_bam_resref = FLAME2N //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+PATCH_DEFINE_ARRAY x_coord BEGIN  3159  END
+PATCH_DEFINE_ARRAY y_coord BEGIN  979   END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FLMS
+		fj_bam_resref = FLMS //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+
+//  I couldn't get the "AmbientActivate" action to work properly
+//  The flame to the left of the double door is hidden by the open door.
+/*
+PATCH_DEFINE_ARRAY x_coord BEGIN 1777 END
+PATCH_DEFINE_ARRAY y_coord BEGIN 2339 END
+PATCH_PHP_EACH x_coord AS index => x BEGIN
+	LPM ~DELETE_EXISTING_ANIMATIONS~
+	LPF fj_are_structure
+	INT_VAR
+		fj_loc_x = $x_coord("%index%")
+		fj_loc_y = $y_coord("%index%")
+		fj_schedule = 0b111000000000000000111111 //Hours 22.00 - 07.00
+		fj_flags = 0b00000000000000000001000001000011	// Visible, blend colours, not covered by wall, don't remove in combat
+		fj_transparent = 0
+		STR_VAR
+		fj_structure_type = animation
+		fj_name = FlmDoor1
+		fj_bam_resref = FLAME2N //bgrd
+	END
+END
+LPM ~CLEAR_ARRAY~
+
+INNER_ACTION BEGIN
+
+<<<<<<<< .../bBG0800.baf
+
+
+IF
+  OpenState("Door0705",TRUE)
+  TimeGT(20)
+  TimeLT(6)
+THEN
+  RESPONSE #100
+    StaticStart("FlmDoor1")
+    AmbientActivate("FlmDoor1",TRUE)
+    Continue()
+END
+
+IF
+  OpenState("Door0705",FALSE)
+  TimeGT(20)
+  TimeLT(6)
+THEN
+  RESPONSE #100
+	StaticStop("FlmDoor1")
+	AmbientActivate("FlmDoor1",FALSE)
+	Continue()
+END
+
+IF
+  TimeGT(5)
+  TimeLT(21)
+THEN
+  RESPONSE #100
+	AmbientActivate("FlmDoor1",FALSE)
+	Continue()
+END
+>>>>>>>>
+
+	EXTEND_BOTTOM ~BG0800.BCS~ ~.../bBG0800.baf~
+END
+*/

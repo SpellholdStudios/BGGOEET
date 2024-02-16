@@ -15,7 +15,7 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		STR_VAR
 		fj_structure_type = animation
 		fj_name = Sconce
-		fj_bam_resref = flame2m
+		fj_bam_resref = FLAME2M
 	END
 END
 LPM ~CLEAR_ARRAY~
@@ -38,7 +38,7 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 		STR_VAR
 		fj_structure_type = animation
 		fj_name = Candle
-		fj_bam_resref = flame2s
+		fj_bam_resref = FLAME2N
 	END
 END
 LPM ~CLEAR_ARRAY~

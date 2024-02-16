@@ -1,0 +1,10 @@
+//////////////////////////////////////
+// identical maps: OH8100
+// OH8100 OH6460
+//////////////////////////////////////
+
+SPRINT identical_area "OH8100"
+
+PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~ BEGIN // add animation for braziers, candles ...
+	PATCH_INCLUDE ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~
+END
