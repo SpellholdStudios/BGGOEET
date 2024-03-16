@@ -239,10 +239,15 @@ BEGIN
 					LPM ~DEBUG~
 				LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.mos~ END
 			END ELSE BEGIN
-				ACTION_IF (area_biff = 1) AND (day = 1) BEGIN
-					COPY_EXISTING ~%are2%.mos~ ~%biffdir%~
+				ACTION_TRY
+					ACTION_IF (area_biff = 1) AND (day = 1) BEGIN
+						COPY_EXISTING ~%are2%.mos~ ~%biffdir%~
 						LPM ~DEBUG~
-					LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.mos~ END
+						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.mos~ END
+					END
+				WITH
+					DEFAULT
+						PRINT ~Couldn't extract %are%.mos from bif~
 				END
 			END
 			
@@ -349,13 +354,23 @@ BEGIN
 			END ELSE BEGIN
 				ACTION_IF (area_biff = 1) AND (night = 1) BEGIN
 					ACTION_IF FILE_EXISTS_IN_GAME ~%are2%N.mos~ BEGIN
-						COPY_EXISTING ~%are2%N.mos~ ~%biffdir%~
-							LPM ~DEBUG~
-						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.mos~ END
+						ACTION_TRY
+							COPY_EXISTING ~%are2%N.mos~ ~%biffdir%~
+								LPM ~DEBUG~
+							LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.mos~ END
+						WITH
+							DEFAULT
+								PRINT ~Couldn't copy %are%N.mos from bif file~
+						END
 					END ELSE BEGIN
-						COPY_EXISTING ~%are2%.mos~ ~%biffdir%/%are2%N.mos~
-							LPM ~DEBUG~
-						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.mos~ END
+						ACTION_TRY
+							COPY_EXISTING ~%are2%.mos~ ~%biffdir%/%are2%N.mos~
+								LPM ~DEBUG~
+							LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.mos~ END
+						WITH
+							DEFAULT
+								PRINT ~Couldn't copy %are%.mos to %are%N.mos from bif file~
+						END
 					END
 				END
 			END

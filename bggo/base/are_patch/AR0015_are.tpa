@@ -3,8 +3,10 @@
 // BG0108 AR0015 TU0015 BD0102
 //////////////////////////////////////
 
-SPRINT identical_area "BG0108"
-
-PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~ BEGIN // add animation for braziers, candles ...
-	PATCH_INCLUDE ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~
+PATCH_IF NOT GAME_IS ~bgt~ BEGIN
+	SPRINT identical_area "BG0108"
+	
+	PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~ BEGIN // add animation for braziers, candles ...
+		PATCH_INCLUDE ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~
+	END
 END
