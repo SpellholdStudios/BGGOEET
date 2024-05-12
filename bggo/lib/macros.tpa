@@ -36,7 +36,7 @@ BEGIN
 	END
 	LAF ALTER_SEARCHMAP
 		STR_VAR
-			path_to_2da_file 	= EVAL ~%MOD_FOLDER%/base/%folder%/bmp%type%/%are%%type%.2da~ 
+			path_to_2da_file 	= EVAL ~%MOD_FOLDER%/base/bmp%type%/%folder%/%are%%type%.2da~  
 			areaname 			= EVAL ~%are2%~ // area name, e.g. ~AR3700~
 			output_path			= EVAL ~%biffdir%~ // output directory
 			type				= EVAL ~%type%~
