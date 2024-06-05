@@ -8,3 +8,6 @@ SPRINT identical_area "BG0401"
 PATCH_IF FILE_EXISTS ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~ BEGIN // add animation for braziers, candles ...
 	PATCH_INCLUDE ~%MOD_FOLDER%/base/are_patch/%identical_area%_are.tpa~
 END
+
+// Wrong area flag, changes from outdoor to indoor
+	WRITE_BYTE 0x48 0x00
