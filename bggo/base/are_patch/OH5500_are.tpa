@@ -1,0 +1,4 @@
+// is an outdoor area without extended night map
+PATCH_IF ((((BYTE_AT 0x48) << 1) >> 7) & BIT0) BEGIN
+	WRITE_BYTE 0x48 (THIS BXOR BIT6) // Toggle extended night flag (BIT6) off
+END
