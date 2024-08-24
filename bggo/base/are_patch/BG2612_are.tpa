@@ -35,3 +35,6 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 	END
 END
 LPM ~CLEAR_ARRAY~
+
+// Wrong area flag, changes from outdoor to indoor
+	WRITE_BYTE 0x48 0x00

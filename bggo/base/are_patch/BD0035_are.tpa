@@ -17,3 +17,6 @@ PATCH_PHP_EACH x_coord AS index => x BEGIN
 	END
 END
 LPM ~CLEAR_ARRAY~
+
+// Wrong area flag, changes to not day/night map, because it's always night
+	WRITE_BYTE 0x48 0b00001101

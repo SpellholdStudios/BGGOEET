@@ -1,0 +1,2 @@
+// Wrong area flag, changes to not day/night map, because it's always night
+	WRITE_BYTE 0x48 0b00001101
