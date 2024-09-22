@@ -36,7 +36,7 @@ BEGIN
 	END
 	LAF ALTER_SEARCHMAP
 		STR_VAR
-			path_to_2da_file 	= EVAL ~%MOD_FOLDER%/base/bmp%type%/%folder%/%are%%type%.2da~  
+			path_to_2da_file 	= EVAL ~%MOD_FOLDER%/base/bmp%type%/%folder%/%are%%type%.2da~ 
 			areaname 			= EVAL ~%are2%~ // area name, e.g. ~AR3700~
 			output_path			= EVAL ~%biffdir%~ // output directory
 			type				= EVAL ~%type%~
@@ -230,12 +230,7 @@ BEGIN
 			// day mos file
 			
 			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/mbcD/%ee%/%are%/%are%.mbc~ BEGIN
-				LAF HANDLE_TILECONV
-					STR_VAR
-						input_path = EVAL ~%MOD_FOLDER%/base/mbcD/%ee%/%are%~
-						output_path	  = EVAL ~%temp%~
-				END
-				COPY ~%temp%/%are%.mos~ ~%biffdir%/%are2%.mos~
+				COPY ~%MOD_FOLDER%/base/mbcD/%ee%/%are%/%are%.mos~ ~%biffdir%/%are2%.mos~
 					LPM ~DEBUG~
 				LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.mos~ END
 			END ELSE BEGIN
@@ -343,12 +338,7 @@ BEGIN
 			
 			// night mos
 			ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/mbcN/%ee%/%are%N/%are%N.mbc~ BEGIN						
-				LAF HANDLE_TILECONV
-					STR_VAR
-						input_path    = EVAL ~%MOD_FOLDER%/base/mbcN/%ee%/%are%N~
-						output_path	  = EVAL ~%temp%~
-				END
-				COPY ~%temp%/%are%N.mos~ ~%biffdir%/%are2%N.mos~
+				COPY ~%MOD_FOLDER%/base/mbcN/%ee%/%are%N/%are%N.mos~ ~%biffdir%/%are2%N.mos~
 					LPM ~DEBUG~
 				LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.mos~ END
 			END ELSE BEGIN
