@@ -52,6 +52,87 @@ BEGIN
 	END
 END
 
+DEFINE_ACTION_FUNCTION COPY_TIS_PVRZ_BGGO
+	STR_VAR
+		tis_path_original   = ""
+		tis_name_original   = "" // original tis-name
+		tis_name_target     = "" // target tis-name. if tis_name_target = "" => tis_name_target = tis_name
+		tis_path_target     = "override"
+BEGIN
+	ACTION_IF ( ~%tis_name_target%~ STR_EQ ~~ ) BEGIN OUTER_SPRINT tis_name_target ~%tis_name_original%~ END
+	
+	ACTION_CLEAR_ARRAY PVR_PAGE_LIST
+	ACTION_CLEAR_ARRAY OFFSET_ARRAY
+	
+	LAF TIS_RES_TO_PVRZ STR_VAR tis_res = EVAL ~%tis_name_target%.tis~ RET prefix_target = prefix END
+	LAF TIS_RES_TO_PVRZ STR_VAR tis_res = EVAL ~%tis_name_original%.tis~ RET prefix_original = prefix END
+	
+	ACTION_IF FILE_EXISTS_IN_GAME  ~%tis_name_target%.tis~ BEGIN
+		COPY_EXISTING - ~%tis_name_target%.tis~ ~%temp%~
+			READ_LONG 0x8  "tiles_cnt"
+			READ_LONG 0x10 "tiles_off"
+			READ_LONG 0xc  "tiles_length"
+			FOR ( i = 0 ; i < tiles_cnt ; ++i ) BEGIN
+				SET offset = tiles_off + tiles_length * i
+				READ_LONG offset pvr_page_original
+				PATCH_IF !(VARIABLE_IS_SET $PVR_PAGE_LIST("%pvr_page_original%" "old")) BEGIN
+					DEFINE_ASSOCIATIVE_ARRAY PVR_PAGE_LIST BEGIN "%pvr_page_original%", "old" => "%pvr_page_original%" END
+				END
+			END
+	END
+	
+	COPY ~%tis_path_original%/%tis_name_original%.tis~ ~%tis_path_target%/%tis_name_target%.tis~
+		LPM ~DEBUG~
+		READ_LONG 0x8  "tiles_cnt"
+		READ_LONG 0x10 "tiles_off"
+		READ_LONG 0xc  "tiles_length"
+		FOR ( i = 0 ; i < tiles_cnt ; ++i ) BEGIN
+			SET offset = tiles_off + tiles_length * i
+			READ_LONG offset pvr_page_target
+			PATCH_IF (pvr_page_target >= 0) BEGIN
+				DEFINE_ASSOCIATIVE_ARRAY OFFSET_ARRAY BEGIN "%offset%" => "%pvr_page_target%" END
+				PATCH_IF !(VARIABLE_IS_SET $PVR_PAGE_LIST("%pvr_page_target%" "old")) BEGIN
+					DEFINE_ASSOCIATIVE_ARRAY PVR_PAGE_LIST BEGIN "%pvr_page_target%", "new" => "%pvr_page_target%" END
+				END
+			END
+		END
+		
+		SORT_ARRAY_INDICES PVR_PAGE_LIST NUMERICALLY
+		SET num_to_reserve = 0
+		PATCH_PHP_EACH PVR_PAGE_LIST AS idx => pvr_index BEGIN
+			PATCH_IF ("%idx_1%" STR_EQ "new") BEGIN
+				SET num_to_reserve += 1
+			END
+		END
+		LPF FIND_FREE_PVRZ_INDEX INT_VAR num_to_reserve = "%num_to_reserve%" STR_VAR prefix = EVAL "%prefix_target%" RET free_index END
+		PATCH_PHP_EACH PVR_PAGE_LIST AS idx => pvr_index BEGIN
+			PATCH_IF ("%idx_1%" STR_EQ "new") BEGIN
+				SET $PVR_PAGE_LIST("%idx_0%" "new") = free_index
+				SET free_index +=1
+			END
+			PATCH_IF debug BEGIN PATCH_PRINT ~%idx_0%, %idx_1% => %pvr_index% : %free_index% %num_to_reserve%~ END
+		END
+		
+		PHP_EACH OFFSET_ARRAY AS offset => value BEGIN
+			SET new_value = 0
+			PATCH_IF ( VARIABLE_IS_SET $PVR_PAGE_LIST( ~%value%~ ~old~ ) ) BEGIN
+				SET new_value = $PVR_PAGE_LIST( ~%value%~ ~old~ )
+			END
+			PATCH_IF ( VARIABLE_IS_SET $PVR_PAGE_LIST( ~%value%~ ~new~ ) ) BEGIN
+				SET new_value = $PVR_PAGE_LIST( ~%value%~ ~new~ )
+			END
+			WRITE_LONG ~%offset%~ ~%new_value%~
+		END
+		
+	ACTION_PHP_EACH PVR_PAGE_LIST AS source => dest BEGIN
+			ACTION_IF ( source_0 < 10 ) BEGIN OUTER_SPRINT sourceX ~0%source_0%~ END ELSE BEGIN OUTER_SPRINT sourceX ~%source_0%~ END
+			ACTION_IF ( dest   < 10 ) BEGIN OUTER_SPRINT destX   ~0%dest%~   END ELSE BEGIN OUTER_SPRINT destX   ~%dest%~   END
+			ACTION_IF ( FILE_EXISTS ~%tis_path_original%/%prefix_original%%sourceX%.PVRZ~ ) BEGIN
+				COPY ~%tis_path_original%/%prefix_original%%sourceX%.PVRZ~ ~%tis_path_target%/%prefix_target%%destX%.PVRZ~
+			END
+	END		
+END
+
 
 DEFINE_PATCH_MACRO ~RENAME_OVL_NAMES~ // replace ovl tis names automatically
 BEGIN
@@ -205,23 +286,15 @@ BEGIN
 				END
 				ACTION_IF GAME_IS ~eet bgee bg2ee~ BEGIN
 					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tis~ BEGIN
-						COPY ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/%are%.tis~ ~%biffdir%/%are2%.tis~
-							LPM ~DEBUG~
-						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.tis~ END
-						ACTION_IF (GAME_IS ~bgee~ AND (~%purple%~ STR_EQ ~BG1~)) BEGIN			// BGEE
-							ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/~ ~.*\.pvrz$~ BEGIN
-								OUTER_PATCH_SAVE newname ~%BASH_FOR_RES%~ BEGIN
-									REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~B~ ~A~
-								END
-								COPY ~%BASH_FOR_FILESPEC%~ ~%biffdir%/%newname%.pvrz~
-								LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.pvrz~ END
-							END
-						END ELSE BEGIN
-							ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcD/%are%/%ee%/~ ~.*\.pvrz$~ BEGIN		// EET, BG2EE
-								COPY ~%BASH_FOR_FILESPEC%~ ~%biffdir%~
-								LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.pvrz~ END
-							END
+						LAF COPY_TIS_PVRZ_BGGO
+							STR_VAR
+								tis_path_original   = EVAL "%MOD_FOLDER%/base/tbcD/%are%/%ee%"
+								tis_name_original   = EVAL "%are%"
+								tis_name_target     = EVAL "%are2%"
+								tis_path_target     = EVAL "%biffdir%"
 						END
+						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.tis~ END
+						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.pvrz~ END
 					END
 				END
 				OUTER_SET day = 1
@@ -314,23 +387,15 @@ BEGIN
 				END
 				ACTION_IF GAME_IS ~eet bgee bg2ee~ BEGIN
 					ACTION_IF FILE_EXISTS ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~ BEGIN
-						COPY ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/%are%N.tis~ ~%biffdir%/%are2%N.tis~
-							LPM ~DEBUG~
-						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.tis~ END
-						ACTION_IF (GAME_IS ~bgee~ AND (~%purple%~ STR_EQ ~BG1~)) BEGIN		// BGEE 
-							ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/~ ~.*\.pvrz$~ BEGIN
-								OUTER_PATCH_SAVE newname ~%BASH_FOR_RES%~ BEGIN
-									REPLACE_TEXTUALLY CASE_INSENSITIVE EXACT_MATCH ~B~ ~A~
-								END
-								COPY ~%BASH_FOR_FILESPEC%~ ~%biffdir%/%newname%.pvrz~
-								LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.pvrz~ END
-							END
-						END ELSE BEGIN
-							ACTION_BASH_FOR ~%MOD_FOLDER%/base/tbcN/%are%/%ee%/~ ~.*\.pvrz$~ BEGIN	// EET, BG2EE
-								COPY ~%BASH_FOR_FILESPEC%~ ~%biffdir%~
-								LAF ~BACKUP_BIFFING~ STR_VAR ext = ~N.pvrz~ END
-							END
+						LAF COPY_TIS_PVRZ_BGGO
+							STR_VAR
+								tis_path_original   = EVAL "%MOD_FOLDER%/base/tbcN/%are%/%ee%"
+								tis_name_original   = EVAL "%are%N"
+								tis_name_target     = EVAL "%are2%N"
+								tis_path_target     = EVAL "%biffdir%"
 						END
+						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.tis~ END
+						LAF ~BACKUP_BIFFING~ STR_VAR ext = ~.pvrz~ END
 					END
 				END
 				OUTER_SET night = 1
